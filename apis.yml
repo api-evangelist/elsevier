@@ -1,20 +1,20 @@
-
-name: Elsevier
-description: >-
-  Elsevier is a Dutch academic publishing company specializing in scientific,
-  technical, and medical content. Its products include journals such as The
-  Lancet, Cell, the ScienceDirect collection of electronic journals, Trends, the
-  Current Opinion series, the online citation database Scopus, the SciVal tool
-  for measuring research performance, the ClinicalKey search engine for
-  clinicians, and the ClinicalPath evidence-based cancer care service. 
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+aid: elsevier
 url: https://raw.githubusercontent.com/apis-json/artisanal/main/apis/elsevier.yml
-created: 2023/11/22
-modified: 2023/11/22
-specificationVersion: '0.16'
-tags: []
 apis:
-  - name: Elsevier Scopus APIs
+  - aid: elsevier:elsevier-scopus-apis
+    name: Elsevier Scopus APIs
+    tags: []
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.example.com
+    humanURL: https://dev.elsevier.com/sc_apis.html
+    overlays:
+      - url: overlays/https://dev.elsevier.com/elsdoc/scopus-openapi-search.yml
+        type: APIs.io Search
+    properties:
+      - url: https://dev.elsevier.com/scopus.html
+        type: Documentation
+      - url: https://dev.elsevier.com/elsdoc/scopus
+        type: OpenAPI
     description: >-
       Scopus delivers a comprehensive view of the world of research. Scopus.com
       allows you to track analyze and visualize research data from 5000
@@ -24,40 +24,40 @@ apis:
       Profiles All of this comes together to power your research and help you to
       stay abreast with current publications, find co-authors, analyze journals
       to publish in and track and monitor global trends
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://dev.elsevier.com/sc_apis.html
-    baseURL: https://api.example.com
+  - aid: elsevier:elsevier-sciencedirect-apis
+    name: Elsevier ScienceDirect APIs
     tags: []
-    properties:
-      - type: Documentation
-        url: https://dev.elsevier.com/scopus.html
-      - type: OpenAPI
-        url: https://dev.elsevier.com/elsdoc/scopus
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.example.com
+    humanURL: https://dev.elsevier.com/sd_apis.html
     overlays:
-      - type: APIs.io Search
-        url: overlays/https://dev.elsevier.com/elsdoc/scopus-openapi-search.yml
-    aid: elsevier:elsevier-scopus-apis
-  - name: Elsevier ScienceDirect APIs
+      - url: >-
+          overlays/https://dev.elsevier.com/elsdoc/sciencedirect-openapi-search.yml
+        type: APIs.io Search
+    properties:
+      - url: https://dev.elsevier.com/sciencedirect.html
+        type: Documentation
+      - url: https://dev.elsevier.com/elsdoc/sciencedirect
+        type: OpenAPI
     description: >+
       ScienceDirect APIs expose peer-reviewed full-text scientific, technical
       and medical content from all scholarly publications indexed by
       ScienceDirect, Elsevier's premier scientific platform.
 
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://dev.elsevier.com/sd_apis.html
-    baseURL: https://api.example.com
+  - aid: elsevier:elsevier-scival-api
+    name: Elsevier SciVal API
     tags: []
-    properties:
-      - type: Documentation
-        url: https://dev.elsevier.com/sciencedirect.html
-      - type: OpenAPI
-        url: https://dev.elsevier.com/elsdoc/sciencedirect
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.example.com
+    humanURL: https://dev.elsevier.com/scival_apis.html
     overlays:
-      - type: APIs.io Search
-        url: >-
-          overlays/https://dev.elsevier.com/elsdoc/sciencedirect-openapi-search.yml
-    aid: elsevier:elsevier-sciencedirect-apis
-  - name: Elsevier SciVal API
+      - url: overlays/https://dev.elsevier.com/elsdoc/scival-openapi-search.yml
+        type: APIs.io Search
+    properties:
+      - url: https://dev.elsevier.com/scival.html
+        type: Documentation
+      - url: https://dev.elsevier.com/elsdoc/scival
+        type: OpenAPI
     description: >+
       The SciVal API gives access to a comprehensive basket of metrics for
       researchers (Scopus Author profiles) and all 8,500+ institutions available
@@ -65,43 +65,47 @@ apis:
       returns metrics from SciVal for a given a Scopus Author or Institution
       identifier (or multiples of each).
 
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://dev.elsevier.com/scival_apis.html
-    baseURL: https://api.example.com
-    tags: []
-    properties:
-      - type: Documentation
-        url: https://dev.elsevier.com/scival.html
-      - type: OpenAPI
-        url: https://dev.elsevier.com/elsdoc/scival
-    overlays:
-      - type: APIs.io Search
-        url: overlays/https://dev.elsevier.com/elsdoc/scival-openapi-search.yml
-    aid: elsevier:elsevier-scival-api
+name: Elsevier
+tags:
+  - Scientific
+  - Technical
+  - Medical
+  - Content
+  - Journals
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 common:
-  - type: Portal
-    url: https://dev.elsevier.com/
-  - type: Use Cases
-    url: https://dev.elsevier.com/use_cases.html
-  - type: Terms of Service
-    url: https://dev.elsevier.com/api_service_agreement.html
-  - type: Examples
-    url: https://dev.elsevier.com/examples.html
-  - type: Guides
-    url: https://dev.elsevier.com/technical_documentation.html
-  - type: SDK
-    url: https://github.com/ElsevierDev/elsapy
-  - type: Support
-    url: https://dev.elsevier.com/support.html
-  - type: Privacy Policy
-    url: http://www.elsevier.com/locate/privacypolicy
+  - url: https://dev.elsevier.com/
+    type: Portal
+  - url: https://dev.elsevier.com/use_cases.html
+    type: Use Cases
+  - url: https://dev.elsevier.com/api_service_agreement.html
+    type: Terms of Service
+  - url: https://dev.elsevier.com/examples.html
+    type: Examples
+  - url: https://dev.elsevier.com/technical_documentation.html
+    type: Guides
+  - url: https://github.com/ElsevierDev/elsapy
+    type: SDK
+  - url: https://dev.elsevier.com/support.html
+    type: Support
+  - url: http://www.elsevier.com/locate/privacypolicy
+    type: Privacy Policy
+created: 2023/11/22
+modified: '2024-11-14'
+overlays:
+  - url: overlays/apis-io-search.yml
+    type: APIs.io Search
+  - url: overlays/apis-io-search.yml
+    type: API Evangelist Ratings
+description: >-
+  Elsevier is a Dutch academic publishing company specializing in scientific,
+  technical, and medical content. Its products include journals such as The
+  Lancet, Cell, the ScienceDirect collection of electronic journals, Trends, the
+  Current Opinion series, the online citation database Scopus, the SciVal tool
+  for measuring research performance, the ClinicalKey search engine for
+  clinicians, and the ClinicalPath evidence-based cancer care service. 
 maintainers:
   - FN: API Evangelist
     url: http://apievangelist.com
     email: info@apievangelist.com
-overlays:
-  - type: APIs.io Search
-    url: overlays/apis-io-search.yml
-  - type: API Evangelist Ratings
-    url: overlays/apis-io-search.yml
-aid: elsevier
+specificationVersion: '0.16'
