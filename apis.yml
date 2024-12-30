@@ -7,12 +7,16 @@ apis:
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/sc_apis.html
+    overlays:
+      - url: overlays/https://dev.elsevier.com/elsdoc/scopus-openapi-search.yml
+        type: APIs.io Search
     properties:
       - url: https://dev.elsevier.com/scopus.html
         type: Documentation
       - url: https://dev.elsevier.com/elsdoc/scopus
         type: OpenAPI
-    description: >-
+    description: |-
+
       Scopus delivers a comprehensive view of the world of research. Scopus.com
       allows you to track analyze and visualize research data from 5000
       different publishers. It covers 78 million items including records from
@@ -27,15 +31,23 @@ apis:
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/sd_apis.html
+    overlays:
+      - url: >-
+
+          overlays/https://dev.elsevier.com/elsdoc/sciencedirect-openapi-search.yml
+        type: APIs.io Search
     properties:
       - url: https://dev.elsevier.com/sciencedirect.html
         type: Documentation
       - url: https://dev.elsevier.com/elsdoc/sciencedirect
         type: OpenAPI
-    description: >+
+    description: |+
+
       ScienceDirect APIs expose peer-reviewed full-text scientific, technical
       and medical content from all scholarly publications indexed by
       ScienceDirect, Elsevier's premier scientific platform.
+
+
 
   - aid: elsevier:elsevier-scival-api
     name: Elsevier SciVal API
@@ -43,17 +55,23 @@ apis:
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/scival_apis.html
+    overlays:
+      - url: overlays/https://dev.elsevier.com/elsdoc/scival-openapi-search.yml
+        type: APIs.io Search
     properties:
       - url: https://dev.elsevier.com/scival.html
         type: Documentation
       - url: https://dev.elsevier.com/elsdoc/scival
         type: OpenAPI
-    description: >+
+    description: |+
+
       The SciVal API gives access to a comprehensive basket of metrics for
       researchers (Scopus Author profiles) and all 8,500+ institutions available
       in SciVal, Elsevier's platform for research performance benchmarking. It
       returns metrics from SciVal for a given a Scopus Author or Institution
       identifier (or multiples of each).
+
+
 
 name: Elsevier
 tags:
@@ -81,8 +99,9 @@ common:
   - url: http://www.elsevier.com/locate/privacypolicy
     type: Privacy Policy
 created: 2023/11/22
-modified: '2024-11-14'
-description: >-
+modified: '2024-12-30'
+description: |-
+
   Elsevier is a Dutch academic publishing company specializing in scientific,
   technical, and medical content. Its products include journals such as The
   Lancet, Cell, the ScienceDirect collection of electronic journals, Trends, the
@@ -94,3 +113,6 @@ maintainers:
     url: http://apievangelist.com
     email: info@apievangelist.com
 specificationVersion: '0.16'
+type: Contract
+position: Consuming
+access: 3rd-Party
