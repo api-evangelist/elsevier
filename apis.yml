@@ -1,12 +1,10 @@
 aid: elsevier
-url: 
-  https://raw.githubusercontent.com/apis-json/artisanal/main/apis/elsevier.yml
+url: https://raw.githubusercontent.com/apis-json/artisanal/main/apis/elsevier.yml
 apis:
   - aid: elsevier:elsevier-scopus-apis
     name: Elsevier Scopus APIs
     tags: []
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/sc_apis.html
     overlays:
@@ -23,8 +21,7 @@ apis:
   - aid: elsevier:elsevier-sciencedirect-apis
     name: Elsevier ScienceDirect APIs
     tags: []
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/sd_apis.html
     overlays:
@@ -44,8 +41,7 @@ apis:
   - aid: elsevier:elsevier-scival-api
     name: Elsevier SciVal API
     tags: []
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://dev.elsevier.com/scival_apis.html
     overlays:
@@ -63,13 +59,12 @@ apis:
       for a given a Scopus Author or Institution identifier (or multiples of each).
 name: Elsevier
 tags:
-  - Scientific
-  - Technical
-  - Medical
   - Content
   - Journals
-image: 
-  https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  - Medical
+  - Scientific
+  - Technical
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 common:
   - url: https://dev.elsevier.com/
     type: Portal
