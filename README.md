@@ -1,118 +1,92 @@
 # Elsevier (elsevier)
+Elsevier is a Dutch academic publishing company specializing in scientific, technical, and medical content. Its products include journals such as The Lancet and Cell, the ScienceDirect collection of electronic journals, the online citation database Scopus, the SciVal research performance platform, and the ClinicalKey search engine for clinicians.
 
-Elsevier is a Dutch academic publishing company specializing in scientific,
-technical, and medical content. Its products include journals such as The
-Lancet, Cell, the ScienceDirect collection of electronic journals, Trends, the
-Current Opinion series, the online citation database Scopus, the SciVal tool
-for measuring research performance, the ClinicalKey search engine for
-clinicians, and the ClinicalPath evidence-based cancer care service. 
-
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/apis-json/artisanal/main/apis/elsevier.yml)
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/elsevier/refs/heads/main/apis.yml)
 
 ## Scope
-
-- **Type:** Contract 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
 
 ## Tags:
-
- - Scientific, Technical, Medical, Content, Journals
+ - Content, Journals, Medical, Research, Scientific, Technical
 
 ## Timestamps
-
-- **Created:** 2023/11/22 
-- **Modified:** 2024-12-30 
+- **Created:** 2023-11-22
+- **Modified:** 2026-04-28
 
 ## APIs
 
 ### Elsevier Scopus APIs
-
-Scopus delivers a comprehensive view of the world of research. Scopus.com
-allows you to track analyze and visualize research data from 5000
-different publishers. It covers 78 million items including records from
-journals, books and book series, conference proceedings and trade
-publications across 16 million Author Profiles and 70,000 Institutional
-Profiles All of this comes together to power your research and help you to
-stay abreast with current publications, find co-authors, analyze journals
-to publish in and track and monitor global trends
+Scopus delivers a comprehensive view of the world of research, allowing tracking, analysis, and visualization of research data across publishers, journals, books, conference proceedings, and trade publications.
 
 **Human URL:** [https://dev.elsevier.com/sc_apis.html](https://dev.elsevier.com/sc_apis.html)
 
-**Base URL:** [https://api.example.com](https://api.example.com)
-
-
 #### Tags:
-
- - No Tags
+ - Citations, Research, Scientific
 
 #### Properties
-
 - [Documentation](https://dev.elsevier.com/scopus.html)
-- [OpenAPI](https://dev.elsevier.com/elsdoc/scopus)
+- [Specification](https://dev.elsevier.com/api_docs.html)
+
 ### Elsevier ScienceDirect APIs
-
-ScienceDirect APIs expose peer-reviewed full-text scientific, technical
-and medical content from all scholarly publications indexed by
-ScienceDirect, Elsevier's premier scientific platform.
-
-
-
-
+ScienceDirect APIs expose peer-reviewed full-text scientific, technical and medical content from all scholarly publications indexed by ScienceDirect, Elsevier's premier scientific platform.
 
 **Human URL:** [https://dev.elsevier.com/sd_apis.html](https://dev.elsevier.com/sd_apis.html)
 
-**Base URL:** [https://api.example.com](https://api.example.com)
-
-
 #### Tags:
-
- - No Tags
+ - Full Text, Journals, Scientific
 
 #### Properties
-
 - [Documentation](https://dev.elsevier.com/sciencedirect.html)
-- [OpenAPI](https://dev.elsevier.com/elsdoc/sciencedirect)
+- [Specification](https://dev.elsevier.com/api_docs.html)
+
 ### Elsevier SciVal API
-
-The SciVal API gives access to a comprehensive basket of metrics for
-researchers (Scopus Author profiles) and all 8,500+ institutions available
-in SciVal, Elsevier's platform for research performance benchmarking. It
-returns metrics from SciVal for a given a Scopus Author or Institution
-identifier (or multiples of each).
-
-
-
-
+The SciVal API gives access to a comprehensive set of metrics for researchers (Scopus Author profiles) and 8,500+ institutions available in SciVal, Elsevier's platform for research performance benchmarking.
 
 **Human URL:** [https://dev.elsevier.com/scival_apis.html](https://dev.elsevier.com/scival_apis.html)
 
-**Base URL:** [https://api.example.com](https://api.example.com)
-
-
 #### Tags:
-
- - No Tags
+ - Benchmarking, Metrics, Research
 
 #### Properties
-
 - [Documentation](https://dev.elsevier.com/scival.html)
-- [OpenAPI](https://dev.elsevier.com/elsdoc/scival)
+- [Specification](https://dev.elsevier.com/api_docs.html)
+
+### Elsevier Engineering Village API
+Engineering Village APIs provide programmatic access to engineering research literature, indexed publications, and engineering-focused content across multiple databases.
+
+**Human URL:** [https://dev.elsevier.com/ev.html](https://dev.elsevier.com/ev.html)
+
+#### Tags:
+ - Engineering, Research
+
+#### Properties
+- [Documentation](https://dev.elsevier.com/ev.html)
+
+### Elsevier Embase API
+Embase APIs provide access to biomedical and pharmacological abstracts and indexing for life sciences research, drug development, and evidence-based medicine.
+
+**Human URL:** [https://dev.elsevier.com/embase.html](https://dev.elsevier.com/embase.html)
+
+#### Tags:
+ - Biomedical, Medical, Pharmacology
+
+#### Properties
+- [Documentation](https://dev.elsevier.com/embase.html)
 
 ## Common Properties
-
 - [Portal](https://dev.elsevier.com/)
+- [Getting Started](https://dev.elsevier.com/getting_started.html)
+- [Documentation](https://dev.elsevier.com/api_docs.html)
 - [Use Cases](https://dev.elsevier.com/use_cases.html)
 - [Terms of Service](https://dev.elsevier.com/api_service_agreement.html)
+- [Privacy Policy](http://www.elsevier.com/locate/privacypolicy)
 - [Examples](https://dev.elsevier.com/examples.html)
 - [Guides](https://dev.elsevier.com/technical_documentation.html)
 - [SDK](https://github.com/ElsevierDev/elsapy)
 - [Support](https://dev.elsevier.com/support.html)
-- [Privacy Policy](http://www.elsevier.com/locate/privacypolicy)
 
 ## Maintainers
-
-**FN:** API Evangelist
-
-**Email:** info@apievangelist.com
-
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
