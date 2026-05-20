@@ -99,6 +99,8 @@ apis:
       - type: Documentation
         url: https://dev.elsevier.com/embase.html
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/elsevier
   - type: Portal
     url: https://dev.elsevier.com/
   - type: GettingStarted
