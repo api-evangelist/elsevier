@@ -1,0 +1,364 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Elsevier Scopus APIs",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ELS-APIKey",
+      "value": "{{X-ELS-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scopus Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/search/scopus",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Boolean search string."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "facets",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Boolean search across the Scopus abstracts cluster."
+        },
+        {
+          "info": {
+            "name": "Author Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/search/author",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "co-author",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "facets",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Boolean search against Scopus author profiles."
+        },
+        {
+          "info": {
+            "name": "Affiliation Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/search/affiliation",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "facets",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Boolean search against Scopus affiliation profiles."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Abstract",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abstract Retrieval by Scopus ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/abstract/scopus_id/:scopus_id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scopus_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Abstract Retrieval by Scopus ID"
+        },
+        {
+          "info": {
+            "name": "Abstract Retrieval by EID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/abstract/eid/:eid",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Abstract Retrieval by EID"
+        },
+        {
+          "info": {
+            "name": "Abstract Retrieval by DOI",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/abstract/doi/:doi",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "doi",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Abstract Retrieval by DOI"
+        },
+        {
+          "info": {
+            "name": "Abstract Retrieval by PII",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/abstract/pii/:pii",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pii",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Abstract Retrieval by PII"
+        },
+        {
+          "info": {
+            "name": "Abstract Retrieval by PubMed ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.elsevier.com/content/abstract/pubmed_id/:pubmed_id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "X-ELS-Insttoken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pubmed_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Abstract Retrieval by PubMed ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
