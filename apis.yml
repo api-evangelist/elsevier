@@ -117,7 +117,7 @@ common:
     url: https://dev.elsevier.com/examples.html
   - type: Guides
     url: https://dev.elsevier.com/technical_documentation.html
-  - type: SDK
+  - type: SDKs
     url: https://github.com/ElsevierDev/elsapy
   - type: Support
     url: https://dev.elsevier.com/support.html
