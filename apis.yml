@@ -99,6 +99,10 @@ apis:
       - type: Documentation
         url: https://dev.elsevier.com/embase.html
 common:
+  - type: DomainSecurity
+    url: security/elsevier-domain-security.yml
+  - type: Authentication
+    url: authentication/elsevier-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/elsevier
   - type: Portal
@@ -121,6 +125,8 @@ common:
     url: https://github.com/ElsevierDev/elsapy
   - type: Support
     url: https://dev.elsevier.com/support.html
+  - type: Blog
+    url: https://www.elsevier.com/connect
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
