@@ -1,0 +1,21 @@
+{
+  "repo": "elsevier",
+  "feeds": [
+    {
+      "source": "https://www.elsevier.com/connect",
+      "feed_url": "https://www.elsevier.com/connect",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://dev.elsevier.com/support.html",
+      "feed_url": "https://dev.elsevier.com/support.html",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 3
+}
