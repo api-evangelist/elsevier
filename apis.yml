@@ -99,6 +99,8 @@ apis:
       - type: Documentation
         url: https://dev.elsevier.com/embase.html
 common:
+  - type: AgenticAccess
+    url: agentic-access/elsevier-agentic-access.yml
   - type: DomainSecurity
     url: security/elsevier-domain-security.yml
   - type: Authentication
