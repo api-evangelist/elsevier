@@ -1,0 +1,171 @@
+openapi: 3.1.0
+info:
+  title: Elsevier Scopus APIs Abstract Search API
+  description: 'Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Elsevier Developer Portal
+    url: https://dev.elsevier.com
+servers:
+- url: https://api.elsevier.com
+security:
+- apiKey: []
+tags:
+- name: Search
+paths:
+  /content/search/scopus:
+    get:
+      summary: Scopus Search
+      description: Boolean search across the Scopus abstracts cluster.
+      operationId: scopusSearch
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Boolean search string.
+      - name: count
+        in: query
+        schema:
+          type: integer
+      - name: start
+        in: query
+        schema:
+          type: integer
+      - name: view
+        in: query
+        schema:
+          type: string
+          enum:
+          - STANDARD
+          - COMPLETE
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: facets
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Search results
+        '400':
+          description: Invalid request
+        '401':
+          description: Authentication error
+        '429':
+          description: Quota exceeded
+  /content/search/author:
+    get:
+      summary: Author Search
+      description: Boolean search against Scopus author profiles.
+      operationId: authorSearch
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: query
+        in: query
+        schema:
+          type: string
+      - name: co-author
+        in: query
+        schema:
+          type: string
+      - name: view
+        in: query
+        schema:
+          type: string
+      - name: start
+        in: query
+        schema:
+          type: integer
+      - name: count
+        in: query
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: facets
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Author search results
+  /content/search/affiliation:
+    get:
+      summary: Affiliation Search
+      description: Boolean search against Scopus affiliation profiles.
+      operationId: affiliationSearch
+      tags:
+      - Search
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: view
+        in: query
+        schema:
+          type: string
+          enum:
+          - STANDARD
+      - name: start
+        in: query
+        schema:
+          type: integer
+      - name: count
+        in: query
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: facets
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Affiliation search results
+components:
+  parameters:
+    AcceptHeader:
+      name: Accept
+      in: header
+      required: false
+      schema:
+        type: string
+        default: application/json
+        enum:
+        - application/json
+        - application/xml
+        - application/atom+xml
+        - application/rdf+xml
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ELS-APIKey

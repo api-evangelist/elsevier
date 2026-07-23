@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Elsevier Scopus APIs Abstract API
+  description: 'Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Elsevier Developer Portal
+    url: https://dev.elsevier.com
+servers:
+- url: https://api.elsevier.com
+security:
+- apiKey: []
+tags:
+- name: Abstract
+paths:
+  /content/abstract/scopus_id/{scopus_id}:
+    get:
+      summary: Abstract Retrieval by Scopus ID
+      operationId: getAbstractByScopusId
+      tags:
+      - Abstract
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: scopus_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/ViewParam'
+      responses:
+        '200':
+          description: Abstract record
+  /content/abstract/eid/{eid}:
+    get:
+      summary: Abstract Retrieval by EID
+      operationId: getAbstractByEid
+      tags:
+      - Abstract
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: eid
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/ViewParam'
+      responses:
+        '200':
+          description: Abstract record
+  /content/abstract/doi/{doi}:
+    get:
+      summary: Abstract Retrieval by DOI
+      operationId: getAbstractByDoi
+      tags:
+      - Abstract
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: doi
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/ViewParam'
+      responses:
+        '200':
+          description: Abstract record
+  /content/abstract/pii/{pii}:
+    get:
+      summary: Abstract Retrieval by PII
+      operationId: getAbstractByPii
+      tags:
+      - Abstract
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: pii
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/ViewParam'
+      responses:
+        '200':
+          description: Abstract record
+  /content/abstract/pubmed_id/{pubmed_id}:
+    get:
+      summary: Abstract Retrieval by PubMed ID
+      operationId: getAbstractByPubmedId
+      tags:
+      - Abstract
+      parameters:
+      - $ref: '#/components/parameters/AcceptHeader'
+      - $ref: '#/components/parameters/InstTokenHeader'
+      - name: pubmed_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/ViewParam'
+      responses:
+        '200':
+          description: Abstract record
+components:
+  parameters:
+    ViewParam:
+      name: view
+      in: query
+      schema:
+        type: string
+        enum:
+        - META
+        - META_ABS
+        - FULL
+        - REF
+        - ENTITLED
+    AcceptHeader:
+      name: Accept
+      in: header
+      required: false
+      schema:
+        type: string
+        default: application/json
+        enum:
+        - application/json
+        - application/xml
+        - application/atom+xml
+        - application/rdf+xml
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-ELS-APIKey
