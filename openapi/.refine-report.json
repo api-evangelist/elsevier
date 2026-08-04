@@ -1,0 +1,16 @@
+{
+  "provider": "elsevier",
+  "sources": [
+    "elsevier-abstract-api-openapi.yml",
+    "elsevier-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "elsevier-abstract-api-openapi.yml",
+    "elsevier-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
