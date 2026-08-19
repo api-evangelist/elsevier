@@ -1,0 +1,639 @@
+{
+  "item": [
+    {
+      "id": "e061a5a4-f130-4eef-934f-1bbb65829822",
+      "name": "Abstract",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6f28dbe-60c4-4f87-b458-90c478aeef41",
+          "name": "Abstract Retrieval by Scopus ID",
+          "request": {
+            "name": "Abstract Retrieval by Scopus ID",
+            "description": {},
+            "url": {
+              "path": [
+                "content",
+                "abstract",
+                "scopus_id",
+                ":scopus_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scopus_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-ELS-Insttoken",
+                "value": "<string>",
+                "description": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a54a242-ab06-4860-8cd8-76f94ae213b4",
+              "name": "Abstract record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "abstract",
+                    "scopus_id",
+                    ":scopus_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scopus_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ELS-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-ELS-Insttoken",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0922c99-99b4-41e2-8a27-f60ae6fd7612",
+          "name": "Abstract Retrieval by EID",
+          "request": {
+            "name": "Abstract Retrieval by EID",
+            "description": {},
+            "url": {
+              "path": [
+                "content",
+                "abstract",
+                "eid",
+                ":eid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-ELS-Insttoken",
+                "value": "<string>",
+                "description": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3c83d787-7a43-4a3a-992f-f7e32266881b",
+              "name": "Abstract record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "abstract",
+                    "eid",
+                    ":eid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ELS-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-ELS-Insttoken",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "214804c0-074a-4349-ab50-4e9598a336ea",
+          "name": "Abstract Retrieval by DOI",
+          "request": {
+            "name": "Abstract Retrieval by DOI",
+            "description": {},
+            "url": {
+              "path": [
+                "content",
+                "abstract",
+                "doi",
+                ":doi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "doi",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-ELS-Insttoken",
+                "value": "<string>",
+                "description": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a883a97-bda0-4f99-af51-cf6560d228cf",
+              "name": "Abstract record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "abstract",
+                    "doi",
+                    ":doi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "doi",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ELS-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-ELS-Insttoken",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "890eac9b-b1c5-4ddb-9dff-af75abef07d5",
+          "name": "Abstract Retrieval by PII",
+          "request": {
+            "name": "Abstract Retrieval by PII",
+            "description": {},
+            "url": {
+              "path": [
+                "content",
+                "abstract",
+                "pii",
+                ":pii"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pii",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-ELS-Insttoken",
+                "value": "<string>",
+                "description": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ffd2e40-ff7b-412d-b428-9095af1d6925",
+              "name": "Abstract record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "abstract",
+                    "pii",
+                    ":pii"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pii",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ELS-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-ELS-Insttoken",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b404d1e-83a6-4a56-a9f6-2023f9a8ba26",
+          "name": "Abstract Retrieval by PubMed ID",
+          "request": {
+            "name": "Abstract Retrieval by PubMed ID",
+            "description": {},
+            "url": {
+              "path": [
+                "content",
+                "abstract",
+                "pubmed_id",
+                ":pubmed_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pubmed_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-ELS-Insttoken",
+                "value": "<string>",
+                "description": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d5b55458-bfd2-4f03-bb31-d98c6408f191",
+              "name": "Abstract record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "abstract",
+                    "pubmed_id",
+                    ":pubmed_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pubmed_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ELS-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "key": "X-ELS-Insttoken",
+                    "value": "<string>",
+                    "description": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.elsevier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ELS-APIKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa3de04b-cb24-4510-8d34-558761412585",
+    "name": "Elsevier Scopus APIs Abstract API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.\n\n\nContact Support:\n Name: Elsevier Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}
