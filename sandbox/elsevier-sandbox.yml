@@ -1,0 +1,75 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/interactive.html
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Elsevier runs a hosted Swagger UI console — "Interactive APIs" — that executes real calls
+  against production api.elsevier.com using a demonstration API key Elsevier supplies, so a
+  developer can exercise the surface before registering. There is no separate sandbox
+  environment, no test-mode key prefix and no fixture data: the console hits live content, and
+  what it returns is bounded by the demo key's entitlements.
+type: hosted-console
+sandbox_environment: false
+test_mode: false
+console:
+  url: https://dev.elsevier.com/interactive.html
+  engine: Swagger UI 2.1.4
+  requires_own_key: false
+  own_key_supported: true
+  own_key_field: apiKey
+  detail: >-
+    "You don't need to obtain your own API key for that, just select the API of interest and hit
+    'Try it out!'". Elsevier states the embedded key "is meant for demonstration purposes only".
+  calls: production
+  host: api.elsevier.com
+  consoles:
+  - name: Search Interactive APIs
+    url: https://dev.elsevier.com/search.html
+    spec: https://dev.elsevier.com/elsdoc/search
+  - name: Retrieval Interactive APIs
+    url: https://dev.elsevier.com/retrieval.html
+    spec: https://dev.elsevier.com/elsdoc/retrieval
+  - name: Metadata Interactive APIs
+    url: https://dev.elsevier.com/metadata.html
+    spec: https://dev.elsevier.com/elsdoc/metadata
+  - name: Scopus Interactive APIs
+    url: https://dev.elsevier.com/scopus.html
+    spec: https://dev.elsevier.com/elsdoc/scopus
+  - name: ScienceDirect Interactive APIs
+    url: https://dev.elsevier.com/sciencedirect.html
+    spec: https://dev.elsevier.com/elsdoc/sciencedirect
+  - name: SciVal Interactive APIs
+    url: https://dev.elsevier.com/scival.html
+    spec: https://dev.elsevier.com/elsdoc/scival
+  - name: Engineering Village Interactive APIs
+    url: https://dev.elsevier.com/engineeringvillage.html
+    spec: https://dev.elsevier.com/elsdoc/engineeringvillage
+test_data:
+  published: true
+  kind: worked identifiers in documentation, not synthetic fixtures
+  examples:
+  - value: 10.1016/S0014-5793(01)03313-0
+    kind: DOI
+    used_in: >-
+      the Cited-by embed example on https://dev.elsevier.com/examples.html — a real published
+      article, not a test record
+  note: >-
+    Every identifier Elsevier uses in its examples is a live production record. There are no
+    magic test IDs, no synthetic authors and no reset mechanism, because there is nothing to
+    write.
+test_credentials:
+  published: false
+  note: >-
+    Elsevier embeds a working demonstration key in the Interactive API pages but does not
+    publish it as a documented value, and asks developers not to use it in applications. It is
+    deliberately not transcribed here.
+limitations:
+- The console calls production and consumes the demo key's shared weekly quota.
+- >-
+  Entitlement-gated content (COMPLETE / COMPONENT views, full text, the eight access-controlled
+  APIs) will not return through the console, because the demo key is not attached to a
+  subscribing institution.
+- >-
+  Swagger UI 2.1.4 is a 2015-era release; the console cannot render the OpenAPI 3.x that most
+  tooling now expects, and the specs behind it are Swagger 2.0 for that reason.

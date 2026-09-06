@@ -1,0 +1,1543 @@
+{  
+   "objectdoi":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve object references associated with a full text article by DOI.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/S0014-5793(01)03313-0",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"application/json",
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectdoiref":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve individual object or object metadata associated with a full text article by DOI.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/S0014-5793(01)03313-0",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Request metadata about object by entering META in view field and removing httpAccept value.",
+               "in":"query",
+               "name":"view",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectdoirefhigh":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve high-resolution image associated with a full text article by DOI.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/j.yjmcc.2014.08.010",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectdoirefstandard":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve regular-sized image associated with a full text article by DOI.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/S0014-5793(01)03313-0",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectdoirefthumbnail":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve thumbnail image associated with a full text article by DOI.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/S0014-5793(01)03313-0",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objecteid":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve object references associated with a full text article by EID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"1-s2.0-S0014579301033130",
+               "description":"eid value",
+               "in":"path",
+               "name":"eid",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"application/json",
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpii":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve object references associated with a full text article by PII.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0014579301033130",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"application/json",
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpiiref":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve individual object or object metadata associated with a full text article by PII.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0014579301033130",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Request metadata about object by entering META in view field and removing httpAccept value.",
+               "in":"query",
+               "name":"view",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpiirefhigh":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve high-resolution image associated with a full text article by PII.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0022282814002570",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpiirefstandard":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve regular-sized image associated with a full text article by PII.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0014579301033130",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpiirefthumbnail":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve thumbnail image associated with a full text article by PII.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0014579301033130",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpubmedid":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"Object retrieval API to retrieve object references associated with a full text article by Medline/Pubmed ID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"11852050",
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"application/json",
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpubmedidref":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"Object retrieval API to retrieve individual object or object metadata associated with a full text article by Medline/Pubmed ID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"11852050",
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Request metadata about object by entering META in view field and removing httpAccept value.",
+               "in":"query",
+               "name":"view",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpubmedidrefhigh":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"Object retrieval API to retrieve high-resolution image associated with a full text article by Medline/Pubmed ID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpubmedidrefstandard":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"Object retrieval API to retrieve regular-sized image associated with a full text article by Medline/Pubmed ID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"11852050",
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectpubmedidrefthumbnail":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"Object retrieval API to retrieve thumbnail image associated with a full text article by Medline/Pubmed ID.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"11852050",
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectscopusid":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve object references associated with a full text article by scopus_id.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"0037070197",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"application/json",
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectscopusidref":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve individual object or object metadata associated with a full text article by scopus_id.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"0037070197",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Request metadata about object by entering META in view field and removing httpAccept value.",
+               "in":"query",
+               "name":"view",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectscopusidrefhigh":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve high-resolution image associated with a full text article by scopus_id.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"84907560456",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectscopusidrefstandard":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve regular-sized image associated with a full text article by scopus_id.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"0037070197",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"*/*",
+               "description":"To retrieve object enter mime type here. Example: */*",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   },
+   "objectscopusidrefthumbnail":{  
+      "get":{  
+         "tags":[  
+            "Object_Retrieval"
+         ],
+         "description":"<strong>Object retrieval API to retrieve thumbnail image associated with a full text article by scopus_id.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"ObjectRetrieval",
+         "parameters":[  
+            {  
+               "default":"0037070197",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"gr1",
+               "description":"Specific Object Reference",
+               "in":"path",
+               "name":"ref",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"image/gif",
+               "description":"To retrieve object enter mime type here. Example: image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "text/xml",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Object Retrieval API"
+      }
+   }
+}

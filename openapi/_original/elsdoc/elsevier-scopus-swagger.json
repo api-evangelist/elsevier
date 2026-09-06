@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0"
+  },
+  "tags":[  
+   	  {  
+         "name":"Scopus_Search",
+         "description":"Scopus Search API"
+      },
+      {  
+         "name":"Affiliation_Search",
+         "description":"Affiliation Search API"
+      },
+      {  
+         "name":"Author_Search",
+         "description":"Author Search API"
+      },
+      {  
+         "name":"Abstract_Retrieval",
+         "description":"Abstract Retrieval API"
+      },
+      {  
+         "name":"Affiliation_Retrieval",
+         "description":"Affiliation Retrieval API"
+      },
+      {  
+         "name":"Author_Retrieval",
+         "description":"Author Retrieval API"
+      },
+      {  
+         "name":"Abstract_Citation_Count",
+         "description":"Abstract Citation count API"
+      },
+      {  
+         "name":"Citations_Overview",
+         "description":"Citations Overview API"
+      },
+      {  
+         "name":"Serial_Title",
+         "description":"Serial Title API"
+      }   
+      ],
+  "host": "api.elsevier.com",
+  "basePath": "/content",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+  "/search/affiliation": {
+      "$ref": "./listings/Affiliation_Search"
+    },
+    "/search/author": {
+      "$ref": "./listings/Author_Search"
+    },
+  "/search/scopus": {
+      "$ref": "./listings/Scopus_Search"
+    },
+   "/abstract/doi/{doi}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreaveldoi"
+    },
+    "/abstract/eid/{eid}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreaveleid"
+    },
+    "/abstract/group_id/{group_id}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreavelgroupid"
+    },
+    "/abstract/pii/{pii}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreavelpii"
+    },
+    "/abstract/pubmed_id/{pubmed_id}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreavelpubmedid"
+    },
+    "/abstract/pui/{pui}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreavelpui"
+    },
+    "/abstract/scopus_id/{scopus_id}": {
+      "$ref": "./listings/Abstract_Retrieval#/abstractretreavelscopusid"
+    },
+    "/affiliation/affiliation_id/{affiliation_id}": {
+      "$ref": "./listings/Affiliation_Retrieval#/affiliationid"
+    },
+    "/affiliation/eid/{eid}": {
+      "$ref": "./listings/Affiliation_Retrieval#/affiliationeid"
+    },
+    "/author/eid/{eid}": {
+      "$ref": "./listings/Author_Retrieval#/authorretrievaleid"
+    },
+    "/author/author_id/{author_id}": {
+      "$ref": "./listings/Author_Retrieval#/authorretrievalid"
+    },
+  "/abstract/citation-count": {
+      "$ref": "./listings/Abstract_Citation_Count#/abstractcitationcount"
+    },
+    "/abstract/citations": {
+      "$ref": "./listings/Citations_Overview#/abstractcitationoverview"
+    },
+    "/serial/title": {
+      "$ref": "./listings/Serial_Title#/serialtitle"
+    },
+    "/serial/title/issn/{issn}": {
+      "$ref": "./listings/Serial_Title#/serialtitleissn"
+    }
+  
+  },
+  "definitions": {
+    "sciencedirect": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "scopus": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "affiliation": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    }
+    
+    
+  }
+}

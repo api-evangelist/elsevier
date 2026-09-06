@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<!--
+Describes the Serial Title (metadata) API.
+
+Revision History:
+
+2011-02-09: Initial definition.
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+            - new resource to return either metadata or cover image for a single serial title
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - expanded subject category description
+			- added query string overrides httpAccept, apiKey, reqId, and ver
+
+2012-11-27: Updates for 12-3 release. Includes:
+            - new ENHANCED view, with associated fields
+            - added date parameter to filter yearly stats in ENHANCED view
+
+2014-06-03: Updates for Sprint 19. Includes:
+            - support for application/xml as response mime type
+
+2014-11-04: Updates for Sprint 26. Includes:
+            - correct resource for individual metadata titles to include title in the resource URI
+
+2017-04-04: Updates for Sprint 40. Includes:
+            - new view option (CITESCORE)
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" xmlns:els="urn:elsevier:rs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eapi="urn:elsevier:api"
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" xmlns:err="http://www.elsevier.com/services/dtd" xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Serial Title API">This provides interfaces to a search through serial titles (SCOPUS content).
+	  <br/><br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/SerialTitleViews.htm">Serial Title Views</a>.
+	</doc>
+	<grammars>
+		<include href="bkapi-serial-title.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/serial/">
+		<resource path="title">
+			<doc title="Serial Title API">This represents a search against the serial titles (SCOPUS content).</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received. Note that submitting <b>new</b> always returns the latest response version.</doc>
+						<option value="new"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="start" type="xsd:string" style="query">
+						<doc title="starting position">
+							Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. start=5</doc>
+					</param>
+					<param name="count" type="xsd:string" style="query">
+						<doc title="number of results">
+							Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default ? if it does an error will be returned.
+							<br/>
+							<br/>ex. count=10</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="STANDARD">
+						<doc title="view">
+							The following chart shows the <a href="https://${dochostname}/documentation/guides/SerialTitleViews.htm">Serial Title Views</a>.
+						</doc>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="CITESCORE"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.</doc>
+					</param>
+					<param name="title" type="xsd:string" style="query">
+						<doc title="source title">
+							This represents a partial or complete serial title. Will match the pattern provided anywhere within the title -- no wildcard support is provided.
+							<br/>
+							<br/>ex. title=medicine</doc>
+					</param>
+					<param name="issn" type="xsd:string" style="query">
+						<doc title="issn">
+							Represents the source identifier filter. One or more identifiers can be provided.
+							<br/>
+						</doc>
+					</param>
+					<param name="pub" type="xsd:string" style="query">
+						<doc title="publisher name">
+							Represents the publisher name. Will match the pattern provided anywhere within the publisher name -- no wildcard support is provided.
+							<br/>
+							<br/>ex. pub=Elsevier</doc>
+					</param>
+					<param name="subj" type="xsd:string" style="query">
+						<doc title="content">
+							Represents the SCOPUS subject area abbreviation associated with the content category desired.
+							<br/>
+                            <br/>The following resource shows all of the available <a href="https://api.elsevier.com/content/subject/scopus?httpAccept=text/xml">subject classifications</a>.
+							<br/>
+							<br/><b>AGRI</b>-	Agricultural and Biological Sciences
+							<br/><b>ARTS</b>-	Arts and Humanities
+							<br/><b>BIOC</b>-	Biochemistry, Genetics and Molecular Biology
+							<br/><b>BUSI</b>-	Business, Management and Accounting
+							<br/><b>CENG</b>-	Chemical Engineering
+							<br/><b>CHEM</b>-	Chemistry
+							<br/><b>COMP</b>-	Computer Science
+							<br/><b>DECI</b>-	Decision Sciences
+							<br/><b>DENT</b>-	Dentistry
+							<br/><b>EART</b>-	Earth and Planetary Sciences
+							<br/><b>ECON</b>-	Economics, Econometrics and Finance
+							<br/><b>ENER</b>-	Energy
+							<br/><b>ENGI</b>-	Engineering
+							<br/><b>ENVI</b>-	Environmental Science
+							<br/><b>HEAL</b>-	Health Professions
+							<br/><b>IMMU</b>-	Immunology and Microbiology
+							<br/><b>MATE</b>-	Materials Science
+							<br/><b>MATH</b>-	Mathematics
+							<br/><b>MEDI</b>-	Medicine
+							<br/><b>NEUR</b>-	Neuroscience
+							<br/><b>NURS</b>-	Nursing
+							<br/><b>PHAR</b>-	Pharmacology, Toxicology and Pharmaceutics
+							<br/><b>PHYS</b>-	Physics and Astronomy
+							<br/><b>PSYC</b>-	Psychology
+							<br/><b>SOCI</b>-	Social Sciences
+							<br/><b>VETE</b>-	Veterinary
+							<br/><b>MULT</b>-	Multidisciplinary
+						</doc>
+					</param>
+					<param name="subjCode" type="xsd:string" style="query">
+						<doc title="content">
+							Represents the SCOPUS subject area code associated with the content category desired. One or more subject codes can be provided.
+							<br/>
+							The following resource shows all of the available <a href="https://api.elsevier.com/content/subject/scopus?httpAccept=text/xml">subject classifications</a>.
+							<br/>
+						</doc>
+					
+					</param>
+					<param name="content" type="xsd:string" style="query">
+						<doc title="content">
+							Specifies the type of source to be returned. One or more source types can be provided.
+							<br/>
+							<br/>Available choices include:
+							<br/>
+							<br/><b>tradejournal</b>         - Trade Publications
+							<br/><b>journal</b>              - Journals
+							<br/><b>conferenceproceeding</b> - Conference Proceedings
+							<br/><b>bookseries</b>           - Book Series
+						</doc>
+						<option value="tradejournal"/>
+						<option value="journal"/>
+						<option value="conferenceproceeding"/>
+						<option value="bookseries"/>
+					</param>
+					<param name="date" type="xsd:string" style="query">
+						<doc title="date restriction">
+							Represents the date range for filtering info entries in EHANCED view, with the lowest granularity being year.
+							<br/>
+							<br/>ex. date=2002-2007
+						</doc>
+					</param>
+					<param name="oa" type="xsd:string" style="query">
+						<doc title="open access filter">
+							Filter used to specify whether the source titles returned should include Open Access types. If included in the request, this filter will limit the results based upon this Open Access status.
+							<br/>
+							<br/>Available choices include:
+							<br/>
+							<br/><b>all</b>     - Return all source titles, regardless of Open Access status.
+							<br/><b>full</b>    - Include only those source titles defined as FULL Open Access.
+							<br/><b>partial</b> - Include only those source titles defined as PARTIAL Open Access. 
+							<br/><b>none</b>    - Include no source titles defined as Open Access (FULL or PARTIAL).
+						</doc>
+						<option value="all"/>
+						<option value="full"/>
+						<option value="partial"/>
+						<option value="none"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleSearchResp.json">
+						<doc title="Serial Title JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleSearchResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleSearchResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="title/issn/{issn}">
+			<doc title="Serial Title API">This represents a single serial title (SCOPUS content) identified by ISSN. This can return either the metadata for that title or the cover image.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="image/gif"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received. Note that submitting <b>new</b> always returns the latest response version.</doc>
+						<option value="new"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="image/gif"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="STANDARD">
+						<doc title="view">
+							The following chart shows the <a href="https://${dochostname}/documentation/guides/SerialTitleViews.htm">Serial Title Views</a>.
+						</doc>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="CITESCORE"/>
+						<option value="COVERIMAGE"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.</doc>
+					</param>
+					<param name="date" type="xsd:string" style="query">
+						<doc title="date restriction">
+							Represents the date range for filtering info entries in EHANCED view, with the lowest granularity being year.
+							<br/>
+							<br/>ex. date=2002-2007
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleResp.json">
+						<doc title="Serial Title JSON Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="image/gif" element="GIF Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleImage.gif">
+						<doc title="Serial Title Cover Image Response">This is the cover image associated with the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

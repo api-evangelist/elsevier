@@ -1,0 +1,53 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/examples.html
+supporting_sources:
+- https://github.com/ElsevierDev/scopusWidgets
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Elsevier publishes a small set of client-side embeds for putting Scopus data on a third-party
+  page. They are copy-paste HTML fragments and a widget repository, not a component library —
+  there is no loader script, no npm package and no versioned distribution.
+families:
+- name: Cited-by embed
+  kind: html-fragment
+  loader: none
+  url: https://dev.elsevier.com/examples.html
+  description: >-
+    An <object> (or <iframe>, for Edge/IE) pointed at
+    https://api.elsevier.com/content/abstract/citation-count with httpAccept=text/html, which
+    renders the Scopus cited-by count for a DOI inline on a publisher's page.
+  requires: an API key in the URL query string
+  note: >-
+    Elsevier's own recommended embed puts the API key in a query parameter inside page markup,
+    where it is visible to every visitor. Worth flagging to anyone adopting it.
+- name: Scopus integration widgets
+  kind: javascript-widgets
+  loader: none
+  url: https://github.com/ElsevierDev/scopusWidgets
+  registry: null
+  version: null
+  published: '2019-05-14'
+  description: Client-side widgets for surfacing Scopus content in a host page.
+  status: archived
+  note: >-
+    Repository is ARCHIVED and read-only; never published to npm, so there is no version to
+    record.
+- name: Search result embeds
+  kind: xslt-transformed-response
+  loader: none
+  url: https://dev.elsevier.com/examples.html
+  description: >-
+    Two worked examples (Article Search, powered by ScienceDirect Search + Serial Title; Scopus
+    Search) that fetch the API in the browser under CORS and render the XML response through an
+    XSLT stylesheet.
+  note: >-
+    Depends on the CORS allowance attached to the key — by default that allowance is
+    https://dev.elsevier.com, so these must be re-provisioned by Elsevier to run on a third-party
+    origin.
+summary:
+  family_count: 3
+  loader_library_published: false
+  registry_published: false
+  all_first_party_repos_archived: true

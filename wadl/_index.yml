@@ -1,0 +1,168 @@
+generated: '2026-09-06'
+method: searched
+source: https://api.elsevier.com/documentation/
+provider: Elsevier
+providerId: elsevier
+format: WADL
+description: Elsevier's real machine-readable contract set. 37 WADL documents describing 149 resources
+  and 138 methods across the whole Research Products surface — every product, including the ones the Swagger
+  consoles never cover (Embase, SUSHI COUNTER, PlumX, Holdings, Feedback, Authentication). Every file
+  here was fetched verbatim from https://api.elsevier.com/documentation/<Name>.wadl and saved byte-for-byte.
+discovery_note: The developer portal links these as https://dev.elsevier.com/documentation/<Name>.wadl,
+  which serves an HTML RENDERING of the contract, not the contract. The machine-readable XML is on the
+  API host at https://api.elsevier.com/documentation/<Name>.wadl. Any crawler that took the linked URL
+  at face value would conclude Elsevier publishes no machine-readable contract at all; that is why this
+  repository previously carried only an eight-operation hand-built stand-in.
+encoding_defect: The provider serves these as Content-Type application/xml;charset=ISO-8859-1 while the
+  XML declaration is <?xml version="1.0"?> with no encoding attribute, which XML requires to be read as
+  UTF-8. Several files therefore contain bytes that are not well-formed UTF-8 and will fail a strict parser.
+  Saved verbatim regardless — the defect is Elsevier's and should be visible.
+base_urls:
+- https://api.elsevier.com/content/
+- https://api.elsevier.com/content/abstract/
+- https://api.elsevier.com/content/affiliation/
+- https://api.elsevier.com/content/search/
+- https://api.elsevier.com/content/article/
+- https://api.elsevier.com/content/article/entitlement/
+- https://api.elsevier.com/content/article/hostingpermission
+- https://api.elsevier.com/content/metadata/
+- https://api.elsevier.com/content/embase/
+- https://api.elsevier.com/content/ev
+- https://api.elsevier.com/content/nonserial/
+- https://api.elsevier.com/content/object/
+- https://api.elsevier.com/content/serial/
+- https://api.elsevier.com/content/subject/
+- https://api.elsevier.com/analytics/
+- https://api.elsevier.com/analytics/scival
+- https://api.elsevier.com/authenticate/
+- https://api.elsevier.com/feedback/
+- https://api.elsevier.com/holdings/
+- https://api.elsevier.com/sushi/
+- https://api.elsevier.com/sushi/r51/
+contracts:
+- file: elsevier-abstract-citation.wadl
+  name: Abstract Citation API
+  source: https://api.elsevier.com/documentation/AbstractCitationAPI.wadl
+- file: elsevier-abstract-citation-count.wadl
+  name: Abstract Citation Count API
+  source: https://api.elsevier.com/documentation/AbstractCitationCountAPI.wadl
+- file: elsevier-abstract-retrieval.wadl
+  name: Abstract Retrieval API
+  source: https://api.elsevier.com/documentation/AbstractRetrievalAPI.wadl
+- file: elsevier-affiliation-retrieval.wadl
+  name: Affiliation Retrieval API
+  source: https://api.elsevier.com/documentation/AffiliationRetrievalAPI.wadl
+- file: elsevier-affiliation-search.wadl
+  name: Affiliation Search API
+  source: https://api.elsevier.com/documentation/AffiliationSearchAPI.wadl
+- file: elsevier-article-entitlement.wadl
+  name: Article Entitlement API
+  source: https://api.elsevier.com/documentation/ArticleEntitlementAPI.wadl
+- file: elsevier-article-metadata.wadl
+  name: Article Metadata API
+  source: https://api.elsevier.com/documentation/ArticleMetadataAPI.wadl
+- file: elsevier-article-permissions.wadl
+  name: Article Permissions API
+  source: https://api.elsevier.com/documentation/ArticlePermissionsAPI.wadl
+- file: elsevier-article-retrieval.wadl
+  name: Article Retrieval API
+  source: https://api.elsevier.com/documentation/ArticleRetrievalAPI.wadl
+- file: elsevier-authentication.wadl
+  name: Authentication API
+  source: https://api.elsevier.com/documentation/AuthenticationAPI.wadl
+- file: elsevier-author-retrieval.wadl
+  name: Author Retrieval API
+  source: https://api.elsevier.com/documentation/AuthorRetrievalAPI.wadl
+- file: elsevier-author-search.wadl
+  name: Author Search API
+  source: https://api.elsevier.com/documentation/AuthorSearchAPI.wadl
+- file: elsevier-embase.wadl
+  name: Embase API
+  source: https://api.elsevier.com/documentation/EmbaseAPI.wadl
+- file: elsevier-engineering-village.wadl
+  name: Engineering Village API
+  source: https://api.elsevier.com/documentation/EngineeringVillageAPI.wadl
+- file: elsevier-engineering-village-retrieval.wadl
+  name: Engineering Village Retrieval API
+  source: https://api.elsevier.com/documentation/EngineeringVillageRetrievalAPI.wadl
+- file: elsevier-feedback.wadl
+  name: Feedback API
+  source: https://api.elsevier.com/documentation/FeedbackAPI.wadl
+- file: elsevier-holdings-report.wadl
+  name: Holdings Report API
+  source: https://api.elsevier.com/documentation/HoldingsReportAPI.wadl
+- file: elsevier-non-serial-title.wadl
+  name: Nonserial Title API
+  source: https://api.elsevier.com/documentation/NonSerialTitleAPI.wadl
+- file: elsevier-object-retrieval.wadl
+  name: Object Retrieval API
+  source: https://api.elsevier.com/documentation/ObjectRetrievalAPI.wadl
+- file: elsevier-plumx-metrics.wadl
+  name: PlumX Metrics API
+  source: https://api.elsevier.com/documentation/PlumXMetricsAPI.wadl
+- file: elsevier-sushicop5.wadl
+  name: SUSHI COUNTER COP5 API
+  source: https://api.elsevier.com/documentation/SUSHICOP5API.wadl
+- file: elsevier-sushicop51.wadl
+  name: SUSHI COUNTER COP5.1 API
+  source: https://api.elsevier.com/documentation/SUSHICOP51API.wadl
+- file: elsevier-scival-author.wadl
+  name: SciVal Author API
+  source: https://api.elsevier.com/documentation/SciValAuthorAPI.wadl
+- file: elsevier-scival-country.wadl
+  name: SciVal Country API
+  source: https://api.elsevier.com/documentation/SciValCountryAPI.wadl
+- file: elsevier-scival-country-group.wadl
+  name: SciVal Country Group API
+  source: https://api.elsevier.com/documentation/SciValCountryGroupAPI.wadl
+- file: elsevier-scival-institution.wadl
+  name: SciVal Institution API
+  source: https://api.elsevier.com/documentation/SciValInstitutionAPI.wadl
+- file: elsevier-scival-institution-group.wadl
+  name: SciVal Institution Group API
+  source: https://api.elsevier.com/documentation/SciValInstitutionGroupAPI.wadl
+- file: elsevier-scival-publication.wadl
+  name: SciVal Publication API
+  source: https://api.elsevier.com/documentation/SciValPublicationAPI.wadl
+- file: elsevier-scival-scopus-source.wadl
+  name: SciVal Scopus Source API
+  source: https://api.elsevier.com/documentation/SciValScopusSourceAPI.wadl
+- file: elsevier-scival-subject-area.wadl
+  name: SciVal Subject Area API
+  source: https://api.elsevier.com/documentation/SciValSubjectAreaAPI.wadl
+- file: elsevier-scival-topic.wadl
+  name: SciVal Topic API
+  source: https://api.elsevier.com/documentation/SciValTopicAPI.wadl
+- file: elsevier-scival-topic-cluster.wadl
+  name: SciVal Topic Cluster API
+  source: https://api.elsevier.com/documentation/SciValTopicClusterAPI.wadl
+- file: elsevier-scival-world-look-up.wadl
+  name: SciVal World Lookup API
+  source: https://api.elsevier.com/documentation/SciValWorldLookUpAPI.wadl
+- file: elsevier-science-direct-search.wadl
+  name: ScienceDirect Search API
+  source: https://api.elsevier.com/documentation/ScienceDirectSearchAPI.wadl
+- file: elsevier-scopus-search.wadl
+  name: Scopus Search API
+  source: https://api.elsevier.com/documentation/ScopusSearchAPI.wadl
+- file: elsevier-serial-title.wadl
+  name: Serial Title API
+  source: https://api.elsevier.com/documentation/SerialTitleAPI.wadl
+- file: elsevier-subject-classifications.wadl
+  name: Subject Classifications API
+  source: https://api.elsevier.com/documentation/SubjectClassificationsAPI.wadl
+summary:
+  contract_count: 37
+  resources: 149
+  methods: 138
+  http_status_all: 200
+  fetched: '2026-09-06'
+prior_record_note: 'Before this pass the repository held openapi/_original/elsevier-openapi.yml — an eight-operation
+  OpenAPI 3.1.0 titled ''Elsevier Scopus APIs'' whose description begins ''Subset of the Elsevier Developer
+  (api.elsevier.com) Scopus APIs...''. No document of that shape is served anywhere on an Elsevier host:
+  /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs and /docs all 404 on api.elsevier.com
+  and dev.elsevier.com (probed 2026-09-06). provenance.yml nonetheless records it as ''harvested — fetched
+  from the provider as-is; byte-identical to the source'', which the manifest builder infers from the
+  _original/ directory rather than from evidence. Treat that file as a stand-in of unverified authorship;
+  the contracts in this directory and the seven Swagger 2.0 documents in openapi/ are the ones actually
+  served by Elsevier, and they cover 98 unique operations rather than 8.'

@@ -1,0 +1,100 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist overlay for Elsevier Engineering Village APIs
+  version: 1.0.0
+  x-generated: '2026-09-06'
+  x-method: generated
+  x-source: openapi/elsevier-engineering-village-swagger.json
+  x-note: Enhancements API Evangelist adds on top of the provider contract. The provider document is never
+    mutated; apply this overlay to get the enriched view.
+extends: openapi/elsevier-engineering-village-swagger.json
+actions:
+- target: $.info
+  description: Attach the contact and licence facts Elsevier publishes on its developer portal but leaves
+    out of the contract.
+  update:
+    contact:
+      name: Elsevier Research Products APIs Support
+      url: https://service.elsevier.com/app/contact/supporthub/researchproductsapis/
+    termsOfService: https://dev.elsevier.com/api_service_agreement.html
+    x-documentation: https://dev.elsevier.com/api_docs.html
+    x-rate-limits: https://dev.elsevier.com/api_key_settings.html
+- target: $
+  description: Elsevier ships these as Swagger 2.0 with no securityDefinitions at all. Declare the four
+    credentials its own WADL contracts and auth guide document.
+  update:
+    securityDefinitions:
+      apiKeyHeader:
+        type: apiKey
+        name: X-ELS-APIKey
+        in: header
+        description: Required on every request.
+      authtoken:
+        type: apiKey
+        name: X-ELS-Authtoken
+        in: header
+        description: Two-hour token from GET /authenticate?platform=SCOPUS.
+      insttoken:
+        type: apiKey
+        name: X-ELS-Insttoken
+        in: header
+        description: Institutional Token issued by Elsevier for remote access. Server-side only.
+      resourceVersion:
+        type: apiKey
+        name: X-ELS-ResourceVersion
+        in: header
+        description: Per-resource version negotiation. Elsevier publishes no list of acceptable values.
+- target: $
+  description: 'Record the entitlement model, which is the single most misread thing about this API: the
+    key authenticates the application, the institutional IP or token decides what content comes back.'
+  update:
+    x-entitlement:
+      model: institutional
+      resolved_by:
+      - institutional-ip
+      - X-ELS-Authtoken
+      - X-ELS-Insttoken
+      note: A valid API key called from outside the subscribing institution returns 401/403 for subscriber-only
+        content.
+      reference: https://dev.elsevier.com/tecdoc_api_authentication.html
+- target: $
+  description: Record the runtime rate-limit signalling Elsevier documents on its key-settings page but
+    never puts in a contract.
+  update:
+    x-rate-limit-headers:
+      limit: X-RateLimit-Limit
+      remaining: X-RateLimit-Remaining
+      reset: X-RateLimit-Reset
+      reset_format: unix-seconds
+      status: X-ELS-Status
+      exhausted_status: 429
+      retry_after: null
+- target: $
+  description: Record the two proprietary error envelopes observed in production, neither of which is
+    RFC 9457.
+  update:
+    x-error-envelopes:
+    - '{"service-error":{"status":{"statusCode":"...","statusText":"..."}}}'
+    - '{"error-response":{"error-code":"...","error-message":"..."}}'
+    x-error-catalog: errors/elsevier-problem-types.yml
+- target: $
+  description: Record the TDM reservation Elsevier attaches to every response of this API.
+  update:
+    x-tdm:
+      reservation: 1
+      policy: https://www.elsevier.com/tdm/tdmrep-policy.json
+      manifest: https://www.elsevier.com/.well-known/tdmrep.json
+      signalled_in: response headers on every call, including errors
+- target: $
+  description: Cross-link the derived artifacts so a consumer of this contract can find the semantics
+    that are not in it.
+  update:
+    x-apievangelist-artifacts:
+      authentication: authentication/elsevier-authentication.yml
+      conventions: conventions/elsevier-conventions.yml
+      errors: errors/elsevier-problem-types.yml
+      lifecycle: lifecycle/elsevier-lifecycle.yml
+      rate_limits: rate-limits/elsevier-rate-limits.yml
+      conformance: conformance/elsevier-conformance.yml
+      data_model: data-model/elsevier-data-model.yml
+      wadl: wadl/_index.yml

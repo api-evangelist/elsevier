@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<!--
+Describes the search interfaces for SCIDIR Search API.
+
+Revision History:
+
+2018-09-12: Initial definition.
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:err="http://www.elsevier.com/services/dtd"
+			 xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="ScienceDirect Search API V2">This represents the search interfaces associated with ScienceDirect. Each search result will, by definition, link to a <a href="https://${dochostname}/documentation/ArticleRetrievalAPI.wadl">Full-Text article</a>.
+        <br/>The PUT interface is the native layer and recommended choice for this API. The GET interface offers support for legacy requests, field and parameter names, etc. but is emulated and thus less robust.
+	    <br/>Please see our <a href="https://${gateway.els.domain.devportal}/tecdoc_sdsearch_migration.html">Science Direct Search Migration Guide</a> for detailed information on both interfaces of this new API.
+	    <br/>Additional information includes <a href="https://${gateway.els.domain.devportal}/guides/ScienceDirectSearchViews.htm">ScienceDirect Search Views</a>.
+	</doc>
+	<grammars>
+		<include href="bkapi-scidir-search.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/search/">
+		<resource path="sciencedirect">
+			<doc title="ScienceDirect Search API">This represents a search against the ScienceDirect cluster, which contains serial/nonserial full-text articles. ScienceDirect is a leading full-text scientific database offering journal articles and book chapters from more than 2,500 journals and almost 20,000 books. This API resource allows for the submission of Boolean queries into the ScienceDirect index, retrieving relevant result metadata in user-specific text formats.</doc>
+			<method name="PUT" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. Currently, only JSON format responses are supported.</doc>
+						<option value="application/json"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">
+							<br/>Represents the version of the resource that should be received. Multiple attributes can
+							<br/>be submitted by separating with commas or semicolons. Options include:
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/search/scidirV2PUTSearchResp.json">
+						<doc title="SCIDIR JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+        <resource path="sciencedirect">
+			<doc title="ScienceDirect Search API">This represents a search against the ScienceDirect cluster, which contains serial/nonserial full-text articles. ScienceDirect is a leading full-text scientific database offering journal articles and book chapters from more than 2,500 journals and almost 20,000 books. This API resource allows for the submission of Boolean queries into the ScienceDirect index, retrieving relevant result metadata in user-specific text formats.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="application/json"/>
+						<option value="application/atom+xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">
+							<br/>Represents the version of the resource that should be received. Multiple attributes can
+							<br/>be submitted by separating with commas or semicolons. Options include:
+						</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="application/atom+xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">
+							<br/>Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received. 
+							<br/>Multiple attributes can be submitted by separating with commas or semicolons. Options include:
+						</doc>
+					</param>
+					<param name="query" type="xsd:string" style="query" required="true">
+						<doc title="search query">
+							<br/>This represents the boolean search to be executed against the SCIDIR cluster (full text articles).
+							<br/>There is additional information regarding <a href="https://${gateway.els.domain.devportal}/tecdoc_sdsearch_migration.html">Search Tips</a>.
+							<br/>
+							<br/>ex. query=heart+attack%20AND%20text(liver)
+						</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="STANDARD">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${gateway.els.domain.devportal}/guides/ScienceDirectSearchViews.htm">ScienceDirect Search Views</a>.
+						</doc>
+						<option value="STANDARD"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include each of the primary fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas. Note that specifying this parameter overrides the view parameter.
+							<br/>
+							<br/>ex. field=url,identifier,description
+						</doc>
+					</param>
+					<param name="suppressNavLinks" type="xsd:string" style="query" default="false">
+						<doc title="suppress navigations">
+							<br/>This parameter is used to suppress the inclusion of top-level navigation links in the response payload.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="date" type="xsd:string" style="query">
+						<doc title="date restriction">
+							<br/>Represents the date range associated with the search, with the lowest granularity being year.
+							<br/>
+							<br/>ex. date=2002-2007
+						</doc>
+					</param>
+					<param name="start" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>Permitted values: 0-6000
+							<br/>ex. start=5
+						</doc>
+					</param>
+					<param name="count" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default - if it does an error will be returned.
+							<br/>Permitted values: 10, 25, 50, 100
+							<br/>ex. count=10
+						</doc>
+					</param>
+					<param name="sort" type="xsd:string" style="query">
+						<doc title="sort fields">
+							<br/>Represents the sort field name and order.
+						</doc>
+						<option value="coverDate"/>
+						<option value="relevance"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/search/scidirV2GETSearchResp.json">
+						<doc title="SCIDIR JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/atom+xml" element="ATOM+XML Example" href="https://${dochostname}/documentation/payloads/search/scidirV2GETSearchATOMResp.xml">
+						<doc title="SCIDIR ATOM Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/search/scidirV2GETSearchResp.xml">
+						<doc title="SCIDIR XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

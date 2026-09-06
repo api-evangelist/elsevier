@@ -1,157 +1,92 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/support.html
+supporting_sources:
+- https://dev.elsevier.com/api_key_settings.html
+- https://dev.elsevier.com/use_cases.html
+- https://dev.elsevier.com/policy.html
+- https://dev.elsevier.com/api_service_agreement.html
 provider: Elsevier
+plan_count: 3
 providerId: elsevier
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Content
-  - Journals
-  - Medical
-  - Research
-  - Scientific
-  - Technical
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Elsevier publishes no price list for the Research Products APIs. Access is not sold in
+  tiers; it is granted by WHO YOU ARE and WHAT YOUR INSTITUTION ALREADY SUBSCRIBES TO. The
+  three access classes below are the provider's own words, and none of them carries a
+  published number. This artifact records that as the finding rather than omitting the file:
+  a developer cannot learn from Elsevier's site what any of this costs.
+pricing_model: entitlement-based
+public_price_list: false
+currency: null
 plans:
-  - id: elsevier-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Elsevier API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Elsevier Scopus APIs
-      - name: Elsevier ScienceDirect APIs
-      - name: Elsevier SciVal API
-      - name: Elsevier Engineering Village API
-      - name: Elsevier Embase API
-  - id: elsevier-pro
-    name: Professional
-    type: paid
-    description: Production tier for Elsevier. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Elsevier Scopus APIs
-      - name: Elsevier ScienceDirect APIs
-      - name: Elsevier SciVal API
-      - name: Elsevier Engineering Village API
-      - name: Elsevier Embase API
-  - id: elsevier-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Elsevier. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Elsevier Scopus APIs
-      - name: Elsevier ScienceDirect APIs
-      - name: Elsevier SciVal API
-      - name: Elsevier Engineering Village API
-      - name: Elsevier Embase API
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- id: elsevier-non-commercial
+  name: Non-commercial (academic and public-sector)
+  type: free
+  price: '0.00'
+  currency: null
+  billing_period: null
+  audience: >-
+    Researchers in academic and public-sector institutions, charities and charitable
+    foundations.
+  description: >-
+    "Most APIs (except SciVal APIs) are available for no charge, for non-commercial use,
+    subject to Elsevier's policies and limits on usage." Quoted verbatim from the developer
+    portal FAQ.
+  self_serve: true
+  signup: https://dev.elsevier.com/apikey/manage
+  included_quota: see rate-limits/elsevier-rate-limits.yml
+  quota_note: >-
+    Quotas are per API, not per plan — the same free key gets 20,000 weekly Scopus Search
+    requests and 5,000 weekly Author Search requests. There is no single global allowance.
+  entitlement_gate: >-
+    Content returned is bounded by the caller's institutional subscription, resolved by
+    institutional IP address. Calling from outside the institutional network without an
+    Institutional Token returns authorisation errors even with a valid key.
+  excluded:
+  - SciVal APIs
+  - the eight access-controlled APIs listed in rate-limits/elsevier-rate-limits.yml
+- id: elsevier-commercial
+  name: Commercial
+  type: contact-sales
+  price: null
+  currency: null
+  billing_period: null
+  audience: Researchers in private-sector and commercial institutions.
+  description: >-
+    "APIs are available (for commercial use), with an API license and subscription, please
+    contact us here to discuss your request." No price, no rate card, no published minimum.
+  self_serve: false
+  signup: https://service.elsevier.com/app/contact/supporthub/researchproductsapis/
+- id: elsevier-scival
+  name: SciVal API
+  type: subscription
+  price: null
+  currency: null
+  billing_period: null
+  audience: SciVal subscribers.
+  description: >-
+    The SciVal APIs are carved out of the free non-commercial offer by name. Access requires a
+    SciVal product subscription; Elsevier publishes no standalone API price.
+  self_serve: false
+  signup: https://dev.elsevier.com/scival_apis.html
+gates:
+- name: Access-controlled APIs
+  description: >-
+    Eight APIs are not enabled on a new key at all and require a written request reviewed by
+    Elsevier API Support, which states it "cannot guarantee permission to use access-controlled
+    APIs."
+  url: https://dev.elsevier.com/api_key_settings.html
+- name: Use-case policy
+  description: >-
+    Even inside the free tier, permitted uses are enumerated (federated search, IR/CRIS/VIVO,
+    cited-by, journal metrics, academic research, text mining, SciVal metrics). A use case not
+    on the list must be cleared with Elsevier before it is allowed.
+  url: https://dev.elsevier.com/policy.html
+summary:
+  plan_count: 3
+  priced_plan_count: 0
+  free_plan_count: 1
+  contact_sales_count: 2
+  note: >-
+    plan_count is 3 access classes, not 3 purchasable tiers. Zero of them carry a published
+    price.

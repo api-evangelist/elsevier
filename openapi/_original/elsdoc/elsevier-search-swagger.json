@@ -1,0 +1,348 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0"
+  },
+  "tags":[  
+          {  
+         "name":"Scopus_Search",
+         "description":"Scopus Search API"
+      },
+      {  
+         "name":"ScienceDirect_Search_V2",
+         "description":"ScienceDirect Search V2 API"
+      },
+      {  
+         "name":"Affiliation_Search",
+         "description":"Affiliation Search API"
+      },
+      {  
+         "name":"Author_Search",
+         "description":"Author Search API"
+      },
+      {  
+         "name":"Engineering_Village_Search",
+         "description":"Engineering Village Search API"
+      }
+    
+      ],
+  "host": "api.elsevier.com",
+  "basePath": "/content",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+  "/search/affiliation": {
+      "$ref": "./listings/Affiliation_Search"
+    },
+    "/search/author": {
+      "$ref": "./listings/Author_Search"
+    },
+    "/ev/results": {
+      "$ref": "./listings/EngineeringVillage_Search"
+    },
+    "/search/sciencedirect": {
+      "$ref": "./listings/ScienceDirect_Search_V2"
+    },
+  "/search/scopus": {
+      "$ref": "./listings/Scopus_Search"
+    }
+  
+  },
+  "definitions": {
+    "sciencedirect": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "scopus": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "affiliation": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "author": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    
+    "PageContainer":{  
+         "properties":{  
+            "PAGE":{  
+               "$ref":"#/definitions/PageContainerItems"
+            }
+         }
+      },
+      "Status":{  
+         "properties":{  
+            "statusCode":{  
+               "type":"string"
+            },
+            "statusText":{  
+               "type":"string"
+            }
+         }
+      },
+      "DocID":{  
+         "properties":{  
+            "DB":{  
+               "$ref":"#/definitions/Database"
+            },
+            "DOC-ID":{  
+               "type":"string"
+            },
+            "HITINDEX":{  
+               "type":"integer",
+               "format":"int32"
+            },
+            "TAGDATE":{  
+               "type":"string"
+            }
+         }
+      },
+      "ServiceError":{  
+         "properties":{  
+            "status":{  
+               "$ref":"#/definitions/Status"
+            }
+         }
+      },
+      "PageContainerItems":{  
+         "properties":{  
+            "PAGE-RESULTS":{  
+               "$ref":"#/definitions/PageResults"
+            },
+            "RESULTS-COUNT":{  
+               "type":"integer",
+               "format":"int32"
+            },
+            "RESULTS-PER-PAGE":{  
+               "type":"integer",
+               "format":"int32"
+            }
+         }
+      },
+      "PageResults":{  
+         "properties":{  
+            "PAGE-ENTRY":{  
+               "type":"array",
+               "items":{  
+                  "$ref":"#/definitions/PageEntry"
+               }
+            }
+         }
+      },
+      "FT":{  
+         "properties":{  
+            "FTLINK":{  
+               "type":"string"
+            }
+         }
+      },
+      "DocProperties":{  
+         "properties":{  
+            "any":{  
+               "type":"object",
+               "additionalProperties":{  
+                  "type":"string"
+               }
+            }
+         }
+      },
+      "Afs":{  
+         "properties":{  
+            "AF":{  
+               "type":"array",
+               "description":"Authors affiliation list",
+               "items":{  
+                  "$ref":"#/definitions/Affiliation"
+               }
+            }
+         }
+      },
+      "CitationEiDoc":{  
+         "properties":{  
+            "AFS":{  
+               "description":"Authors affiliation",
+               "$ref":"#/definitions/Afs"
+            },
+            "AUS":{  
+               "description":"Authors",
+               "$ref":"#/definitions/Aus"
+            },
+            "DOC":{  
+               "$ref":"#/definitions/DocID"
+            },
+            "DOCUMENTPROPERTIES":{  
+               "type":"object",
+               "additionalProperties":{  
+                  "type":"string"
+               }
+            },
+            "EDS":{  
+               "description":"Editors",
+               "$ref":"#/definitions/Eds"
+            },
+            "EFS":{  
+               "description":"Editors affiliation",
+               "$ref":"#/definitions/Efs"
+            },
+            "FT":{  
+               "$ref":"#/definitions/FT"
+            },
+            "VIEW":{  
+               "type":"string"
+            },
+            "docProperties":{  
+               "$ref":"#/definitions/DocProperties"
+            }
+         }
+      },
+      "PageEntry":{  
+         "properties":{  
+            "EI-DOCUMENT":{  
+               "$ref":"#/definitions/CitationEiDoc"
+            }
+         }
+      },
+      "Efs":{  
+         "properties":{  
+            "EF":{  
+               "type":"array",
+               "description":"Editors affiliation list",
+               "items":{  
+                  "$ref":"#/definitions/Affiliation"
+               }
+            }
+         }
+      },
+      "ContributorInfo":{  
+         "properties":{  
+            "AFS":{  
+               "description":"Affiliations",
+               "$ref":"#/definitions/ContributorAffiliation"
+            },
+            "CO":{  
+               "type":"string",
+               "description":"Country"
+            },
+            "EMAIL":{  
+               "type":"string"
+            },
+            "ID":{  
+               "type":"string"
+            },
+            "NAME":{  
+               "type":"string"
+            }
+         }
+      },
+      "Eds":{  
+         "properties":{  
+            "ED":{  
+               "type":"array",
+               "description":"Editor list",
+               "items":{  
+                  "$ref":"#/definitions/ContributorInfo"
+               }
+            }
+         }
+      },
+      "Database":{  
+         "properties":{  
+            "DBNAME":{  
+               "type":"string"
+            },
+            "ID":{  
+               "type":"string"
+            }
+         }
+      },
+      "ServiceErrorWrap":{  
+         "properties":{  
+            "service-error":{  
+               "$ref":"#/definitions/ServiceError"
+            }
+         }
+      },
+      "Aus":{  
+         "properties":{  
+            "AU":{  
+               "type":"array",
+               "description":"Author list",
+               "items":{  
+                  "$ref":"#/definitions/ContributorInfo"
+               }
+            }
+         }
+      },
+      "ContributorAffiliation":{  
+         "properties":{  
+            "AFID":{  
+               "type":"array",
+               "description":"Affiliation ID list",
+               "items":{  
+                  "type":"string"
+               }
+            }
+         }
+      },
+      "Affiliation":{  
+         "properties":{  
+            "ID":{  
+               "type":"string"
+            },
+            "NAME":{  
+               "type":"string"
+            }
+         }
+      }
+    
+    
+  }
+}

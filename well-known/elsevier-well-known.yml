@@ -1,0 +1,169 @@
+generated: '2026-09-06'
+method: probed
+source: live HTTPS probes of every host this record knows (registrable domain + www, the API
+  base host, the developer/docs host, and the identity host the portal's sign-in redirect
+  names), 2026-09-06 (re-probed and extended 2026-09-06)
+note: >-
+  Elsevier serves exactly one well-known document, and it is not one of the usual five.
+  https://www.elsevier.com/.well-known/tdmrep.json is a TDM Reservation Protocol (W3C TDM
+  Reservation Protocol CG) manifest that reserves text-and-data-mining rights over the whole
+  site and points at an ODRL offer at https://www.elsevier.com/tdm/tdmrep-policy.json. The
+  same reservation is echoed at runtime by the API itself: every api.elsevier.com response
+  carries `tdm-reservation: 1` and `tdm-policy: https://www.elsevier.com/tdm/tdmrep-policy.json`
+  response headers (observed on a live 401 from /content/search/scopus). No security.txt,
+  no OpenID/OAuth discovery, no api-catalog, no ai-plugin, no agent card on any host.
+hosts:
+- host: www.elsevier.com
+  documents:
+  - path: /.well-known/tdmrep.json
+    status: 200
+    content_type: application/json
+    file: elsevier-tdmrep.json
+    note: TDM Reservation Protocol manifest; tdm-reservation 1 for location "/".
+  - path: /tdm/tdmrep-policy.json
+    status: 200
+    content_type: application/json
+    file: elsevier-tdmrep-policy.json
+    note: >-
+      Not a /.well-known/ path — it is the ODRL policy the tdmrep manifest points at, saved
+      because the manifest is meaningless without it. Assigner Elsevier B.V., contact
+      tdm-license@elsevier.com; permits tdm:mine for EU DSM Article 3 research purposes and
+      attaches a duty for every other purpose.
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: elsevier.com
+  documents:
+  - path: /.well-known/tdmrep.json
+    status: 200
+    content_type: application/json
+    file: elsevier-tdmrep.json
+    note: Same document as www; apex and www serve identical content.
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: api.elsevier.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    note: >-
+      Probed because id.elsevier.com turned out to be a real authorization server. The API
+      host publishes no RFC 9728 pointer back to it, so a 401 from api.elsevier.com gives a
+      client no machine-readable route to the token endpoint.
+  - path: /.well-known/tdmrep.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: dev.elsevier.com
+  documents:
+  - path: /.well-known/tdmrep.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /robots.txt
+    status: 200
+    note: >-
+      Not a discovery document, recorded because it is an agent-facing policy: the developer
+      portal's robots.txt Disallows GPTBot, ChatGPT-User and Google-Extended from the entire
+      host. The API documentation Elsevier publishes for machines is closed to the crawlers
+      that feed the assistants developers now use to read it.
+- host: id.elsevier.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/plain
+    file: elsevier-id-openid-configuration.json
+    note: >-
+      A real OpenID Connect discovery document (PingFederate), issuer https://id.elsevier.com.
+      35 scopes_supported, 11 grant types, PKCE S256, a dynamic registration endpoint and a
+      JWKS. See scopes/elsevier-scopes.yml.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/plain
+    file: elsevier-id-oauth-authorization-server.json
+    note: >-
+      RFC 8414 authorization-server metadata. Identical to the OIDC document minus the 15
+      OIDC-only keys (userinfo_endpoint, claims_supported, id_token_* algorithms, logout).
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+    note: HTML error page, not an agent card.
+  - path: /.well-known/agent.json
+    status: 404
+    note: HTML error page, not an agent card.
+  host_ownership: >-
+    Elsevier's own identity platform, and reached by following Elsevier's own redirect:
+    https://dev.elsevier.com/apikey/manage 302s to
+    https://id.elsevier.com/as/authorization.oauth2 with client_id ELSAPI-PROD. The issuer in
+    the document is https://id.elsevier.com. This is the third host the auth metadata lives
+    on; probing only elsevier.com and dev.elsevier.com missed it entirely.
+summary:
+  hosts_probed: 5
+  documents_served: 4
+  security_txt: false
+  openid_configuration: true
+  oauth_authorization_server: true
+  oauth_protected_resource: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false
+  served:
+  - https://www.elsevier.com/.well-known/tdmrep.json
+  - https://elsevier.com/.well-known/tdmrep.json
+  - https://id.elsevier.com/.well-known/openid-configuration
+  - https://id.elsevier.com/.well-known/oauth-authorization-server

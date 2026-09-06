@@ -1,0 +1,660 @@
+<?xml version="1.0"?>
+<!--
+Describes the interfaces for Author Feedback API.
+
+Revision History:
+
+2015-07-22: Initial definition.
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" xmlns:els="urn:elsevier:rs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eapi="urn:elsevier:api"
+             xmlns:err="http://www.elsevier.com/services/dtd" xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" xmlns="http://wadl.dev.java.net/2009/02">
+    <doc title="Author Feedback API">This interface provides access to the Author Feedback API.</doc>
+    <doc><br></br>Related Documentation: <a href="https://api.scopusfeedback.com/apidoc/index.html">Scopus Author Feedback</a></doc>
+    <doc><br></br>Note: The related Author Feedback documentation may contain parameters not supported through this resource. It is provided as a detailed reference for supported parameters and for use case examples.</doc>
+    <grammars>
+        <include href="Error.xsd"/>
+    </grammars>
+    <resources base="https://api.elsevier.com/feedback/">
+        <resource path="search/abstract/{eid}">
+            <doc>Search for an abstract by Scopus article eid.</doc>
+            <method name="GET">
+                <request>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackAbstractResp.json">
+                        <doc title="Feedback Abstract JSON Response">This is JSON representing the requested resource.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+        <resource path="search/article/authorship">
+            <doc>Obtain a list of documents that belong to each of the unique authors specified. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorshipBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorshipResp.json">
+                        <doc title="Feedback Authorship JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+        <resource path="/search/article">
+            <doc>Retrieve a list of articles by eids, author ids, or item titles. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackArticleBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackArticleResp.json">
+                        <doc title="Feedback Article JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+        <resource path="/search/author">
+            <doc>Retrieve authors based on author id or matching first/last names. Results may be filtered by affiliation names or ids. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorResp.json">
+                        <doc title="Feedback Author JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+        <resource path="/search/authorVariants/{authorId}">
+            <doc>Retrieve a list of authors that is similar in name to the specified author.</doc>
+            <method name="GET" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorVariantResp.json">
+                        <doc title="Feedback Author Variant JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>        
+        <resource path="/search/authorSequence">
+            <doc>Retrieve a list of authors and their sequence number for the specified eids. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorSequenceBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackAuthorSequenceResp.json">
+                        <doc title="Feedback Author Sequence JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>        
+        <resource path="/search/single/AuthorSequence">
+            <doc>Retrieve a list of eids and sequence numbers for the specified author. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackSingleAuthorSequenceBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackSingleAuthorSequenceResp.json">
+                        <doc title="Feedback Single Author Sequence JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>        
+        <resource path="/request/submit">
+            <doc>Add articles to the specified author profile. Articles can be specified by eid as either selected or unmatched articles. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackRequestSubmitBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackRequestSubmitResp.json">
+                        <doc title="Feedback Request Submit JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+            <resource path="/request/profile">
+            <doc>Returns the target author profile based on the selected authors and articles. <a href="https://${dochostname}/documentation/payloads/feedback/feedbackRequestProfileBody.json">Example BODY</a></doc>
+            <method name="POST" id="simple">
+                <request>
+                    <param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+                        <doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+                        <doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+                    </param>
+                    <param name="X-ELS-ReqId" type="xsd:string" style="header">
+                        <doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                    <param name="httpaccept" type="xsd:string" style="query">
+                        <doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+                        <option value="application/json"/>
+                    </param>
+                    <param name="apiKey" type="xsd:string" style="query">
+                        <doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+                    </param>
+                    <param name="reqId" type="xsd:string" style="query">
+                        <doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+                    </param>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/feedback/feedbackRequestProfileResp.json">
+                        <doc title="Feedback Request Profile JSON Response">This is JSON representing the requested document.</doc>
+                    </representation>
+                </response>
+                <response status="400">
+                    <representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+                        <doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+                    </representation>
+                </response>
+                <response status="401">
+                    <representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+                    </representation>
+                </response>
+                <response status="403">
+                    <representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+                        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+                    </representation>
+                </response>
+                <response status="404">
+                    <representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+                        <doc title="Resource Not Found">This is an error that occurs when the request resource cannot be found.</doc>
+                    </representation>
+                </response>
+                <response status="405">
+                    <representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+                        <doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="406">
+                    <representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+                        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+                    </representation>
+                </response>
+                <response status="429">
+                    <representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+                        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+                    </representation>
+                </response>
+                <response status="500">
+                    <representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+                        <doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+                    </representation>
+                </response>
+            </method>
+        </resource>
+    </resources>
+</application>

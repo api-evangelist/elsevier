@@ -1,0 +1,908 @@
+<?xml version="1.0"?>
+<!--
+Describes the interfaces for SciVal TOPIC Lookup API.
+
+Revision History:
+
+2018-08-29: Initial definition.
+2018-12-11: Added country lookup
+2020-03-20: Added source lookup
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" xmlns:els="urn:elsevier:rs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eapi="urn:elsevier:api"
+			 xmlns:err="http://www.elsevier.com/services/dtd" xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Topic Lookup API">This represents the lookup interfaces associated with SciVal Topics.</doc>
+	<grammars/>
+	<resources base="https://api.elsevier.com/analytics/scival">
+		<resource path="topic">
+			<resource path="{id}">
+				<doc title="Topic Lookup API">This represents a lookup for a SciVal Topic.</doc>
+				<method id="getTopic" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="id" type="xsd:long" style="template">
+							<doc title="id">This represents the ID of the SciVal Topic that is being looked up.</doc>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/topicLookupResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicLookupResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicLookupTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="countryId/{countryId}">
+				<doc title="Topic Lookup API">This request returns the Topics associated with a SciVal Country.</doc>
+				<method id="getTopicsByCountryId" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="countryId" type="xsd:long" style="template">
+							<doc title="country identifier">This represents the ID of the SciVal Country for which Topics are being returned.</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="limit" style="query" type="xs:int" default="100">
+							<doc title="result limit">This value specifies the number of results to return. Coupled with offset, it can be utilized to paginate results.</doc>
+						</param>
+						<param name="offset" style="query" type="xs:int" default="0">
+							<doc title="result offset">For paginating results, this is how many pages (of size = limit) to skip before returning results.</doc>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/topicsByCountryResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsByCountryResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsByCountryTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="institutionId/{institutionId}">
+				<doc title="Topic Lookup API">This request returns the Topics associated with a SciVal Institution.</doc>
+				<method id="getTopicsByInstitutionId" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="institutionId" type="xsd:long" style="template">
+							<doc title="institution identifier">This represents the ID of the SciVal Institution for which Topics are being returned.</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="keyContribOnly" style="query" type="xs:boolean" default="false">
+							<doc title="key contributors only">This flag, if set to true, will result in only key contributing topics being returned.</doc>
+						</param>
+						<param name="limit" style="query" type="xs:int" default="100">
+							<doc title="result limit">This value specifies the number of results to return. Coupled with offset, it can be utilized to paginate results.</doc>
+						</param>
+						<param name="offset" style="query" type="xs:int" default="0">
+							<doc title="result offset">For paginating results, this is how many pages (of size = limit) to skip before returning results.</doc>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/topicsByInstitutionResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsByInstitutionResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsByInstitutionTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="scopusSourceId/{sourceId}">
+				<doc title="Topic Lookup API">This request returns the Topics associated with a Scopus source ID.</doc>
+				<method id="getTopicsBySourceId" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="sourceId" type="xsd:long" style="template">
+							<doc title="source identifier">This represents the ID of the Scopus source (i.e. Journal) for which Topics are being returned.</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="keyContribOnly" style="query" type="xs:boolean" default="false">
+							<doc title="key contributors only">This flag, if set to true, will result in only key contributing topics being returned.</doc>
+						</param>
+						<param name="limit" style="query" type="xs:int" default="100">
+							<doc title="result limit">This value specifies the number of results to return. Coupled with offset, it can be utilized to paginate results.</doc>
+						</param>
+						<param name="offset" style="query" type="xs:int" default="0">
+							<doc title="result offset">For paginating results, this is how many pages (of size = limit) to skip before returning results.</doc>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/topicsBySourceResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsBySourceResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicsBySourceTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="metrics">
+				<doc title="Topic Lookup API">This represents a request to get one or more types of metrics for one or more SciVal Topics.</doc>
+				<method id="topicMetrics" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="metricTypes" style="query" type="xs:string" required="true">
+							<doc title="metric">
+								<br/>This represents the types of metrics desired in the response. More than one can be specified.
+								<br/>
+								<br/>ex. metrics=CitationCount,CorePapers
+							</doc>
+							<option value="AuthorCount"/>
+							<option value="CitationCount"/>
+							<option value="CitingPatentCount"/>
+							<option value="CorePapers"/>
+							<option value="FieldWeightedCitationImpact"/>
+							<option value="InstitutionCount"/>
+							<option value="PatentCitationCount"/>
+							<option value="PatentCitationsPerPublication"/>
+							<option value="PatentCitedPublicationCount"/>
+							<option value="ProminencePercentile"/>
+							<option value="MostRecentlyPublishedPapers"/>
+							<option value="RelatedTopics"/>
+							<option value="ScholarlyOutput"/>
+							<option value="TopAuthors"/>
+							<option value="TopCitedPublications"/>
+							<option value="TopInstitutions"/>
+							<option value="TopJournals"/>
+							<option value="TopKeywords"/>
+						</param>
+						<param name="topicIds" style="query" type="xs:string">
+							<doc title="topicIds">
+								<br/>This represents the SciVal Topic IDs for which metrics are desired in the response. More than one can be specified.
+								<br/>
+								<br/>ex. topicIds=124,195
+							</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="subjectAreaFilterURI" style="query" type="xs:string" default="">
+							<doc title="subject area filter">
+								<br/>The URI(s) of the subject area(s) to filter the returned metrics by. Provide multiple URIs as a comma-separated list; results use OR logic (a publication matches if it belongs to any selected subject area).
+							</doc>
+						</param>
+						<param name="includeSelfCitations" style="query" type="xs:boolean" default="true">
+							<doc title="self-citations">
+								<br/>Whether or not to include self-citations in the metric calculations. Note that only certain metrics take this flag into consideration.
+							</doc>
+						</param>
+						<param name="byYear" style="query" type="xs:boolean" default="false">
+							<doc title="by year">
+								<br/>If set to true, metric values will be returned for each year in the range specified. If set to false, the metric values will be calculated for the entire year range.
+							</doc>
+						</param>
+						<param name="includedDocs" style="query" type="xs:string" default="AllPublicationTypes">
+							<doc title="document types">
+								<br/>The document types to include in the metric calculations. Note that only certain metrics take this flag into consideration.
+							</doc>
+							<option value="AllPublicationTypes"/>
+							<option value="ArticlesOnly"/>
+							<option value="ArticlesReviews"/>
+							<option value="ArticlesReviewsConferencePapers"/>
+							<option value="ArticlesReviewsConferencePapersBooksAndBookChapters"/>
+							<option value="ArticlesConferencePapers"/>
+							<option value="BooksAndBookChapters"/>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/topicMetricsResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicMetricsResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/topicMetricsTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="/metrics/countryId/{countryId}">
+				<doc title="Topic Lookup API">This represents a request to get one or more types of metrics for a SciVal Topic within a given country.</doc>
+				<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="countryId" style="template" type="xs:long"/>
+				<method id="countryTopicMetrics" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="countryId" type="xsd:long" style="template">
+							<doc title="country identifier">This represents the ID of the SciVal Country that the metrics are returned for.</doc>
+						</param>
+						<param name="topicId" type="xs:long" style="query">
+							<doc title="topic identifier">This represents the ID of the SciVal Topic that the metrics are returned for.</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="metricTypes" style="query" type="xs:string" required="true">
+							<doc title="metric">
+								<br/>This represents the types of metrics desired in the response. More than one can be specified.
+								<br/>
+								<br/>ex. metrics=CitationCount,ScholarlyOutput
+							</doc>
+							<option value="CitationCount"/>
+							<option value="ScholarlyOutput"/>
+							<option value="FieldWeightedCitationImpact"/>
+							<option value="PublicationShare"/>
+							<option value="PublicationShareGrowth"/>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/countryTopicMetricsResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/countryTopicMetricsResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/countryTopicMetricsTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+			<resource path="/metrics/institutionId/{institutionId}">
+				<doc title="Topic Lookup API">This represents a request to get one or more types of metrics for a SciVal Topic within a given institution.</doc>
+				<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="institutionId" style="template" type="xs:long"/>
+				<method id="institutionTopicMetrics" name="GET">
+					<request>
+						<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+							<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="Authorization" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+						</param>
+						<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+							<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+						</param>
+						<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+							<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+						</param>
+						<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+							<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+						</param>
+						<param name="X-ELS-ReqId" type="xsd:string" style="header">
+							<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="httpAccept" type="xsd:string" style="query">
+							<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+							<option value="application/json"/>
+							<option value="application/xml"/>
+							<option value="text/xml"/>
+						</param>
+						<param name="access_token" type="xsd:string" style="query">
+							<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+						</param>
+						<param name="insttoken" type="xsd:string" style="query">
+							<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+						</param>
+						<param name="apiKey" type="xsd:string" style="query">
+							<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+						</param>
+						<param name="reqId" type="xsd:string" style="query">
+							<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+						</param>
+						<param name="institutionId" type="xsd:long" style="template">
+							<doc title="institution identifier">This represents the ID of the SciVal Institution that the metrics are returned for.</doc>
+						</param>
+						<param name="topicId" type="xs:long" style="query">
+							<doc title="topic identifier">This represents the ID of the SciVal Topic that the metrics are returned for.</doc>
+						</param>
+						<param name="yearRange" style="query" type="xs:string" default="5yrs">
+							<doc title="year range">
+								<br/>The year range for which to calculate the metric values.
+								<br/>
+								<br/>For instance, if the current year is 2018, 3yrsAndCurrentAndFuture would be 2015-2019.
+							</doc>
+							<option value="3yrs"/>
+							<option value="3yrsAndCurrent"/>
+							<option value="3yrsAndCurrentAndFuture"/>
+							<option value="5yrs"/>
+							<option value="5yrsAndCurrent"/>
+							<option value="5yrsAndCurrentAndFuture"/>
+							<option value="10yrs"/>
+						</param>
+						<param name="metricTypes" style="query" type="xs:string" required="true">
+							<doc title="metric">
+								<br/>This represents the types of metrics desired in the response. More than one can be specified.
+								<br/>
+								<br/>ex. metrics=CitationCount,CorePapers
+							</doc>
+							<option value="CitationCount"/>
+							<option value="FieldWeightedCitationImpact"/>
+							<option value="PublicationShare"/>
+							<option value="PublicationShareGrowth"/>
+							<option value="ScholarlyOutput"/>
+						</param>
+					</request>
+					<response status="200">
+						<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/scival/instTopicMetricsResp.json">
+							<doc title="Topic JSON Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/instTopicMetricsResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="200">
+						<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/scival/instTopicMetricsTEXTResp.xml">
+							<doc title="Topic XML Response">This is XML representing the requested document.</doc>
+						</representation>
+					</response>
+					<response status="400">
+						<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+							<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+						</representation>
+					</response>
+					<response status="401">
+						<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+						</representation>
+					</response>
+					<response status="403">
+						<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+							<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+						</representation>
+					</response>
+					<response status="405">
+						<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+							<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+						</representation>
+					</response>
+					<response status="406">
+						<representation mediaType="text/xml" element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+							<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+						</representation>
+					</response>
+					<response status="429">
+						<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+							<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+						</representation>
+					</response>
+					<response status="500">
+						<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+							<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+						</representation>
+					</response>
+				</method>
+			</resource>
+		</resource>
+	</resources>
+</application>

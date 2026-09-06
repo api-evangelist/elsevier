@@ -1,0 +1,396 @@
+ {  
+   "abstractretreaveldoi":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval via DOI exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrieval",
+         "parameters":[  
+            {  
+               "default":"10.1016/S0014-5793(01)03313-0",
+               "description":"doi value",
+               "in":"path",
+               "name":"doi",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   },
+   "abstractretreaveleid":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval via EID exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrievalEID",
+         "parameters":[  
+            {  
+               "default":"2-s2.0-0037070197",
+               "description":"eid value",
+               "in":"path",
+               "name":"eid",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "application/xml",
+            "text/xml" 
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "$ref":"#/definitions/stream"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   },
+   "abstractretreavelpii":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval via PII exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrieval",
+         "parameters":[  
+            {  
+               "default":"S0014579301033130",
+               "description":"pii value",
+               "in":"path",
+               "name":"pii",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   },
+   "abstractretreavelpubmedid":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval via Medline/Pubmed ID exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrieval",
+         "parameters":[  
+            {  
+               "default":"11852050",
+               "description":"pubmed_id value",
+               "in":"path",
+               "name":"pubmed_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   },
+   "abstractretreavelpui":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval vi PUI exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrieval",
+         "parameters":[  
+            {  
+               "default":"34164449",
+               "description":"pui value",
+               "in":"path",
+               "name":"pui",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   },
+   "abstractretreavelscopusid":{  
+      "get":{  
+         "tags":[  
+            "Abstract_Retrieval"
+         ],
+         "description":"<strong>Abstract retrieval via Scopus ID exposes interfaces associated with Scopus Abstract API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AbstractRetrieval",
+         "parameters":[  
+            {  
+               "default":"0037070197",
+               "description":"scopus_id value",
+               "in":"path",
+               "name":"scopus_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "items":{  
+
+                  },
+                  "type":"array"
+               }
+            }
+         },
+         "summary":"Abstract Retrieval API"
+      }
+   }
+}
+     
+

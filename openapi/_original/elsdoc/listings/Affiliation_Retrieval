@@ -1,0 +1,131 @@
+{  
+   "affiliationid":{  
+      "get":{  
+         "tags":[  
+            "Affiliation_Retrieval"
+         ],
+         "description":"<strong>Affiliation retrieval via affiliation_id exposes interfaces associated with Scopus Affiliation Retrieval API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AffiliationRetrieval",
+         "parameters":[  
+            {  
+               "default":"60016849",
+               "description":"affiliation_id value",
+               "in":"path",
+               "name":"affiliation_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "default":"text/xml",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                 
+               }
+            }
+         },
+         "summary":"Affiliation Retrieval API"
+      }
+   },
+   "affiliationeid":{  
+      "get":{  
+         "tags":[  
+            "Affiliation_Retrieval"
+         ],
+         "description":"<strong>Affiliation retrieval via EID exposes interfaces associated with Scopus Affiliation Retrieval API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"AffiliationRetrieval",
+         "parameters":[  
+            {  
+               "default":"10-s2.0-60016849",
+               "description":"eid value",
+               "in":"path",
+               "name":"eid",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "default":"text/xml",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "text/xml",
+            "application/xml",
+            "application/json",
+            "application/rdf+xml"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                 
+               
+               }
+            }
+         },
+         "summary":"Affiliation Retrieval API"
+      }
+   }
+}

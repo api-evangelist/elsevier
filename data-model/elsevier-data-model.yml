@@ -1,0 +1,208 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/elsevier-*-swagger.json (7 first-party Swagger 2.0 documents, 140 distinct
+  definitions) and wadl/ (37 first-party WADL contracts, 149 resources)
+supporting_sources:
+- https://dev.elsevier.com/support.html (the FAQ that states the Scopus/ScienceDirect relationship)
+- https://dev.elsevier.com/sc_abstract_retrieval_views.html and the sibling per-view pages
+provider: Elsevier
+providerId: elsevier
+description: >-
+  The Elsevier research-content graph as its own contracts describe it. Two databases sit
+  underneath: ScienceDirect holds full text, Scopus holds indexed metadata and citations over a
+  much wider publisher set and builds author, affiliation and topic profiles on top. Most
+  Elsevier entities are reachable by five interchangeable identifier schemes, and which one you
+  hold determines which path you call — that is the single most important shape in this API.
+identifier_schemes:
+- id: doi
+  name: DOI
+  standard: ISO 26324
+  path_segment: /doi/{doi}
+  applies_to: [Abstract, Article, Object, Entitlement]
+- id: eid
+  name: Elsevier EID
+  proprietary: true
+  path_segment: /eid/{eid}
+  applies_to: [Abstract, Article, Object, Entitlement, Affiliation, Author]
+  note: >-
+    Affiliation EIDs prefixed 34 are institution-hierarchy profiles; prefixed 10 are the
+    ordinary ones (release note 2019-09-12).
+- id: pii
+  name: PII
+  proprietary: true
+  path_segment: /pii/{pii}
+  applies_to: [Abstract, Article, Object, Entitlement]
+- id: pubmed_id
+  name: PubMed ID
+  standard: NLM
+  path_segment: /pubmed_id/{pubmed_id}
+  applies_to: [Abstract, Article, Object, Entitlement]
+- id: scopus_id
+  name: Scopus ID
+  proprietary: true
+  path_segment: /scopus_id/{scopus_id}
+  applies_to: [Abstract, Article, Object, Entitlement]
+- id: pui
+  name: Embase PUI
+  proprietary: true
+  path_segment: /pui/{pui}
+  applies_to: [Abstract]
+- id: orcid
+  name: ORCID iD
+  standard: ISO 27729-adjacent
+  path_segment: /author/orcid/{orcid}
+  applies_to: [Author]
+- id: issn
+  name: ISSN
+  standard: ISO 3297
+  path_segment: /serial/title/issn/{issn}
+  applies_to: [SerialTitle]
+- id: isbn
+  name: ISBN
+  standard: ISO 2108
+  path_segment: /nonserial/title/isbn/{isbn}
+  applies_to: [NonserialTitle]
+entities:
+- name: Document
+  aka: [Abstract, Article]
+  description: >-
+    A publication record. The Abstract Retrieval API returns the Scopus-indexed metadata view;
+    the Article Retrieval API returns the ScienceDirect full-text view of the same work when
+    Elsevier hosts it.
+  operations: [AbstractRetrieval, ArticleRetrieval, ArticleMetadata]
+  views: [META, META_ABS, META_ABS_REF, FULL, REF, ENTITLED, STANDARD, COMPLETE]
+- name: Author
+  description: A Scopus author profile, algorithmically built from indexed documents.
+  operations: [AuthorRetrieval, AuthorRetrievalid, AuthorSearch, getAuthorByORCID, getAuthor, authorMetrics]
+  note: >-
+    Profiles are machine-generated, so duplicates exist by design and are corrected through the
+    Scopus web UI, not the API.
+- name: Affiliation
+  aka: [Institution]
+  description: >-
+    An institution profile. Appears twice in the surface with different shapes — as a Scopus
+    Affiliation and as a SciVal Institution — and the two are not the same object.
+  operations: [AffiliationRetrieval, AffiliationSearch, getInstitution, getInstitutions, institutionMetrics]
+- name: SerialTitle
+  description: A journal or serial, keyed by ISSN.
+  operations: [SerialTitleSearch, SerialTitleMetadata]
+- name: NonserialTitle
+  description: A book or other non-serial publication, keyed by ISBN.
+  operations: [NonserialTitleSearch, NonserialTitleMetadata]
+- name: Object
+  description: >-
+    A binary asset attached to an article — figure, image, PDF. Retrieved at four resolutions
+    (base, high, standard, thumbnail) per reference.
+  operations: [ObjectRetrieval]
+- name: Entitlement
+  description: >-
+    A per-identifier answer to "may this caller read the full text". Not content — a
+    permission check.
+  operations: [ArticleEntitlementRetrieval]
+- name: Citation
+  description: Citation counts and year-by-year citation overviews for a document.
+  operations: [AbstractCitationCount, CitationsOverview]
+- name: Topic / TopicCluster
+  description: >-
+    SciVal's research-area clustering. A Topic belongs to a TopicCluster; both attach metrics
+    and both can be scoped by institution, country or source.
+  operations: [getTopic, getTopicCluster, topicMetrics, topicClusterMetrics, getTopicsByInstitutionId, getTopicsByCountryId, getTopicsBySourceId]
+- name: Country / CountryGroup
+  description: SciVal geographic aggregation entities, each with a metrics resource.
+  operations: [getCountry, getCountryByCode, countryMetrics, getCountryGroup, countryGroupMetricsV1]
+- name: ScopusSource
+  description: A SciVal view of a publication venue, keyed to a Scopus source id.
+  operations: [getSource, sourceSearch, sourceMetrics]
+- name: SubjectArea
+  description: >-
+    Classification of research areas; also exposed standalone as Subject Classifications on the
+    content surface.
+  operations: [getSubjectArea, subjectAreaSearch, getSubjectAreasByClassification]
+- name: UsageReport
+  description: >-
+    COUNTER R5 / R5.1 usage statistics for a platform, database or title — the SUSHI surface.
+  operations:
+  - 'SUSHI GET /sushi/reports/'
+  - 'SUSHI GET /sushi/reports/{platform}'
+  - 'SUSHI GET /sushi/reports/{database}'
+  - 'SUSHI GET /sushi/reports/{title}'
+relationships:
+- from: Document
+  to: Author
+  type: has_many
+  via: authors / ContributorInfo
+- from: Document
+  to: Affiliation
+  type: has_many
+  via: affiliation / ContributorAffiliation
+- from: Document
+  to: SerialTitle
+  type: belongs_to
+  via: prism:issn / source-id
+- from: Document
+  to: NonserialTitle
+  type: belongs_to
+  via: prism:isbn
+- from: Document
+  to: Object
+  type: has_many
+  via: ref (object reference within the article)
+- from: Document
+  to: Citation
+  type: has_one
+  via: citedby-count / scopus_id
+- from: Document
+  to: Entitlement
+  type: has_one
+  via: the same identifier, on the entitlement path
+- from: Author
+  to: Affiliation
+  type: has_many
+  via: affiliation-current / affiliation-history
+- from: Author
+  to: Document
+  type: has_many
+  via: author_id in Scopus Search
+- from: Affiliation
+  to: Affiliation
+  type: has_many
+  via: institution hierarchy (EID prefix 34 parents over prefix 10 children)
+- from: TopicCluster
+  to: Topic
+  type: has_many
+  via: topicClusterId
+- from: Topic
+  to: ScopusSource
+  type: has_many
+  via: scopusSourceId
+- from: Affiliation
+  to: Topic
+  type: has_many
+  via: /topic/institutionId/{institutionId}
+- from: Country
+  to: Affiliation
+  type: has_many
+  via: /institution/countryId/{countryId}
+- from: CountryGroup
+  to: Country
+  type: has_many
+  via: /institution/countryGroupId/{countryGroupId}
+- from: ScopusSource
+  to: SerialTitle
+  type: has_one
+  via: issn
+  note: >-
+    The same venue is modelled twice — as a SciVal ScopusSource with metrics and as a content
+    SerialTitle with coverage and cover images. There is no single canonical venue object.
+error_shape:
+  definitions: [ServiceError, ServiceErrorWrap, Status]
+  note: The error envelope is itself a declared schema in the Swagger documents.
+pagination_shape:
+  definitions: [PageContainer, PageContainerItems, PageResults, PageEntry]
+summary:
+  entities: 14
+  relationships: 16
+  identifier_schemes: 9
+  definitions_in_contracts: 140
+  render: null

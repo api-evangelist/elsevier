@@ -1,0 +1,86 @@
+{
+"abstractcitationoverview":{  
+"get": {
+        "tags":[  
+            "Citations_Overview"
+         ],
+        "description": "<strong>Abstract Citation API allows to retrieve citations given one of the document identifiers (DOI, PII, scopus_id or pubmed_id).</strong><br/> API key in this example was setup with authorized CORS domains.",
+        "operationId": "CitationsOverview",
+        "parameters": [
+            {
+                "default": "10.1016/S0014-5793(01)03313-0",
+                "description": "DOI document identifier. Example: 10.1016/S0014-5793(01)03313-0",
+                "in": "query",
+                "name": "doi",
+                "required": false,
+                "type": "string"
+            },
+            {
+                "description": "PII document identifier. Example: S0014579301033130",
+                "in": "query",
+                "name": "pii",
+                "required": false,
+                "type": "string"
+            },
+            {
+                "description": "Scopus ID document identifier. Example: 0037070197",
+                "in": "query",
+                "name": "scopus_id",
+                "required": false,
+                "type": "string"
+            },
+            {
+                "description": "MEDLINE/pubmed_id document identifier. Example: 11852050",
+                "in": "query",
+                "name": "pubmed_id",
+                "required": false,
+                "type": "string"
+            },
+            {
+                "default": "7f59af901d2d86f78a1fd60c1bf9426a",
+                "description": "Your API key",
+                "in": "query",
+                "name": "apiKey",
+                "required": true,
+                "type": "string"
+            },
+            {
+                "default": "application/json",
+                "description": "Requested content type, overrides HTTP header value",
+                "in": "query",
+                "name": "httpAccept",
+                "required": false,
+                "type": "string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+        ],
+        "produces": [
+            "application/json",
+            "application/xml",
+            "text/xml"
+        ],
+        "responses": {
+            "200": {
+                "description": "No response was specified",
+                "schema": {
+                    "$ref": "#/definitions/stream"
+                }
+            }
+        },
+        "summary": "Citations Overview"
+      }
+   }
+}

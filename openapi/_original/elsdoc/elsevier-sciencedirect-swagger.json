@@ -1,0 +1,188 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0"
+  },
+  "tags":[  
+      {  
+         "name":"ScienceDirect_Search_V2",
+         "description":"ScienceDirect Search V2 API"
+      },
+      {  
+         "name":"Abstract_Retrieval",
+         "description":"Abstract Retrieval API"
+      },
+      {  
+         "name":"Affiliation_Retrieval",
+         "description":"Affiliation Retrieval API"
+      },
+      {  
+         "name":"Article_Entitlement_Retrieval",
+         "description":"Article Entitlement Retrieval API"
+      },
+      {  
+         "name":"Article_Metadata",
+         "description":"Article Metadata API"
+      },
+      {  
+         "name":"Article_Retrieval",
+         "description":"Article Retrieval API"
+      },
+      {  
+         "name":"Author_Retrieval",
+         "description":"Author Retrieval API"
+      },
+      {  
+         "name":"Engineering_Village_Retrieval",
+         "description":"Engineering Village Retrieval API"
+      },
+      {  
+         "name":"Object_Retrieval",
+         "description":"Object Retrieval API"
+      },
+      {  
+         "name":"Nonserial_Title",
+         "description":"Nonserial Title API"
+      },
+      {  
+         "name":"Serial_Title",
+         "description":"Serial Title API"
+      }      
+      ],
+  "host": "api.elsevier.com",
+  "basePath": "/content",
+  "schemes": [
+    "https",
+    "http"
+  ], 
+  "paths": {
+     "/article/entitlement/doi/{doi}": {
+      "$ref": "./listings/Article_Entitlement_Retrieval#/entitlementdoi"
+    },
+    "/article/entitlement/eid/{eid}": {
+      "$ref": "./listings/Article_Entitlement_Retrieval#/entitlementeid"
+    },
+    "/article/entitlement/pii/{pii}": {
+      "$ref": "./listings/Article_Entitlement_Retrieval#/entitlementpii"
+    },
+    "/article/entitlement/pubmed_id/{pubmed_id}": {
+      "$ref": "./listings/Article_Entitlement_Retrieval#/entitlementpubmedid"
+    },
+    "/article/entitlement/scopus_id/{scopus_id}": {
+      "$ref": "./listings/Article_Entitlement_Retrieval#/entitlementscopusid"
+    },
+    "/article/doi/{doi}": {
+      "$ref": "./listings/Article_Retrieval#/articledoi"
+    },
+    "/article/eid/{eid}": {
+      "$ref": "./listings/Article_Retrieval#/articleeid"
+    },
+    "/article/pii/{pii}": {
+      "$ref": "./listings/Article_Retrieval#/articlepii"
+    },
+    "/article/pubmed_id/{pubmed_id}": {
+      "$ref": "./listings/Article_Retrieval#/articlepubmedid"
+    },
+    "/article/scopus_id/{scopus_id}": {
+      "$ref": "./listings/Article_Retrieval#/scopusid"
+    },
+    "/metadata/article": {
+      "$ref": "./listings/Article_Metadata"
+    }, 
+    "/object/doi/{doi}": {
+      "$ref": "./listings/Object_Retrieval#/objectdoi"
+    }, 
+    "/object/doi/{doi}/ref/{ref}": {
+      "$ref": "./listings/Object_Retrieval#/objectdoiref"
+    }, 
+    "/object/doi/{doi}/ref/{ref}/high": {
+      "$ref": "./listings/Object_Retrieval#/objectdoirefhigh"
+    }, 
+    "/object/doi/{doi}/ref/{ref}/standard": {
+      "$ref": "./listings/Object_Retrieval#/objectdoirefstandard"
+    }, 
+    "/object/doi/{doi}/ref/{ref}/thumbnail": {
+      "$ref": "./listings/Object_Retrieval#/objectdoirefthumbnail"
+    }, 
+    "/object/eid/{eid}": {
+      "$ref": "./listings/Object_Retrieval#/objecteid"
+    }, 
+    "/object/pii/{pii}": {
+      "$ref": "./listings/Object_Retrieval#/objectpii"
+    }, 
+    "/object/pii/{pii}/ref/{ref}": {
+      "$ref": "./listings/Object_Retrieval#/objectpiiref"
+    }, 
+    "/object/pii/{pii}/ref/{ref}/high": {
+      "$ref": "./listings/Object_Retrieval#/objectpiirefhigh"
+    }, 
+    "/object/pii/{pii}/ref/{ref}/standard": {
+      "$ref": "./listings/Object_Retrieval#/objectpiirefstandard"
+    }, 
+    "/object/pii/{pii}/ref/{ref}/thumbnail": {
+      "$ref": "./listings/Object_Retrieval#/objectpiirefthumbnail"
+    }, 
+    "/object/pubmed_id/{pubmed_id}": {
+      "$ref": "./listings/Object_Retrieval#/objectpubmedid"
+    }, 
+    "/object/pubmed_id/{pubmed_id}/ref/{ref}": {
+      "$ref": "./listings/Object_Retrieval#/objectpubmedidref"
+    }, 
+    "/object/pubmed_id/{pubmed_id}/ref/{ref}/high": {
+      "$ref": "./listings/Object_Retrieval#/objectpubmedidrefhigh"
+    }, 
+    "/object/pubmed_id/{pubmed_id}/ref/{ref}/standard": {
+      "$ref": "./listings/Object_Retrieval#/objectpubmedidrefstandard"
+    }, 
+    "/object/pubmed_id/{pubmed_id}/ref/{ref}/thumbnail": {
+      "$ref": "./listings/Object_Retrieval#/objectpubmedidrefthumbnail"
+    }, 
+    "/object/scopus_id/{scopus_id}": {
+      "$ref": "./listings/Object_Retrieval#/objectscopusid"
+    }, 
+    "/object/scopus_id/{scopus_id}/ref/{ref}": {
+      "$ref": "./listings/Object_Retrieval#/objectscopusidref"
+    }, 
+    "/object/scopus_id/{scopus_id}/ref/{ref}/high": {
+      "$ref": "./listings/Object_Retrieval#/objectscopusidrefhigh"
+    }, 
+    "/object/scopus_id/{scopus_id}/ref/{ref}/standard": {
+      "$ref": "./listings/Object_Retrieval#/objectscopusidrefstandard"
+    }, 
+    "/object/scopus_id/{scopus_id}/ref/{ref}/thumbnail": {
+      "$ref": "./listings/Object_Retrieval#/objectscopusidrefthumbnail"
+    },
+    "/search/sciencedirect": {
+      "$ref": "./listings/ScienceDirect_Search_V2"
+    },
+    "/nonserial/title": {
+      "$ref": "./listings/Nonserial_Title#/nonserialtitle"
+    },
+    "/nonserial/title/isbn/{isbn}": {
+      "$ref": "./listings/Nonserial_Title#/nonserialtitleisbn"
+    },
+    "/serial/title": {
+      "$ref": "./listings/Serial_Title#/serialtitle"
+    },
+    "/serial/title/issn/{issn}": {
+      "$ref": "./listings/Serial_Title#/serialtitleissn"
+    }    
+  },
+  "definitions": {
+    "sciencedirect": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    } 
+  }
+}
+
+

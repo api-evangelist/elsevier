@@ -1,0 +1,163 @@
+{  
+   "serialtitle":{  
+      "get":{  
+         "tags":[  
+            "Serial_Title"
+         ],
+         "description":"<strong>Serial Metadata API represents a search against the serial titles (Science Direct content).</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"SerialTitleSearch",
+         "parameters":[  
+            {  
+               "description":"Partial or complete serial title. Example: gene",
+               "in":"query",
+               "name":"title",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "default":"03781119",
+               "description":"One or more source identifiers. Example: 03781119,07350651",
+               "in":"query",
+               "name":"issn",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"ScienceDirect subject area abbreviation associated with the content category. Example: MATH",
+               "in":"query",
+               "name":"subj",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"one or more subject area code associated with the content category. Example: 2600,2601",
+               "in":"query",
+               "name":"subjCode",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Specifies the amount of data to be returned in the response. Example: citescore",
+               "in":"query",
+               "name":"view",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"Specifies a year or range of years for which to return yearly metric data. Example: 2014-2016",
+               "in":"query",
+               "name":"date",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "application/xml",
+            "text/xml",
+            "image/gif"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "$ref":"#/definitions/stream"
+               }
+            }
+         },
+         "summary":"Serial Title Search"
+      }
+   },
+   "serialtitleissn":{  
+      "get":{  
+         "tags":[  
+            "Serial_Title"
+         ],
+         "description":"<strong>Single serial title (Science Direct content) identified by ISSN. Returns either the metadata for that title or the cover image.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"SerialTitleMetadata",
+         "parameters":[  
+            {  
+               "default":"03781119",
+               "description":"ISSN source identifier. Example: 03781119",
+               "in":"path",
+               "name":"issn",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value. To retrieve cover image use image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "application/xml",
+            "text/xml",
+            "image/gif"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "$ref":"#/definitions/stream"
+               }
+            }
+         },
+         "summary":"Serial Title Metadata"
+      }
+   }
+}

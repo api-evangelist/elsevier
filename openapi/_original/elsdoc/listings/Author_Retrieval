@@ -1,0 +1,126 @@
+{  
+   "authorretrievaleid": {
+   "get":{  
+          "tags":["Author_Retrieval"],
+      "description":"<strong>Author retrieval via profile EID exposes interfaces associated with Scopus Author profile.</strong><br/> API key in this example was setup with authorized CORS domains.",
+      "operationId":"AuthorRetrieval",
+      "parameters":[  
+            {  
+               "default":"9-s2.0-22988279600",
+               "description":"eid value",
+               "in":"path",
+               "name":"eid",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "default":"text/xml",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+      ],
+      "produces":[  
+         "text/xml",
+         "application/xml",
+         "application/json",
+         "application/rdf+xml"
+      ],
+      "responses":{  
+         "200":{  
+            "description":"No response was specified",
+            "schema":{  
+                
+            }
+         }
+      },
+      "summary":"Author Retrieval API"
+   }
+   },
+   "authorretrievalid": {
+   "get":{  
+          "tags":["Author_Retrieval"],
+      "description":"<strong>Author retrieval exposes interfaces associated with Scopus Author profile.</strong><br/> API key in this example was setup with authorized CORS domains.",
+      "operationId":"AuthorRetrievalid",
+      "parameters":[  
+            {  
+               "default":"22988279600",
+               "description":"author_id value",
+               "in":"path",
+               "name":"author_id",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+      ],
+      "produces":[  
+         "text/xml",
+         "application/xml",
+         "application/json",
+         "application/rdf+xml"
+      ],
+      "responses":{  
+         "200":{  
+            "description":"No response was specified",
+            "schema":{  
+            
+            }
+         }
+      },
+      "summary":"Author Retrieval API"
+   }
+   }
+   
+}

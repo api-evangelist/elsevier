@@ -1,0 +1,168 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  wadl/ — 37 first-party WADL contracts harvested from https://api.elsevier.com/documentation/,
+  whose <response status=...> / <representation> doc blocks are Elsevier's own error
+  descriptions (655 error responses across 138 methods)
+supporting_sources:
+- https://dev.elsevier.com/api_key_settings.html (429 semantics)
+- https://dev.elsevier.com/tecdoc_api_authentication.html (401 vs 403 semantics)
+- live probes of https://api.elsevier.com/content/search/scopus, 2026-09-06 (envelope shapes)
+provider: Elsevier
+providerId: elsevier
+format: proprietary
+rfc9457: false
+description: >-
+  Elsevier does not publish a numbered error-code registry. What it publishes instead is an
+  error description on every response of every method in its 37 WADL contracts, plus a
+  free-text X-ELS-Status header at runtime. This catalog is the union of the two.
+envelopes:
+- name: service-error
+  shape: '{"service-error":{"status":{"statusCode":"<CODE>","statusText":"<message>"}}}'
+  content_type: application/json;charset=UTF-8
+  xml_equivalent: <service-error><status><statusCode/><statusText/></status></service-error>
+  used_by: the API gateway and the content services
+  probed: 'https://api.elsevier.com/content/search/scopus?query=heart (no key) -> 401, 2026-09-06'
+- name: error-response
+  shape: '{"error-response":{"error-code":"<CODE>","error-message":"<message>"}}'
+  content_type: application/json
+  used_by: the edge/routing tier — 404s on unrouted paths and 503s
+  probed: 'https://api.elsevier.com/openapi.json -> 404, 2026-09-06'
+runtime_signal:
+  header: X-ELS-Status
+  format: '<CODE> - <human message>'
+  observed:
+  - AUTHENTICATION_ERROR - Invalid API Key
+  - QUOTA_EXCEEDED - Quota Exceeded
+  note: >-
+    The status code alone does not identify the failure. X-ELS-Status is the discriminator, and
+    it is a header rather than part of the body — a client that only parses the payload loses
+    it.
+problem_types:
+- status: 400
+  code: INVALID_INPUT
+  title: Invalid request
+  detail: >-
+    "This is an error that occurs when invalid information is submitted." Declared on 123 of
+    138 methods; a second variant on 12 methods reads "This error indicates missing or
+    incorrect parameters."
+  occurrences: 137
+  remediation: >-
+    Validate query syntax against the per-product search tips (dev.elsevier.com/tips/) before
+    retrying. Not retryable unchanged.
+  retryable: false
+- status: 401
+  code: AUTHENTICATION_ERROR
+  title: Authentication failed
+  detail: >-
+    "This is an error that occurs when a user cannot be authenticated due to missing/invalid
+    credentials (authtoken or APIKey)."
+  occurrences: 136
+  remediation: >-
+    Check X-ELS-APIKey is present and valid. If an authtoken is in use, note it expires two
+    hours after issuance and must be re-fetched from /authenticate.
+  retryable: false
+  retryable_after_refresh: true
+- status: 403
+  code: AUTHORIZATION_ERROR
+  title: Not entitled
+  detail: >-
+    "This is an error that occurs when a user cannot be authenticated or entitlements cannot be
+    validated." In practice this is the entitlement wall, not a credential problem: a valid key
+    calling from outside the institutional network, or asking for a view (COMPLETE, COMPONENT)
+    or an access-controlled API the key was never enabled for.
+  occurrences: 133
+  remediation: >-
+    Confirm the call originates inside the subscribing institution's IP range, or obtain an
+    Institutional Token. For access-controlled APIs, request enablement from Elsevier API
+    Support — it is not self-serve.
+  retryable: false
+- status: 404
+  code: RESOURCE_NOT_FOUND
+  title: Resource not found
+  detail: >-
+    "This is an error that occurs when the requested resource cannot be found." Also returned
+    by the edge tier, in the error-response envelope, for any path that does not route.
+  occurrences: 67
+  remediation: Verify the identifier (DOI, EID, PII, PubMed ID, Scopus ID) and the path.
+  retryable: false
+- status: 405
+  code: METHOD_NOT_ALLOWED
+  title: Invalid HTTP method
+  detail: '"This is an error that occurs when the requested HTTP Method is invalid."'
+  occurrences: 135
+  remediation: >-
+    Nearly every Elsevier operation is GET. The single documented exception is PUT
+    /content/search/sciencedirect.
+  retryable: false
+- status: 406
+  code: NOT_ACCEPTABLE
+  title: Invalid mime type
+  detail: '"This is an error that occurs when the requested mime type is invalid."'
+  occurrences: 135
+  remediation: >-
+    Use a media type the resource declares, via Accept or the httpAccept query parameter. Not
+    every view is available in every representation.
+  retryable: false
+- status: 429
+  code: QUOTA_EXCEEDED
+  title: Too many requests
+  detail: >-
+    "This is an error that occurs when a requester has exceeded the quota limits associated with
+    their API Key." Covers two distinct conditions: the weekly per-API quota, and the
+    per-second throttle (a hard limit since the 2019-07-11 release, which replaced request
+    queueing).
+  occurrences: 137
+  remediation: >-
+    Read X-RateLimit-Reset (a Unix timestamp) for the weekly reset. There is no Retry-After
+    header, so a throttled caller must back off on its own schedule. When the weekly quota is
+    exhausted X-RateLimit-Limit and X-RateLimit-Remaining stop being returned at all.
+  retryable: true
+- status: 500
+  code: SERVER_ERROR
+  title: Server error
+  detail: >-
+    "This is a general purpose error condition, typically due to back-end processing errors."
+  occurrences: 135
+  remediation: Retry with backoff; quote X-ELS-TransId to API Support if it persists.
+  retryable: true
+- status: 503
+  code: Service Unavailable
+  title: Service unavailable
+  detail: >-
+    '{"error-response":{"error-code":"Service Unavailable","error-message":"One of our services
+    it is not currently available"}}' — observed live, including the grammatical error, in
+    response to a syntactically valid but unregistered API key.
+  occurrences: 0
+  observed_only: true
+  probed: 'https://api.elsevier.com/content/search/scopus with an unregistered key, 2026-09-06'
+  remediation: >-
+    Treat as retryable, but be aware Elsevier returns 503 for at least one condition that is
+    really an authentication outcome — a client cannot infer "the service is down" from it.
+  retryable: true
+non_error_statuses_worth_handling:
+- status: 300
+  title: Multiple choices
+  detail: >-
+    Returned when a single author profile has been superseded by multiple profiles, or when a
+    requested resource has unresolved choices. Declared on 5 methods.
+- status: 301
+  title: Moved permanently
+  detail: Redirect to a single author location when an author profile has been superseded.
+- status: 303
+  title: See other
+  detail: PDF document redirect; the document URL is returned in the Location header.
+- status: 307
+  title: Temporary redirect
+  detail: Document redirect; the URL is returned in the Location header.
+- status: 202
+  title: Accepted
+  detail: >-
+    "The request has been accepted for processing, but the processing has not been completed."
+    Declared on 5 object-retrieval methods.
+summary:
+  problem_type_count: 9
+  error_responses_in_contracts: 655
+  envelopes: 2
+  registry_published: false
+  rfc9457: false

@@ -1,0 +1,100 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/release_notes.html
+supporting_sources:
+- https://dev.elsevier.com/api_docs.html
+- https://dev.elsevier.com/policy.html
+- https://dev.elsevier.com/support.html
+- wadl/ (37 first-party WADL contracts, each carrying its own dated revision history)
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Elsevier has a real versioning mechanism, a real dated release-notes archive, and a real
+  history of retiring APIs on notice. What it does not have is anything current. The
+  release-notes page stopped on 2019-09-12 and the newest revision-history entry inside the
+  WADL contracts is from the same era, which leaves a caller with no way to learn what changed
+  in the last seven years except by watching responses.
+versioning:
+  scheme: per-resource, negotiated
+  mechanism:
+    request_header: X-ELS-ResourceVersion
+    request_parameter: ver
+    response_header: X-ELS-ResourceVersion
+    default_value: default
+  path_versioning: false
+  version_list_published: false
+  note: >-
+    62 of 138 WADL methods accept a `ver` parameter, but Elsevier publishes no enumeration of
+    acceptable values anywhere on the developer portal. The mechanism is usable only by a
+    caller who was given a version string out of band.
+  product_versioning_observed:
+  - ScienceDirect Search V2 (the v2 is in the product name and the tag, not in the path)
+  - SUSHI COP5 and SUSHI COP5.1 shipped as separate contracts and separate paths (/sushi/, /sushi/r51/)
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  practice_observed: true
+  detail: >-
+    There is no deprecation policy document and no RFC 8594 Sunset/Deprecation header. Elsevier
+    has nonetheless retired APIs in the open and announced it in the release notes — the
+    clearest example being the original ScienceDirect Search API, marked "(deprecated)" and
+    then given "Final retirement" in the 2018-12-13 notes, with callers directed to ScienceDirect
+    Search V2 or the Article Metadata API. Individual parameters have been withdrawn the same
+    way (cdnRedirect, 2019-05-15). The practice existed; the policy never did, and the channel
+    that carried the announcements has been silent since 2019.
+  historical_retirements:
+  - name: ScienceDirect Search API (v1)
+    announced: '2018-12-13'
+    action: final retirement
+    replacement: ScienceDirect Search V2 API, Article Metadata API
+  - name: cdnRedirect parameter (Article Retrieval API)
+    announced: '2019-05-15'
+    action: no longer supported; parameter ignored
+  - name: ArticlesReviewsEditorials / ArticlesReviewsEditorialsShortSurveys metrics (SciVal API)
+    announced: '2019-09-12'
+    action: removed from most metric operations
+  - name: Complementary Metrics API
+    announced: '2018-12-06'
+    action: renamed to PlumX Metrics API; resource URL moved from /analytics/compmetrics to /analytics/plumx
+change_log:
+  published: true
+  url: https://dev.elsevier.com/release_notes.html
+  format: dated HTML sections
+  entry_count: 93
+  first_entry: '2014-12-16'
+  last_entry: '2019-09-12'
+  stale: true
+  stale_by_days_at_capture: 2551
+  detail: see changelog/elsevier-changelog.yml
+status_page:
+  published: false
+  probed:
+  - url: https://status.elsevier.com
+    result: DNS does not resolve
+  - url: https://status.scopus.com
+    result: DNS does not resolve
+  - url: https://elsevier.statuspage.io
+    result: 302 to a Microsoft Entra SAML sign-in — an internal Statuspage, not a public one
+  detail: >-
+    There is no public status page for the Research Products APIs. Incidents are handled
+    through the support centre case queue.
+sla:
+  published: false
+  detail: >-
+    The API Service Agreement (dev.elsevier.com/api_service_agreement.html) governs permitted
+    use, not availability. No uptime commitment, no credit schedule, no support response target
+    is published for the free non-commercial tier.
+support:
+  channel: case queue
+  url: https://service.elsevier.com/app/contact/supporthub/researchproductsapis/
+  detail: >-
+    A single contact form is the channel for quota increases, access-controlled API enablement,
+    Institutional Tokens, commercial licensing and incidents. There is no forum, no public
+    issue tracker, and the one first-party SDK repository is archived and read-only.
+deprecated_operations_in_contracts: []
+deprecated_operations_note: >-
+  None of the 153 operations in the harvested Swagger documents and none of the 138 WADL
+  methods carries a deprecation marker. Retirements were announced in prose and then removed,
+  never flagged in the contract first.

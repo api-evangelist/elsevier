@@ -1,0 +1,204 @@
+generated: '2026-09-06'
+method: probed
+source: https://id.elsevier.com/.well-known/openid-configuration
+supporting_sources:
+- https://id.elsevier.com/.well-known/oauth-authorization-server
+- 'https://dev.elsevier.com/apikey/manage (302 -> id.elsevier.com/as/authorization.oauth2, the redirect that identifies id.elsevier.com as the authorization server behind the developer portal)'
+- https://dev.elsevier.com/tecdoc_api_authentication.html
+docs: null
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Elsevier runs a real OAuth 2.0 / OpenID Connect authorization server at
+  https://id.elsevier.com (PingFederate), and it serves both RFC 8414 and OpenID Discovery
+  metadata anonymously. The 35 scopes below are transcribed verbatim from
+  scopes_supported in that document, fetched 2026-09-06 (HTTP 200,
+  content-type text/plain).
+scope_model: identity-platform
+read_this_first: >-
+  THESE ARE NOT API SCOPES. Every scope the authorization server advertises governs identity
+  and profile release — who the signed-in person is, which institution they are associated
+  with, whether their email is confirmed — not which Research Products API operation a token
+  may call. Access to api.elsevier.com is still governed by the X-ELS-APIKey plus the
+  institutional entitlement model described in authentication/elsevier-authentication.yml,
+  and Elsevier publishes no scope, permission or role reference for those APIs anywhere.
+  Recording the identity scopes here without that sentence would credit Elsevier with a
+  fine-grained API authorization model it does not publish.
+authorization_server:
+  issuer: https://id.elsevier.com
+  software: PingFederate
+  discovery:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ../well-known/elsevier-id-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: ../well-known/elsevier-id-oauth-authorization-server.json
+  authorization_endpoint: https://id.elsevier.com/as/authorization.oauth2
+  token_endpoint: https://id.elsevier.com/as/token.oauth2
+  introspection_endpoint: https://id.elsevier.com/as/introspect.oauth2
+  revocation_endpoint: https://id.elsevier.com/as/revoke_token.oauth2
+  userinfo_endpoint: https://id.elsevier.com/idp/userinfo.openid
+  registration_endpoint: https://id.elsevier.com/as/clients.oauth2
+  device_authorization_endpoint: https://id.elsevier.com/as/device_authz.oauth2
+  jwks_uri: https://id.elsevier.com/pf/JWKS
+  grant_types_supported:
+  - implicit
+  - authorization_code
+  - refresh_token
+  - password
+  - client_credentials
+  - urn:pingidentity.com:oauth2:grant_type:validate_bearer
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+  - urn:ietf:params:oauth:grant-type:saml2-bearer
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:ietf:params:oauth:grant-type:token-exchange
+  - urn:openid:params:grant-type:ciba
+  pkce_methods:
+  - plain
+  - S256
+  token_endpoint_auth_methods:
+  - client_secret_basic
+  - client_secret_post
+  - client_secret_jwt
+  - private_key_jwt
+  - tls_client_auth
+  - none
+  notes:
+  - >-
+    The implicit and password grants are still advertised; both are discouraged by OAuth 2.1
+    and neither should be chosen by a new integration.
+  - >-
+    id_token_signing_alg_values_supported includes "none", which an id_token validator must
+    reject explicitly.
+scope_count: 35
+scopes:
+- name: openid
+  standard: true
+  description: OpenID Connect — request an id_token.
+- name: profile
+  standard: true
+  description: Standard OIDC profile claims (name, given_name, family_name, picture, updated_at).
+- name: email
+  standard: true
+  description: Standard OIDC email and email_verified claims.
+- name: address
+  standard: true
+  description: Standard OIDC address claim.
+- name: phone
+  standard: true
+  description: Standard OIDC phone claim.
+- name: els_universal_identity
+  standard: false
+  description: Elsevier universal identity information (els_universal_identity_info claim).
+- name: els_universal_access
+  standard: false
+  description: Elsevier universal access attributes.
+- name: els_auth_info
+  standard: false
+  description: >-
+    Authentication context — auth_time, auth_token, auth_failure. Requested by the developer
+    portal's own client (client_id ELSAPI-PROD) on the sign-in redirect.
+- name: els_idp_info
+  standard: false
+  description: Identity-provider metadata for the session (idp_info claim).
+- name: els_analytics_info
+  standard: false
+  description: Analytics attributes attached to the identity (analytics_info claim). Also requested by ELSAPI-PROD.
+- name: els_idp_analytics_attrs
+  standard: false
+  description: Identity-provider analytics attributes (idp_analytics_attrs claim).
+- name: els_user_roles
+  standard: false
+  description: Roles held by the user (user_roles claim).
+- name: els_sa_discover
+  standard: false
+  description: Seamless-access / institution-discovery attribute release.
+- name: individual_identity
+  standard: false
+  description: Individual (person-level) identity, as distinct from institutional association.
+- name: institutional_association
+  standard: false
+  description: The institution the user is associated with (inst_assoc, inst_acct_* claims).
+- name: universal
+  standard: false
+  description: Elsevier universal identity umbrella scope.
+- name: urn:com:elsevier:idp:policy:product:indv_identity
+  standard: false
+  description: >-
+    Policy scope requiring individual identity to be established. Requested by ELSAPI-PROD on
+    the developer-portal sign-in.
+- name: urn:com:elsevier:idp:policy:product:inst_assoc
+  standard: false
+  description: Policy scope requiring institutional association to be established.
+- name: urn:com:elsevier:idp:policy:product:force_sign_in
+  standard: false
+  description: Policy scope forcing an interactive sign-in rather than silent session reuse.
+- name: urn:com:elsevier:idp:policy:product:user_roles
+  standard: false
+  description: Policy scope releasing user roles.
+- name: urn:com:elsevier:idp:policy:product:salutation
+  standard: false
+  description: Policy scope releasing the salutation claim.
+- name: urn:com:elsevier:idp:policy:product:formal_email
+  standard: false
+  description: Policy scope releasing the formal email address.
+- name: urn:com:elsevier:idp:policy:feature:attribute:country
+  standard: false
+  description: Policy scope releasing the country attribute.
+- name: urn:idp:policy:universal:attribute:name
+  standard: false
+  description: Policy scope releasing the name attribute.
+- name: urn:idp:policy:feature:security:password:strongPassword
+  standard: false
+  description: Policy scope asserting the strong-password requirement was met.
+- name: urn:idp:policy:product:confirmation:emailconfirmation
+  standard: false
+  description: Email-confirmation policy, generic.
+- name: urn:idp:policy:product:confirmation:EAPI:emailconfirmation
+  standard: false
+  description: >-
+    Email-confirmation policy scoped to EAPI — the Elsevier developer/API portal. This is the
+    scope that ties this authorization server to dev.elsevier.com.
+- name: urn:idp:policy:product:confirmation:SD:emailconfirmation
+  standard: false
+  description: Email-confirmation policy scoped to ScienceDirect.
+- name: urn:idp:policy:product:confirmation:OSC:emailconfirmation
+  standard: false
+  description: Email-confirmation policy scoped to OSC.
+- name: urn:idp:policy:product:confirmation:MDY:emailconfirmation
+  standard: false
+  description: Email-confirmation policy scoped to MDY (Mendeley).
+- name: urn:idp:policy:product:confirmation:IDMIG:emailconfirmation
+  standard: false
+  description: Email-confirmation policy scoped to the identity-migration product.
+- name: urn:idp:policy:product:SD:idp_user_linking_attribute
+  standard: false
+  description: ScienceDirect user-linking attribute release.
+- name: urn:idp:policy:product:PURE:idp_user_linking_attribute
+  standard: false
+  description: Pure user-linking attribute release.
+- name: Demo_rel2020.11
+  standard: false
+  description: >-
+    A demonstration scope left in the production advertisement. Recorded because it is in the
+    provider's own document, not because it is usable.
+- name: Demo_rel2020.12
+  standard: false
+  description: A second demonstration scope, as above.
+gaps:
+- >-
+  No scope in this list maps to a Research Products API operation. There is no
+  scopes_supported entry for Scopus, ScienceDirect content, SciVal, Embase, Engineering
+  Village or SUSHI.
+- >-
+  Elsevier's own auth guide says "We offer an oauth implementation for developers wanting to
+  integrate ScienceDirect and/or Scopus content into client-side applications requiring access
+  to user level (rather than institutional) content", but publishes no client-registration
+  path, no grant walkthrough and no scope for it. The mechanism is discoverable here; the
+  product documentation for it is not.
+- >-
+  api.elsevier.com serves no /.well-known/oauth-protected-resource, so a client that finds a
+  401 there has no RFC 9728 pointer back to this authorization server. The link between the
+  two was established here by following the developer portal's sign-in redirect, not by any
+  document Elsevier publishes.

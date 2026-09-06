@@ -1,0 +1,132 @@
+{
+      "get": {
+      "tags":[  
+               "ScienceDirect_Search_V2"
+            ],
+        "description": "<strong>ScienceDirect search exposes interfaces associated with ScienceDirect search API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+        "operationId": "ScienceDirectSearchV2",
+        "parameters": [
+            {
+              "default": "gene",
+              "description": "ScienceDirect search query string",
+              "in": "query",
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "default": "7f59af901d2d86f78a1fd60c1bf9426a",
+              "description": "Your API key",
+              "in": "query",
+              "name": "apiKey",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "description": "Requested content type, overrides HTTP header value",
+              "in": "query",
+              "name": "httpAccept",
+              "required": false,
+              "type": "string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+        ],
+        "produces": [
+          "application/json",
+          "application/atom+xml",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+             "$ref": "#/definitions/sciencedirect"
+            }
+          }
+        },
+        "summary": "ScienceDirect Search V2 API"
+      },
+      "put": {
+      "tags":[  
+               "ScienceDirect_Search_V2"
+            ],
+        "description": "<strong>ScienceDirect search exposes interfaces associated with ScienceDirect search API.</strong><br/> API key in this example was setup with authorized CORS domains.",
+        "operationId": "ScienceDirectSearchV2",
+        "parameters": [
+            {
+               "default": "{\r\n  \"qs\": \"protein\",\r\n  \"pub\": \"\\\"Cell\\\"\",\r\n  \"filters\": {\r\n      \"openAccess\": true\r\n  },\r\n  \"display\": {\r\n      \"offset\": 0,\r\n      \"show\": 25,\r\n      \"sortBy\": \"date\"\r\n  }\r\n}",
+               "in":"body",
+               "name":"body",
+               "description":"request body",
+               "required":true,
+               "type": "string"
+            },
+            {
+              "default": "7f59af901d2d86f78a1fd60c1bf9426a",
+              "description": "Your API key",
+              "in": "header",
+              "name": "x-els-apikey",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "default": "application/json",
+              "description": "Submitted content type",
+              "in": "header",
+              "name": "Content-Type",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "description": "Requested content type",
+              "in": "header",
+              "name": "Accept",
+              "required": false,
+              "type": "string"
+            },
+            {  
+                "name":"x-els-insttoken",
+                "in":"header",
+                "description":"Specification for authorization",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"x-els-authtoken",
+                "in":"header",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+        ],
+        "produces": [
+          "application/json",
+          "application/atom+xml",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+             "$ref": "#/definitions/sciencedirect"
+            }
+          }
+        },
+        "summary": "ScienceDirect Search V2 API"
+      }
+  
+}
+

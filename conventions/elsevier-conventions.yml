@@ -1,0 +1,168 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/technical_documentation.html
+supporting_sources:
+- https://dev.elsevier.com/tecdoc_api_authentication.html
+- https://dev.elsevier.com/api_key_settings.html
+- https://dev.elsevier.com/support.html
+- https://dev.elsevier.com/tecdoc_cors.html
+- wadl/ (37 first-party WADL contracts, 138 methods)
+- openapi/elsevier-*-swagger.json (7 first-party Swagger 2.0 documents)
+- live probe of https://api.elsevier.com/content/search/scopus, 2026-09-06
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Cross-cutting runtime semantics for the Elsevier Research Products APIs on
+  https://api.elsevier.com. Read from Elsevier's own WADL and Swagger contracts and its
+  how-to guides, and confirmed against a live unauthenticated response.
+auth:
+  style: api-key-plus-entitlement-token
+  header: X-ELS-APIKey
+  also_accepted_in_query: apiKey
+  detail: see authentication/elsevier-authentication.yml
+content_negotiation:
+  header: Accept
+  query_override: httpAccept
+  detail: >-
+    Elsevier supports a query-parameter override of Accept — `httpAccept=application/json`
+    (spelled `httpaccept` on 15 of the WADL methods, a real inconsistency in the provider's own
+    contracts). Default representation is XML on some surfaces and JSON on others; the
+    Authentication API returns JSON unless Accept is set to text/xml or
+    application/atom+xml.
+  media_types_declared:
+  - text/xml
+  - application/json
+  - application/xml
+  - application/atom+xml
+  - application/rdf+xml
+  - application/pdf
+  - image/jpeg
+  - image/gif
+  - image/png
+  - image/svg
+versioning:
+  style: header-and-parameter
+  request_header: X-ELS-ResourceVersion
+  request_parameter: ver
+  observed_in_wadl_methods: 62
+  response_header: X-ELS-ResourceVersion
+  observed_response_value: default
+  path_versioning: false
+  detail: >-
+    There is no version segment in any path. Version is negotiated per resource with the
+    X-ELS-ResourceVersion header (or the `ver` query parameter), and an unversioned request
+    answers with X-ELS-ResourceVersion default. Elsevier publishes no list of the versions a
+    caller may ask for, so the parameter is only usable by someone who was told the value out
+    of band.
+pagination:
+  style: offset-and-cursor
+  parameters:
+    offset: start
+    limit: count
+    scival_offset: offset
+    scival_limit: limit
+    cursor: cursor
+  defaults:
+    page_size: 25
+    max_page_size: 200
+  deep_pagination:
+    supported: true
+    parameter: cursor
+    detail: >-
+      Scopus Search caps a result set at 5,000 items when paged with start/count; cursor
+      pagination lifts that cap and is forward-only. ScienceDirect Search V2 caps at 6,000
+      items. SciVal uses offset/limit rather than start/count — the naming is not shared
+      across products.
+  response_fields:
+  - opensearch:totalResults
+  - opensearch:startIndex
+  - opensearch:itemsPerPage
+  - link[@ref=next|prev|first|last|self]
+field_selection:
+  supported: true
+  parameters:
+  - field
+  - view
+  detail: >-
+    Two independent mechanisms. `view` selects a named server-side projection (STANDARD,
+    COMPLETE, COMPONENT, FULL, ENHANCED, COVERIMAGE, REF, DOCUMENT, META, META_ABS,
+    META_ABS_REF) and drives BOTH the shape of the response and the entitlement required to
+    get it — COMPLETE and COMPONENT on Scopus Search were restricted to entitled users in the
+    2018-09-14 release. `field` narrows the returned elements within a view and is declared on
+    47 WADL methods.
+request_tracing:
+  request_header: X-ELS-ReqId
+  request_parameter: reqId
+  response_headers:
+  - X-ELS-ReqId
+  - X-ELS-TransId
+  detail: >-
+    A caller-supplied correlation id is accepted on 122 of the 138 WADL methods and echoed
+    back. Elsevier also mints X-ELS-TransId on every response, including errors — observed on
+    a live 401. This is the identifier API Support asks for.
+rate_limit_signaling:
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - X-ELS-Status
+  status_on_exhaustion: 429
+  detail: see rate-limits/elsevier-rate-limits.yml
+error_envelope:
+  shapes:
+  - '{"service-error":{"status":{"statusCode":"...","statusText":"..."}}}'
+  - '{"error-response":{"error-code":"...","error-message":"..."}}'
+  rfc9457: false
+  content_type: application/json;charset=UTF-8
+  detail: >-
+    Two different envelopes are in production on the same host, chosen by which tier answered.
+    Neither is application/problem+json. See errors/elsevier-problem-types.yml.
+cors:
+  supported: true
+  detail: >-
+    W3C CORS is supported and documented (dev.elsevier.com/tecdoc_cors.html). Keys issued by
+    Elsevier are configured by default for cross-origin requests from https://dev.elsevier.com
+    only; a caller's own origin has to be added by Elsevier.
+idempotency:
+  coverage: na
+  mechanism: none
+  header: null
+  scope: []
+  detail: >-
+    Not applicable rather than absent. 151 of the 153 operations in the harvested contracts are
+    GET; the two exceptions are PUT /content/search/sciencedirect, which is a search that
+    carries its query in a request body and creates nothing, and the Feedback API. There is no
+    resource-creating operation anywhere on the public surface, so there is nothing an
+    Idempotency-Key would protect. Recorded as na so it leaves the denominator instead of
+    scoring as a missing safeguard.
+reversibility:
+  grade: na
+  detail: >-
+    The public Elsevier API surface is read-only. No operation creates, mutates or destroys
+    provider-side state, so there is no action for an agent to take back and no window to
+    state. Elsevier publishes no cancel/refund/void/undo/restore operation because it needs
+    none.
+  write_surfaces: []
+dry_run_mode:
+  supported: na
+  detail: Read-only surface; a rehearsal mode would be indistinguishable from the call itself.
+caching:
+  detail: >-
+    Observed responses set `cache-control: no-store, no-cache, must-revalidate, max-age=0` and
+    `pragma: no-cache`. No ETag or Last-Modified was returned on the probed response, so
+    conditional requests are not available as a quota-saving strategy.
+tdm_signalling:
+  response_headers:
+    tdm-reservation: '1'
+    tdm-policy: https://www.elsevier.com/tdm/tdmrep-policy.json
+  detail: >-
+    Every api.elsevier.com response — including error responses — carries TDM Reservation
+    Protocol headers asserting rights over the payload and pointing at an ODRL offer. This is
+    unusual and worth knowing: the machine-readable licence travels with the data, on every
+    call. See well-known/elsevier-well-known.yml.
+cross_links:
+  authentication: authentication/elsevier-authentication.yml
+  errors: errors/elsevier-problem-types.yml
+  lifecycle: lifecycle/elsevier-lifecycle.yml
+  rate_limits: rate-limits/elsevier-rate-limits.yml
+  conformance: conformance/elsevier-conformance.yml

@@ -1,113 +1,601 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/api_key_settings.html
+supporting_sources:
+- 'https://dev.elsevier.com/support.html (FAQ: quota reset time and header semantics)'
+- 'https://dev.elsevier.com/release_notes.html (2019-07-11: shaped throttling replaced by fixed throttling)'
+- live probe of https://api.elsevier.com/content/search/scopus (unauthenticated 401, 2026-09-06) for the
+  runtime header set
 provider: Elsevier
+limit_count: 36
 providerId: elsevier
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Content
-  - Journals
-  - Medical
-  - Research
-  - Scientific
-  - Technical
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Elsevier API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+description: Per-API weekly quotas and per-second throttles for the Elsevier Research Products APIs, transcribed
+  from the provider's own Default API Key Settings table. Elsevier states plainly that "Quota limits are
+  unique to each API, there is not a single global setting for a given APIKey" — so these are per-API-key,
+  per-API limits, not tiers.
 headers:
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
   reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  reset_format: Unix timestamp (seconds)
+  status: X-ELS-Status
+  request_id: X-ELS-ReqId
+  retryAfter: null
+  policy: null
+  note: 'X-RateLimit-Limit / -Remaining / -Reset are returned on successful responses. Elsevier documents
+    that once the weekly quota is exhausted those two counters STOP being returned and the response instead
+    carries X-ELS-Status: QUOTA_EXCEEDED alongside X-RateLimit-Reset — so an agent cannot rely on Remaining
+    trending to zero as its exhaustion signal. No Retry-After and no RFC 9238 RateLimit-Policy header
+    is emitted.'
 responseCodes:
   throttled: 429
   quotaExceeded: 429
-  serviceUnavailable: 503
+  note: Both exhaustion modes return the same status. They are distinguished only by whether X-ELS-Status
+    is QUOTA_EXCEEDED (weekly quota) or the X-RateLimit-* counters are still present (per-second throttle).
+quota_increase:
+  available: true
+  process: email API Support with the API key, full institution name, a description of the use case, the
+    API name, and the requested quota
+  url: https://service.elsevier.com/app/contact/supporthub/researchproductsapis/
+  self_serve: false
+access_controlled_apis:
+  note: Access to these APIs is not enabled on a new key by default and requires review by Elsevier API
+    Support, which explicitly "cannot guarantee permission".
+  apis:
+  - Scopus Citation Overview
+  - Scopus Author Feedback
+  - ScienceDirect Full-Text Entitlement
+  - ScienceDirect Article Hosting Permissions
+  - ScienceDirect Holdings Report
+  - Embase Search and Retrieval
+  - Engineering Village Search and Retrieval
+  - SUSHI COP5 API
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
+- name: Serial Title
+  product: Scopus
+  scope: api-key
+  applies_to_api: Serial Title
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD, COVERIMAGE, ENHANCED views. Default 25 results / max 200 results.
+- name: Citations Count Metadata
+  product: Scopus
+  scope: api-key
+  applies_to_api: Citations Count Metadata
+  limit: 50000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Elsevier Scopus APIs
-      - Elsevier ScienceDirect APIs
-      - Elsevier SciVal API
-      - Elsevier Engineering Village API
-      - Elsevier Embase API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Elsevier Scopus APIs
-      - Elsevier ScienceDirect APIs
-      - Elsevier SciVal API
-      - Elsevier Engineering Village API
-      - Elsevier Embase API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Elsevier Scopus APIs
-      - Elsevier ScienceDirect APIs
-      - Elsevier SciVal API
-      - Elsevier Engineering Village API
-      - Elsevier Embase API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Elsevier Scopus APIs
-      - Elsevier ScienceDirect APIs
-      - Elsevier SciVal API
-      - Elsevier Engineering Village API
-      - Elsevier Embase API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Elsevier Scopus APIs
-      - Elsevier ScienceDirect APIs
-      - Elsevier SciVal API
-      - Elsevier Engineering Village API
-      - Elsevier Embase API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD view. Default 25 results / max 200 results.
+- name: Subject Classifications
+  product: Scopus
+  scope: api-key
+  applies_to_api: Subject Classifications
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst: null
+  note: STANDARD view. Default 25 results / max 200 results. Quota and throttle published as N/A.
+- name: Abstract Retrieval
+  product: Scopus
+  scope: api-key
+  applies_to_api: Abstract Retrieval
+  limit: 10000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 9
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: All views, default FULL view.
+- name: Affiliation Retrieval
+  product: Scopus
+  scope: api-key
+  applies_to_api: Affiliation Retrieval
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 9
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: All views, default STANDARD view.
+- name: Author Retrieval
+  product: Scopus
+  scope: api-key
+  applies_to_api: Author Retrieval
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 3
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: All views, default STANDARD view.
+- name: Affiliation Search
+  product: Scopus
+  scope: api-key
+  applies_to_api: Affiliation Search
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Default 25 results / max 200 results; 5,000 item result limit.
+- name: Author Search
+  product: Scopus
+  scope: api-key
+  applies_to_api: Author Search
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 2
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Default 25 results / max 200 results; 5,000 item result limit.
+- name: Scopus Search
+  product: Scopus
+  scope: api-key
+  applies_to_api: Scopus Search
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 9
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD view max 200 results; COMPLETE and COMPONENT views max 25 results. 5,000 item total result
+    limit unless cursor pagination is used.
+- name: Serial Title
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: Serial Title
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD, COVERIMAGE views. Default 25 results / max 200 results.
+- name: Nonserial Title
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: Nonserial Title
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD, COVERIMAGE views. Default 25 results / max 200 results.
+- name: Subject Classifications
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: Subject Classifications
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst: null
+  note: No restrictions on views or results; quota and throttle published as N/A.
+- name: Article Retrieval
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: Article Retrieval
+  limit: 50000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 10
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: All subscribed, open-access and complimentary articles. Unlimited for text-mining API keys.
+- name: Article Metadata
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: Article Metadata
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: 25 results, field-restricted search against ScienceDirect serial/nonserial full-text articles;
+    6,000 item total result limit. Weekly quota published as N/A.
+- name: ScienceDirect Search v2
+  product: ScienceDirect
+  scope: api-key
+  applies_to_api: ScienceDirect Search v2
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 2
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD view max 200 results; 6,000 item total result limit.
+- name: SciVal Author Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Author Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Default 100 results / max 500 results. Quota marked with an asterisk on the source table.
+- name: SciVal Country Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Country Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Country Group Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Country Group Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Institution Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Institution Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Institution Group Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Institution Group Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Publication Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Publication Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Scopus Source Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Scopus Source Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Subject Area
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Subject Area
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Topic Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Topic Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal Topic Cluster Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal Topic Cluster Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metrics resource; no limit on total results (varies by resource).
+- name: SciVal World Lookup
+  product: SciVal
+  scope: api-key
+  applies_to_api: SciVal World Lookup
+  limit: 5000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Max 100 results for the Metric resource; no limit on total results (varies by resource).
+- name: Scopus Citation Overview
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Scopus Citation Overview
+  limit: 20000
+  metric: requests
+  window: 7d
+  window_note: Quotas reset every seven days; the exact reset instant is per-API and is returned as the
+    X-RateLimit-Reset Unix timestamp.
+  burst:
+    limit: 4
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: STANDARD view. Default 25 results / max 200 results. Access not enabled by default.
+- name: Scopus Author Feedback
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Scopus Author Feedback
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst: null
+  note: Quota and throttle published as N/A. Access not enabled by default.
+- name: ScienceDirect Full-Text Entitlement
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: ScienceDirect Full-Text Entitlement
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Weekly quota published as N/A. Access not enabled by default.
+- name: ScienceDirect Article Hosting Permissions
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: ScienceDirect Article Hosting Permissions
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Open-access information for a single full-text article. Weekly quota published as N/A. Access
+    not enabled by default.
+- name: ScienceDirect Holdings Report
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: ScienceDirect Holdings Report
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 2
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Weekly quota published as N/A. Access not enabled by default.
+- name: Embase Search
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Embase Search
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: Default 25 results; no limit on total results. Weekly quota published as N/A. Access not enabled
+    by default.
+- name: Embase Retrieval
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Embase Retrieval
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: One document per request. Weekly quota published as N/A. Access not enabled by default.
+- name: Engineering Village Search
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Engineering Village Search
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst: null
+  note: Default 25 results. Quota and throttle published as N/A. Access not enabled by default.
+- name: Engineering Village Retrieval
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: Engineering Village Retrieval
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst: null
+  note: One document per request. Quota and throttle published as N/A. Access not enabled by default.
+- name: SUSHI COP5 API
+  product: Access-controlled
+  scope: api-key
+  applies_to_api: SUSHI COP5 API
+  limit: null
+  metric: requests
+  window: 7d
+  window_note: Elsevier publishes N/A for this API in the weekly-quota column.
+  burst:
+    limit: 6
+    metric: requests
+    window: 1s
+    note: Hard throttle. Since the 2019-07-11 release, exceeding it returns HTTP 429 immediately rather
+      than queueing the request.
+  note: One request per metric type. Weekly quota published as N/A. Access not enabled by default.
+summary:
+  limit_count: 36
+  apis_with_published_weekly_quota: 24
+  apis_with_published_throttle: 31
+  runtime_headers_published: true

@@ -1,0 +1,68 @@
+{
+    "@context": [
+        "http://www.w3.org/ns/odrl.jsonld",
+        "http://www.w3.org/2006/vcard/ns",
+        {
+            "tdm": "http://www.w3.org/ns/tdmrep/",
+            "stm": "http://www.stm-assoc.org/standards/ns/tdmrep/",
+            "odrl:leftOperand": {
+                "@type": "@id"
+            },
+            "odrl:rightOperand": {
+                "@type": "@id"
+            },
+            "vcard:hasTelephone": {
+                "@type": "@id"
+            },
+            "vcard:hasEmail": {
+                "@type": "@id"
+            }
+        }
+    ],
+    "uid": "https://www.elsevier.com/tdm/tdmrep-policy#1",
+    "@type": "Offer",
+    "profile": "http://www.w3.org/ns/tdmrep",
+    "assigner": {
+        "uid": "https://www.elsevier.com",
+        "vcard:fn": "Elsevier B.V.",
+        "vcard:nickname": "Elsevier",
+        "vcard:hasEmail": "mailto:tdm-license@elsevier.com",
+        "vcard:hasAddress": {
+            "vcard:street-address": "Radarweg 29",
+            "vcard:postal-code": "1043 NX",
+            "vcard:locality": "Amsterdam",
+            "vcard:country-name": "The Netherlands"
+        },
+        "vcard:hasTelephone": "tel:+31204853911",
+        "vcard:hasURL": "https://www.elsevier.com/legal/tdmrep-license"
+    },
+    "permission": [
+        {
+            "target": "https://www.elsevier.com#all-content",
+            "action": "tdm:mine",
+            "constraint": [
+                {
+                    "odrl:leftOperand": "purpose",
+                    "operator": "eq",
+                    "odrl:rightOperand": "stm:eu-dsm-article3"
+                }
+            ]
+        },
+        {
+            "target": "https://www.elsevier.com#all-content",
+            "action": "tdm:mine",
+            "constraint": [
+                {
+                    "odrl:leftOperand": "purpose",
+                    "operator": "neq",
+                    "odrl:rightOperand": "stm:eu-dsm-article3"
+                }
+            ],
+            "duty": [
+                {
+                    "action": "obtainConsent"
+                }
+            ]
+        }
+    ]
+}

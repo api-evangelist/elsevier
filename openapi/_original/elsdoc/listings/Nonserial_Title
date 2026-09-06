@@ -1,0 +1,142 @@
+{  
+   "nonserialtitle":{  
+      "get":{  
+         "tags":[  
+            "Nonserial_Title"
+         ],
+         "description":"<strong>Nonserial Metadata API represents a search against the nonserial titles (Science Direct content).</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"NonserialTitleSearch",
+         "parameters":[  
+            {  
+               "description":"Partial or complete nonserial title. Example: game",
+               "in":"query",
+               "name":"title",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "default":"978-1-898563-14-3",
+               "description":"One or more source identifier. Example: 978-1-898563-14-3,978-0-12-370182-4",
+               "in":"query",
+               "name":"isbn",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "description":"ScienceDirect subject area abbreviation associated with the content category. Example: mathsgen",
+               "in":"query",
+               "name":"subj",
+               "required":false,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "application/xml",
+            "text/xml",
+            "image/gif"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "$ref":"#/definitions/stream"
+               }
+            }
+         },
+         "summary":"Nonserial Title Search"
+      }
+   },
+   "nonserialtitleisbn":{  
+      "get":{  
+         "tags":[  
+            "Nonserial_Title"
+         ],
+         "description":"<strong>Single nonserial title (Science Direct content) identified by ISBN. Returns either the metadata for that title or the cover image.</strong><br/> API key in this example was setup with authorized CORS domains.",
+         "operationId":"NonserialTitleMetadata",
+         "parameters":[  
+            {  
+               "default":"978-1-898563-14-3",
+               "description":"ISBN source identifier. Example: 978-1-898563-14-3",
+               "in":"path",
+               "name":"isbn",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+               "description":"Your API key",
+               "in":"query",
+               "name":"apiKey",
+               "required":true,
+               "type":"string"
+            },
+            {  
+               "description":"Requested content type, overrides HTTP header value. To retrieve cover image use image/gif",
+               "in":"query",
+               "name":"httpAccept",
+               "required":false,
+               "type":"string"
+            },
+            {  
+                "name":"insttoken",
+                "in":"query",
+                "description":"Specification for authorization, institution authtoken",
+                "required":false,
+                "type":"string"
+            },
+            {  
+                "name":"access_token",
+                "in":"query",
+                "description":"Specification for active session, secured authtoken",
+                "required":false,
+                "type":"string"
+            }
+         ],
+         "produces":[  
+            "application/json",
+            "application/xml",
+            "text/xml",
+            "image/gif"
+         ],
+         "responses":{  
+            "200":{  
+               "description":"No response was specified",
+               "schema":{  
+                  "$ref":"#/definitions/stream"
+               }
+            }
+         },
+         "summary":"Nonserial Title Metadata"
+      }
+   }
+}

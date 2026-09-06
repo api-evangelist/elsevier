@@ -1,0 +1,113 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://dev.elsevier.com/support.html (the only SDK Elsevier links from its developer
+  portal), https://github.com/ElsevierDev (the first-party GitHub organisation),
+  https://pypi.org/pypi/elsapy/json (registry metadata), and
+  https://api.github.com/users/ElsevierDev/repos (repository state), all fetched 2026-09-06.
+note: >-
+  Elsevier links exactly one client library from its developer portal and disclaims it in the
+  same sentence: "There is a basic SDK available for the RP APIs at GitHub. Please note this
+  SDK is not supported by Elsevier." (dev.elsevier.com/support.html). Every repository in the
+  ElsevierDev GitHub organisation — all five of them — is ARCHIVED. There is no npm, Maven,
+  NuGet, RubyGems, Packagist, crates.io or Go module published under an Elsevier namespace;
+  those registries were checked and returned nothing first-party.
+packages:
+- name: elsapy
+  language: Python
+  registry: pypi
+  official: true
+  supported: false
+  url: https://pypi.org/project/elsapy/
+  repository: https://github.com/ElsevierDev/elsapy
+  version: 0.5.1
+  published: '2022-11-09'
+  license: BSD-3-Clause
+  covers:
+  - Elsevier Scopus APIs
+  - Elsevier ScienceDirect APIs
+  description: >-
+    A Python module for use with Elsevier's APIs — Scopus, ScienceDirect and others. Wraps
+    the X-ELS-APIKey / insttoken auth model and the search + retrieval endpoints.
+  note: >-
+    First-party by authorship (published from the ElsevierDev organisation) but explicitly
+    unsupported by Elsevier's own documentation. The GitHub repository is ARCHIVED and
+    read-only; last commit and last PyPI release are both 2022-11-09, which is nearly four
+    years behind the API surface it wraps and predates every SciVal topic-cluster and
+    ScienceDirect Search V2 change now in the published contracts.
+- name: rss
+  language: JavaScript
+  registry: null
+  official: true
+  supported: false
+  url: https://github.com/ElsevierDev/rss
+  repository: https://github.com/ElsevierDev/rss
+  version: null
+  published: '2024-12-18'
+  description: Scopus API-based RSS replica.
+  note: >-
+    Never published to a package registry, so there is no metadata endpoint to read a version
+    from — `version: null` here means checked and none exists, not unchecked. The repository
+    is ARCHIVED; the date recorded is the last push.
+- name: apidemo
+  language: JavaScript
+  registry: null
+  official: true
+  supported: false
+  url: https://github.com/ElsevierDev/apidemo
+  repository: https://github.com/ElsevierDev/apidemo
+  version: null
+  published: '2021-03-18'
+  description: >-
+    A Node.js program for api.elsevier.com demonstrating interoperability between the Scopus
+    and SciVal APIs.
+  note: 'Not published to any registry; ARCHIVED. version: null means checked, nothing to record.'
+- name: scopusWidgets
+  language: JavaScript
+  registry: null
+  official: true
+  supported: false
+  url: https://github.com/ElsevierDev/scopusWidgets
+  repository: https://github.com/ElsevierDev/scopusWidgets
+  version: null
+  published: '2019-05-14'
+  description: Scopus integration widgets (client-side embeds).
+  note: 'Not published to any registry; ARCHIVED. version: null means checked, nothing to record.'
+- name: pybliometrics
+  language: Python
+  registry: null
+  official: false
+  supported: false
+  url: https://github.com/ElsevierDev/pybliometrics
+  version: null
+  published: '2019-09-05'
+  description: Python-based API wrapper to access Scopus.
+  note: >-
+    A fork living in the Elsevier organisation, not an Elsevier product — the maintained
+    upstream is community-run. ARCHIVED here. official:false for that reason.
+registries_checked:
+- registry: pypi
+  result: one first-party package (elsapy)
+- registry: npm
+  result: no first-party package (elsapy, elsevier, @elsevier/* all 404)
+- registry: maven-central
+  result: no first-party Elsevier API client
+- registry: nuget
+  result: no first-party Elsevier API client
+- registry: rubygems
+  result: no first-party Elsevier API client
+- registry: packagist
+  result: no first-party Elsevier API client
+- registry: crates.io
+  result: no first-party Elsevier API client
+- registry: pkg.go.dev
+  result: no first-party Elsevier API client
+summary:
+  package_count: 5
+  official_count: 4
+  registry_published_count: 1
+  languages:
+  - Python
+  - JavaScript
+  all_first_party_repos_archived: true
+  newest_first_party_release: '2022-11-09'

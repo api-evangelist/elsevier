@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Describes the search interfaces for the PlumX Metrics API.
+
+Revision History:
+
+2018-09-14: Initial definition.
+
+2018-10-30: Renamed to PlumX Metrics API
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+             xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			 xmlns:eapi="urn:elsevier:api" 
+			 xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02" 
+			 xmlns:tns="http://www.elsevier.com/research-metrics/1/schemas">
+  <doc title="PlumX Metrics API" xml:lang="en">This represents the interface for retrieving PlumX metrics for Scopus documents and other related artifacts.
+		<br/>PlumX metrics include social media mentions and other sources that go beyond traditional citation data.
+		<br/>This API is available to all API users with an active Scopus subscription.
+  </doc>
+  <grammars>
+    <xs:schema xmlns:tns="http://www.elsevier.com/research-metrics/1/schemas" targetNamespace="http://www.elsevier.com/research-metrics/1/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="metrics_summary" type="tns:metrics_summary" />
+      <xs:element name="category" type="tns:category" />
+      <xs:element name="count_type" type="tns:count_type" />
+      <xs:element name="source" type="tns:source" />
+      <xs:element name="idType" type="tns:idType" />
+      <xs:complexType name="metrics_summary">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="id_type">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Identifier type of the metrics data search.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="id_value">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Identifier value of the metrics data search.</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" name="categories" type="tns:category">
+            <xs:annotation>
+              <xs:documentation>List of count categories with total and partitioned metrics counts</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="category">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="name" type="tns:category.name">
+            <xs:annotation>
+              <xs:documentation>Label for category.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total metric count for count category</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:integer" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="count_types" type="tns:count_type">
+            <xs:annotation>
+              <xs:documentation>List of count types with total and partitioned metrics counts</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="category.name">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="capture" />
+          <xs:enumeration value="citation" />
+          <xs:enumeration value="mention" />
+          <xs:enumeration value="socialMedia" />
+          <xs:enumeration value="usage" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="count_type">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="name" type="tns:count_type.name">
+            <xs:annotation>
+              <xs:documentation>Label for count type represented</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total metric count for count type</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:integer" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="sources" type="tns:source">
+            <xs:annotation>
+              <xs:documentation>List sources with metrics counts, currently only applied to count_types that appear in the citation count category</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="count_type.name">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ABSTRACT_VIEWS" />
+          <xs:enumeration value="ALL_BLOG_COUNT" />
+          <xs:enumeration value="BOOKMARK_COUNT" />
+          <xs:enumeration value="CITED_BY_COUNT" />
+          <xs:enumeration value="CLINICAL_CITED_BY_COUNT" />
+          <xs:enumeration value="COLLABORATOR_COUNT" />
+          <xs:enumeration value="COMMENT_COUNT" />
+          <xs:enumeration value="DOWNLOAD_COUNT" />
+          <xs:enumeration value="EXPORTS_SAVES" />
+          <xs:enumeration value="FACEBOOK_COUNT" />
+          <xs:enumeration value="FAVORITE_COUNT" />
+          <xs:enumeration value="FORK_COUNT" />
+          <xs:enumeration value="FULL_TEXT_VIEWS" />
+          <xs:enumeration value="HOLDINGS_COUNT" />
+          <xs:enumeration value="HTML_VIEWS" />
+          <xs:enumeration value="LIKE_COUNT" />
+          <xs:enumeration value="LINK_CLICK_COUNT" />
+          <xs:enumeration value="LINK_COUNT" />
+          <xs:enumeration value="LINK_OUTS" />
+          <xs:enumeration value="NEWS_COUNT" />
+          <xs:enumeration value="PATENT_CITED_BY_COUNT" />
+          <xs:enumeration value="PDF_VIEWS" />
+          <xs:enumeration value="PLAY_COUNT" />
+          <xs:enumeration value="POLICY_CITED_BY_COUNT" />
+          <xs:enumeration value="QA_SITE_MENTIONS" />
+          <xs:enumeration value="READER_COUNT" />
+          <xs:enumeration value="REFERENCE_COUNT" />
+          <xs:enumeration value="REVIEW_COUNT" />
+          <xs:enumeration value="SAMPLE_DOWNLOADS" />
+          <xs:enumeration value="SHARE_COUNT" />
+          <xs:enumeration value="TWEET_COUNT" />
+          <xs:enumeration value="VIEW_COUNT" />
+          <xs:enumeration value="WATCHER_COUNT" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="source">
+        <xs:annotation>
+          <xs:documentation>Source name and total count object</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="name">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Name of metrics source</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:string" />
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="total">
+            <xs:simpleType>
+              <xs:annotation>
+                <xs:documentation>Total metric count for that source</xs:documentation>
+              </xs:annotation>
+              <xs:restriction base="xs:integer" />
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="idType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="doi" />
+          <xs:enumeration value="elsevierId" />
+          <xs:enumeration value="elsevierPii" />
+          <xs:enumeration value="isbn" />
+          <xs:enumeration value="pmcid" />
+          <xs:enumeration value="pmid" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </grammars>
+  <resources base="https://api.elsevier.com/analytics/">
+    <resource id="_artifactsidTypeidValuemetrics" path="plumx/{idType}/{idValue}">
+      <doc title="PlumX Metrics API">API used for finding aggregate metric counts for individual document identifiers and other related artifacts.</doc>
+      <param name="idType" style="template" type="tns:idType" default="" required="true">
+        <doc title="idType" xml:lang="en">The type of identifier to search for.
+        	<p>
+        	Possible identifier type values:
+        	</p>
+        	<ul>
+				<li>doi</li>
+				<li>elsevierId</li>
+				<li>elsevierPii</li>
+				<li>isbn</li>
+				<li>pmcid</li>
+				<li>pmid</li>
+        	</ul>
+        </doc>
+      </param>
+      <param name="idValue" style="template" type="xsd:string" default="" required="true">
+        <doc title="idValue" xml:lang="en">The value of the identifier to search for.</doc>
+      </param>
+      <method id="metrics_by_id_and_value_GET" name="GET">
+        <doc title="Metrics by Identifier Type and Value" xml:lang="en">Ordered counts of total metrics for each Count Type associated with an identifier</doc>
+        <request>
+			<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+				<doc title="accept">This represents the acceptable mime type format in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+				<option value="application/json"/>
+				<option value="application/atom+xml"/>
+				<option value="application/xml"/>
+			</param>
+			<param name="Authorization" type="xsd:string" style="header">
+				<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+			</param>
+			<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+				<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+			</param>
+			<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+				<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+			</param>
+			<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+				<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+			</param>
+			<param name="X-ELS-ReqId" type="xsd:string" style="header">
+				<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+			</param>
+			<param name="X-ELS-ResourceVersion" type="xsd:string" style="header" default="1">
+				<doc title="resource version">
+					<br/>Version of the data requested, default = 1, 404 reponse if version does not exist
+				</doc>
+				<option value="1"/>
+			</param>
+			<param name="httpAccept" type="xsd:string" style="query">
+				<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+				<option value="application/json"/>
+				<option value="application/atom+xml"/>
+				<option value="application/xml"/>
+			</param>
+			<param name="access_token" type="xsd:string" style="query">
+				<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+			</param>
+			<param name="insttoken" type="xsd:string" style="query">
+				<doc title="institution identifier">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+			</param>
+			<param name="apiKey" type="xsd:string" style="query">
+				<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+			</param>
+			<param name="reqId" type="xsd:string" style="query">
+				<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+			</param>
+        </request>
+        <response status="200">
+          <representation mediaType="application/json" element="tns:metrics_summary" />
+        </response>
+        <response status="401">
+          <doc title="401" xml:lang="en">Not authorized to access resource. Authentication token is not valid for viewing content.</doc>
+        </response>
+        <response status="404">
+          <doc title="404" xml:lang="en">Error code when zero metrics are associated with an idValue/idType combination or the idValue/idType does not exist in the system</doc>
+        </response>
+        <response status="500">
+          <doc title="500" xml:lang="en">Unexpected server error, could not complete response</doc>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>

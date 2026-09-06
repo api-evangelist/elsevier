@@ -2,23 +2,21 @@
   "repo": "elsevier",
   "feeds": [
     {
-      "source": "https://www.elsevier.com/connect",
-      "feed_url": "https://www.elsevier.com/connect",
-      "title": "",
-      "saved": 0,
-      "method": "none",
-      "nature": "undetermined",
-      "nature_basis": null
-    },
-    {
       "source": "https://dev.elsevier.com/support.html",
       "feed_url": "https://dev.elsevier.com/support.html",
       "title": "",
       "saved": 0,
       "method": "none"
+    },
+    {
+      "source": "https://www.elsevier.com/connect",
+      "feed_url": "https://www.elsevier.com/connect",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 3,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,

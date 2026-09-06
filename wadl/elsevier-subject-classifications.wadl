@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<!--
+Describes the Subject Classifications API.
+
+Revision History:
+
+2014-12-16: Initial definition.
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" xmlns:els="urn:elsevier:rs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eapi="urn:elsevier:api"
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" xmlns:err="http://www.elsevier.com/services/dtd" xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Subject Classifications API">This provides the ability to retrieve and search for the Subject Classifications associated with ScienceDirect or Scopus content.
+	</doc>
+	<grammars>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/subject/">
+		<resource path="scidir">
+			<doc title="Subject Classifications API - ScienceDirect">This represents the subject classifications associated with ScienceDirect content.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="description" type="xsd:string" style="query">
+						<doc title="filter by description">
+							Subject classifications are filtered based upon any word provided in the primary subject classification description. This is a case-insensitive match of any portion of the field.
+							<br/>
+							<br/>ex. description=biological</doc>
+					</param>
+					<param name="detail" type="xsd:string" style="query">
+						<doc title="filter by detail">
+							Subject classifications are filtered based upon any word provided in the detail attribute. This is a case-insensitive match of any portion of the field.
+							<br/>
+							<br/>ex. detail=food</doc>
+					</param>
+					<param name="code" type="xsd:string" style="query">
+						<doc title="filter by code">
+							Subject classifications are filtered based upon any word provided in the code attribute. This is a case-insensitive match of the entire field.
+							<br/>
+							<br/>ex. code=391</doc>
+					</param>
+					<param name="parentCode" type="xsd:string" style="query">
+						<doc title="filter by parentCode">
+							Subject classifications are filtered based upon any word provided in the parentCode attribute. This is a case-insensitive match of the entire field.
+							<br/>
+							<br/>ex. parentCode=7</doc>
+					</param>
+					<param name="abbrev" type="xsd:string" style="query">
+						<doc title="filter by abbrev">
+							Subject classifications are filtered based upon any word provided in the abbrev attribute. This is a case-insensitive match of the entire field.
+							<br/>
+							<br/>ex. abbrev=analysis</doc>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							This represents the specific fields that should be returned. If no fields are specified the entire subject-classification entry is returned.
+							<br/>Multiple fields can be specified, delimited by commas.</doc>
+						<option value="code"/>
+						<option value="abbrev"/>
+						<option value="detail"/>
+						<option value="description"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example">
+						<doc title="Subject Classification JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example">
+						<doc title="Subject Classification XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleSearchResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="scopus">
+			<doc title="Subject Classifications API - Scopus">This represents the subject classifications associated with Scopus content.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="description" type="xsd:string" style="query">
+						<doc title="filter by description">
+							Subject classifications are filtered based upon any word provided in the primary subject classification description. This is a case-insensitive match of any portion of the field.
+							<br/>
+							<br/>ex. description=biological</doc>
+					</param>
+					<param name="detail" type="xsd:string" style="query">
+						<doc title="filter by detail">
+							Subject classifications are filtered based upon any word provided in the detail attribute. This is a case-insensitive match of any portion of the field.
+							<br/>
+							<br/>ex. detail=food</doc>
+					</param>
+					<param name="code" type="xsd:string" style="query">
+						<doc title="filter by code">
+							Subject classifications are filtered based upon any word provided in the code attribute. This is a case-insensitive match of the entire field.
+							<br/>
+							<br/>ex. code=1106</doc>
+					</param>
+					<param name="abbrev" type="xsd:string" style="query">
+						<doc title="filter by abbrev">
+							Subject classifications are filtered based upon any word provided in the abbrev attribute. This is a case-insensitive match of the entire field.
+							<br/>
+							<br/>ex. abbrev=AGRI</doc>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							This represents the specific fields that should be returned. If no fields are specified the entire subject-classification entry is returned.
+							<br/>Multiple fields can be specified, delimited by commas.</doc>
+						<option value="code"/>
+						<option value="abbrev"/>
+						<option value="detail"/>
+						<option value="description"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example">
+						<doc title="Subject Classification JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example">
+						<doc title="Subject Classification XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/metadata/serialTitleSearchResp.xml">
+						<doc title="Serial Title XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

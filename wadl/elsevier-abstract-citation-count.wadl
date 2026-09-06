@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!--
+Describes the Abstract Citation Count interface for API.
+
+Revision History:
+
+2010-05-07: Initial definition for 11-2 release.
+            - moved citations resource from AbstractRetrievalAPI.wadl to this file.
+            - new resource (citation count)
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - change to sort field names (year -> sort-year and citationnum -> rowTotal)
+			- added query string overrides httpAccept, apiKey, reqId, and ver
+
+2014-04-22: Updates for Sprint 17. Includes:
+            - separation of Abstract Citations API and Abstract Citation Count API
+
+2015-03-10: Updates for ELSAPI Sprint 3. Includes:
+            - support for citation count as metadata through the request for textual mime types (JSON, XML)
+
+2015-06-02: Updates for ELSAPI Sprint 9. Includes:
+            - support for citation count as html snippet through the request for textual mime type (text/html)
+
+2016-10-25: Updates for ELSAPI Sprint 32. Includes:
+            - removal of non-singular document identifier qualifiers (i.e. issn, isbn, volume, issue, title, page)
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+             xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Abstract Citations Count API">This represents the interfaces to retrieve document citation counts (SCOPUS content) as a watermarked image or as metadata (JSON, XML). The metadata response also includes additional document identifiers, if available.
+	<br/><br/>The following chart shows the <a href="https://${gateway.els.domain.devportal}/guides/AbstractCitationCountViews.htm">Citation Count Metadata Views</a>.
+	<br/><br/>Note that the image and the metadata are considered distinct resources and access to each may be restricted accordingly.
+	</doc>
+	<grammars>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/abstract/">
+		<resource path="citation-count">
+			<doc title="Abstract Citation Count API">This represents a retrieval of citation counts for specific documents (SCOPUS content) as a branded image. Performs a search based upon the identifiers provided and returns the cited-by count of the document(s) returned as a SCOPUS-branded image or as textual metadata (JSON, XML). Note that each category is considered a distinct resource and access restrictions may be applicable.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types for which the response can be generated. Note that retrieving the citation count as an image is considered a different resource from the text metadata responses of JSON and XML.</doc>
+						<option value="image/jpeg"/>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="text/html"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token, where the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this key is used to validate the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.  Note that retrieving the citation count as an image is considered a different resource from the text metadata responses of JSON and XML.</doc>
+						<option value="image/jpeg"/>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="text/html"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="scopus_id" type="xsd:string" style="query">
+						<doc title="Scopus Identifier">
+							<br/>The citation count for only one document identifier will be returned for images. A comma-delimited list of values can be used for textual responses. Only one type of identifier should be used per request.
+							<br/>
+						</doc>
+					</param>
+					<param name="doi" type="xsd:string" style="query">
+						<doc title="Document Object Identifier">
+							<br/>The citation count for only one document identifier will be returned for images. A comma-delimited list of values can be used for textual responses. Only one type of identifier should be used per request.
+							<br/>
+						</doc>
+					</param>
+					<param name="pii" type="xsd:string" style="query">
+						<doc title="Publication Item Identifier">
+							<br/>The citation count for only one document identifier will be returned for images. A comma-delimited list of values can be used for textual responses. Only one type of identifier should be used per request.
+							<br/>
+						</doc>
+					</param>
+					<param name="pubmed_id" type="xsd:string" style="query">
+						<doc title="PUBMED Identifier">
+							<br/>The citation count for only one document identifier will be returned for images. A comma-delimited list of values can be used for textual responses. Only one type of identifier should be used per request.
+							<br/>
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="image/jpeg" element="abstractCitationCountImage.jpg" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationCountImage.jpg">
+						<doc title="Abstract Citation Count JPEG Response">This is JPEG image representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/json" element="abstractCitationCountMeta.json" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationCountMeta.json">
+						<doc title="Abstract Citation Count Metadata JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="abstractCitationCountMeta.xml" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationCountMeta.xml">
+						<doc title="Abstract Citation Count Metadata XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="abstractCitationCountMeta.xml" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationCountMeta.xml">
+						<doc title="Abstract Citation Count Metadata XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/html" element="abstractCitationCountMeta.htm" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationCountMeta.htm">
+						<doc title="Abstract Citation Count Metadata XML Response">This is HTML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="invalidRequest.xml" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="authError.xml" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="invalidHttpMethod.xml" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml" element="invalidAcceptHeader.xml" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="quotaExceeded.xml" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="genericError.xml" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

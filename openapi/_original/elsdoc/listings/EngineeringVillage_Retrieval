@@ -1,0 +1,98 @@
+{  
+   "get":{  
+            "tags":[  
+               "Engineering_Village_Retrieval"
+            ],
+            "summary":"Engineering Village Retrieval API",
+            "description":"This represents arecord retrieval from the Engineering Village databases.",
+            "operationId":"fetchRecordUsingGET",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[  
+               {  
+                  "name":"apiKey",
+                  "in":"query",
+                  "description":"Required if no X-ELS-APIKey HTTP header, this represents a unique application developer key providing access to resource.",
+                  "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+                  "required":true,
+                  "type":"string"
+               },
+               {  
+                  "name": "docId",
+                  "in": "query",
+                  "description": "DocId values corresponding to record to retreieve. The docId values are found in the DOC/DOC-ID values of the results returned by the Engineering Village Search API.",
+                  "required": true,
+                  "type": "array",
+                  "items": {
+                      "type": "string"
+                  },
+                  "collectionFormat": "multi"
+               },
+               {  
+                   "name":"insttoken",
+                   "in":"query",
+                   "description":"Specification for authorization, institution authtoken",
+                   "required":false,
+                   "type":"string"
+               },
+               {  
+                  "name":"access_token",
+                  "in":"query",
+                  "description":"Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is \"&lt;token&gt;\" (where the token represents the end-user session key). The presence of a bearer token implies the request will be executed against user-based entitlements.",
+                  "required":false,
+                  "type":"string"
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"Engineering Village Retrieval Response",
+                  "schema":{  
+                     "$ref":"#/definitions/PageContainer"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid Request: This is an error that occurs when invalid information is submitted.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "401":{  
+                  "description":"Authentication Error: This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "500":{  
+                  "description":"Generic Error: This is a general purpose error condition, typically due to back-end processing errors.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "403":{  
+                  "description":"Authorization/Entitlements Error: This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "429":{  
+                  "description":"Quota Exceeded: This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "500":{  
+                  "description":"Generic Error: This is a general purpose error condition, typically due to back-end processing errors.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               }
+            }
+         }
+     
+   
+}

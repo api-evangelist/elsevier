@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<!--
+Describes the Holdings Report API.
+
+Revision History:
+
+2015-06-23: Initial definition.
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+             xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Holdings Report API">This interface represents a usage report generated for ScienceDirect content. Data available in the universally-accepted Knowledge Base and Related Tools (KBART) format provides a single source for detailed content needs. The KBART joint initiative investigates data problems within the OpenURL supply chain, provides a standardized way to exchange and update content, and broadens access to content.
+	    <br/><br/>The report can be generated in CSV/EXCEL, XML, or KBART (plain text) formats.
+	</doc>
+	<grammars>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/holdings/">
+		<resource path="report.url">
+			<doc title="Holdings Report API">This represents a report generated against ScienceDirect content.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="text/csv">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.
+                            <br/><br/>Mappings of formats to mime type includes:
+                            <br/><b>CSV</b> - text/csv; charset=UTF-8
+                            <br/><b>XML</b> - text/xml; charset=UTF-8
+                            <br/><b>KBART</b> - text/plain; charset=UTF-8
+                            <br/><b>EXCEL</b> - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8
+                        </doc>
+						<option value="text/csv"/>
+						<option value="text/plain"/>
+						<option value="text/xml"/>
+						<option value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received. Note that submitting <b>new</b> always returns the latest response version.</doc>
+						<option value="new"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.
+                            <br/><br/>Mappings of formats to mime type includes:
+                            <br/><b>CSV</b> - text/csv; charset=UTF-8
+                            <br/><b>XML</b> - text/xml; charset=UTF-8
+                            <br/><b>KBART</b> - text/plain; charset=UTF-8
+                            <br/><b>EXCEL</b> - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8
+                        </doc>
+						<option value="text/csv"/>
+						<option value="text/plain"/>
+						<option value="text/xml"/>
+						<option value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="_platform" type="xsd:string" style="query" default="SD">
+						<doc title="Content Platform">
+							Indicates for which back-end platform the report should be generated.
+						</doc>
+						<option value="SD"/>
+					</param>
+					<param name="_site" type="xsd:string" style="query" default="science">
+						<doc title="Content Platform">
+							Indicates for which back-end site the report should be generated.
+						</doc>
+						<option value="science"/>
+					</param>
+					<param name="format" type="xsd:string" style="query" default="CSV">
+						<doc title="Report Format">
+							Overrides Accept mime type specifying the format of the report returned.
+                            <br/><br/>Mappings of formats to mime type includes:
+                            <br/><b>CSV</b> - text/csv; charset=UTF-8
+                            <br/><b>XML</b> - text/xml; charset=UTF-8
+                            <br/><b>KBART</b> - text/plain; charset=UTF-8
+                            <br/><b>EXCEL</b> - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8
+						</doc>
+						<option value="CSV"/>
+						<option value="XML"/>
+						<option value="KBART"/>
+						<option value="EXCEL"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="text/csv" element="CSV Example" href="https://${dochostname}/documentation/payloads/reports/holdingsResp.csv">
+						<doc title="Holdings Report CSV Response">This is CSV representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/reports/holdingsResp.xml">
+						<doc title="Holdings Report XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/plain" element="KBART Example" href="https://${dochostname}/documentation/payloads/reports/holdingsResp.txt">
+						<doc title="Holdings Report KBART Response">This is text representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" element="EXCEL Example" href="https://${dochostname}/documentation/payloads/reports/holdingsResp.xslx">
+						<doc title="Holdings Report EXCEL Response">This is EXCEL representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

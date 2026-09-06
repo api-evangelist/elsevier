@@ -1,0 +1,400 @@
+<?xml version="1.0"?>
+<!--
+Describes the search interfaces for SCOPUS Search API.
+
+Revision History:
+
+2010-08-26: Initial definition.
+
+2011-02-08: Updates for 11-1 release. Includes:
+            - change in response field for HUB Search API (text changed to prism:teaser)
+            - new parameter for HUB Search API (content)
+	    - new parameter for AUTHOR Search API (co-author)
+	    - new parameter for all interfaces (field)
+	    - detailed comments for facets.
+
+2011-05-07: Updates for 11-2 release. Includes:
+            - added VECTOR view for HUB Search API (contains fields vector, document-exclusion, and collapse-exclusion)
+            - change in request for HUB Search API (added vector, document-exclusion, and collapse-exclusion)
+            - new namespace for 'isbn' (prism:isbn)
+            - change in facet for SCOPUS Search API: AU-ID now returns only author id while AUTHNAME returns both id and name.
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added SCIDIR-OBJECT Search API
+            - added SUBJAREA and SUBTYPE facets for HUB Search API
+            - added COUNTRY facet for SCOPUS Search API
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+            - added content parameter to SCOPUS Search API
+            - added alias parameter to SCOPUS and AUTHOR Search API
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - change to sort field names
+			- new qualifiers for facets (include, include_above, include_below, exclude, exclude_above, and exclude_below)
+			- new resource version allowing detail expansion for some facets
+			- new response field authkeywords for HUB, SCIDIR, SCIDIR-OBJECT, and SCOPUS Search
+			- new response field intid for SCOPUS Search
+			- added query string overrides httpAccept, apiKey, reqId, and ver
+
+2012-11-24: Updates for 12-3 release. Includes:
+            - support of 'new' resource version specification
+            - added 'relevancy' as a sort field for all search APIs
+
+2013-11-15: Updates for Agile. Includes:
+            - split from other search APIs
+
+2014-04-01: Updates for Sprint 16. Includes:
+            - added search tips
+
+2014-07-15: Updates for Sprint 21. Includes:
+            - new parameters 'resolveGroups' and 'authorFormat'
+
+2014-12-16: Updates for ELSAPI Sprint 1. Includes:
+            - added suppressNavLinks to omit navigation links from the response
+            - removed index:scopus resource
+
+2015-12-08: Updates for ELSAPI Sprint 18. Includes:
+            - removed parameters 'resolveGroups' and 'authorFormat'
+
+2015-12-08: Updates for ELSAPI Sprint 18. Includes:
+            - removed parameters 'resolveGroups' and 'authorFormat'
+
+2016-07-13: Updates for ELSAPI Sprint 29. Includes:
+            - removed sort fields 'aucite' and 'title'
+
+2018-01-05: Updates for ELSAPI Sprint 53. Includes:
+            - removed text/link for search fields documentation (which has been deprecated)
+            - ex. and a list of search field <a href="https://${currentApiHostname}/content/search/fields/scopus">descriptions and examples</a>.
+
+2018-06-12: Updates for ELSAPI Sprint 60. Includes:
+            - addition of 'cursor' parameter, which allows deep pagination searches
+
+2019-01-24: Updates for ELSAPI Sprint 70. Includes:
+            - addition of 'openaccess' and 'fund-sponsor' facets
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:err="http://www.elsevier.com/services/dtd"
+			 xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Scopus Search API">This represents the search interfaces associated with Scopus abstracts. Each search result will, by definition, link to a <a href="https://${dochostname}/documentation/AbstractRetrievalAPI.wadl">Scopus abstract</a>. Search entries might also have links to a <a href="https://${dochostname}/documentation/ArticleRetrievalAPI.wadl">Full-Text article</a> representation of the result.
+        <br/>
+	    <br/>Additional information includes <a href="https://${gateway.els.domain.devportal}/guides/ScopusSearchViews.htm">Scopus Search Views</a> and <a href="https://${gateway.els.domain.devportal}/tips/ScopusSearchTips.htm">Scopus Search Tips</a>.
+	</doc>
+        <grammars>
+		<include href="bkapi-scopus-search.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/search/">
+		<resource path="scopus">
+			<doc title="SCOPUS Search API">This represents a search against the SCOPUS cluster, which contains SCOPUS abstracts. Scopus is the largest abstract and citation database of research literature and quality web sources. Updated daily, Scopus covers 50 million abstracts of over 20,500 peer-reviewed titles from more than 5,000 publishers. This search resource allows for the submission of Boolean queries into the Scopus index, retrieving relevant result metadata in a user-specific text formats.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime type format in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="application/json"/>
+						<option value="application/atom+xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">
+							<br/>Represents the version of the resource that should be received. Multiple attributes can
+							<br/>be submitted by separating with commas or semicolons. Options include:
+							<br/>
+							<br/><b>facetexpand</b> - adds new fields under each facet returned (where applicable)
+							<br/><b>allexpand</b>   - (same as facetexpand)
+							<br/><b>new</b>         - returns the most recent and prototyped features
+						</doc>
+						<option value="facetexpand"/>
+						<option value="allexpand"/>
+						<option value="new"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="response format">Override for HTTP header Accept, this represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="application/atom+xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution identifier">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">
+							<br/>Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received. 
+							<br/>Multiple attributes can be submitted by separating with commas or semicolons. Options include:
+							<br/>
+							<br/><b>facetexpand</b> - adds new fields under each facet returned (where applicable)
+							<br/><b>allexpand</b>   - (same as facetexpand)
+							<br/><b>new</b>         - returns the most recent and prototyped features
+						</doc>
+						<option value="facetexpand"/>
+						<option value="allexpand"/>
+						<option value="new"/>
+					</param>
+					<param name="query" type="xsd:string" style="query" required="true">
+						<doc title="search query">
+							<br/>This represents the boolean search to be executed against the SCOPUS cluster.
+							<br/>There is additional information regarding <a href="https://${gateway.els.domain.devportal}/tips/ScopusSearchTips.htm">Search Tips</a>.
+							<br/>
+							<br/>ex. query=heart+attack%20AND%20text(liver)
+						</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="STANDARD">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${gateway.els.domain.devportal}/guides/ScopusSearchViews.htm">Scopus Search Views</a>.
+						</doc>
+						<option value="STANDARD"/>
+						<option value="COMPLETE"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas. Note that specifying this parameter overrides the view parameter.
+							<br/>
+							<br/>ex. field=url,identifier,description
+						</doc>
+					</param>
+					<param name="suppressNavLinks" type="xsd:string" style="query" default="false">
+						<doc title="suppress navigations">
+							<br/>This parameter is used to suppress the inclusion of top-level navigation links in the response payload.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="date" type="xsd:string" style="query">
+						<doc title="date restriction">
+							<br/>Represents the date range associated with the search, with the lowest granularity being year.
+							<br/>
+							<br/>ex. date=2002-2007
+						</doc>
+					</param>
+					<param name="start" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. start=5
+						</doc>
+					</param>
+					<param name="count" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default - if it does an error will be returned.
+							<br/>
+							<br/>ex. count=10
+						</doc>
+					</param>
+					<param name="sort" type="xsd:string" style="query">
+						<doc title="sort fields">
+							<br/>Represents the sort field name and order. A plus in front of the sort field name indicates ascending order, a minus indicates descending order. If sort order is not specified (i.e. no + or -) then the order defaults to descending (DESC).
+							<br/>
+							<br/>Up to three fields can be specified, each delimited by a comma. The precedence is determined by their order (i.e. first is primary, second is secondary, and third is tertiary).
+							<br/>
+							<br/>+/-{field name}[,+/-{field name}
+							<br/>
+							<br/>ex. sort=coverDate,-title
+						</doc>
+						<option value="artnum"/>
+						<option value="citedby-count"/>
+						<option value="coverDate"/>
+						<option value="creator"/>
+						<option value="orig-load-date"/>
+						<option value="pagecount"/>
+						<option value="pagefirst"/>
+						<option value="pageRange"/>
+						<option value="publicationName"/>
+						<option value="pubyear"/>
+						<option value="relevancy"/>
+						<option value="volume"/>
+					</param>
+					<param name="content" type="xsd:string" style="query" default="all">
+						<doc title="content">
+							<br/>This parameter is used to filter specific categories of content that should be searched/returned. 
+						</doc>
+						<option value="core"/>
+						<option value="dummy"/>
+						<option value="all"/>
+					</param>
+					<param name="subj" type="xsd:string" style="query">
+						<doc title="subject category">
+							<br/>Represents the subject area code associated with the content category desired. Note that these subject code mapping vary based upon the environment in which the request is executed.
+							<br/>
+                            <br/>The following resource shows all of the available <a href="https://api.elsevier.com/content/subject/scopus?httpAccept=text/xml">subject classifications</a>.
+							<br/>
+							<br/>Available choices include:
+							<br/>
+							<br/><b>AGRI</b> -	Agricultural and Biological Sciences
+							<br/><b>ARTS</b> -	Arts and Humanities
+							<br/><b>BIOC</b> -	Biochemistry, Genetics and Molecular Biology
+							<br/><b>BUSI</b> -	Business, Management and Accounting
+							<br/><b>CENG</b> -	Chemical Engineering
+							<br/><b>CHEM</b> -	Chemistry
+							<br/><b>COMP</b> -	Computer Science
+							<br/><b>DECI</b> -	Decision Sciences
+							<br/><b>DENT</b> -	Dentistry
+							<br/><b>EART</b> -	Earth and Planetary Sciences
+							<br/><b>ECON</b> -	Economics, Econometrics and Finance
+							<br/><b>ENER</b> -	Energy
+							<br/><b>ENGI</b> -	Engineering
+							<br/><b>ENVI</b> -	Environmental Science
+							<br/><b>HEAL</b> -	Health Professions
+							<br/><b>IMMU</b> -	Immunology and Microbiology
+							<br/><b>MATE</b> -	Materials Science
+							<br/><b>MATH</b> -	Mathematics
+							<br/><b>MEDI</b> -	Medicine
+							<br/><b>NEUR</b> -	Neuroscience
+							<br/><b>NURS</b> -	Nursing
+							<br/><b>PHAR</b> -	Pharmacology, Toxicology and Pharmaceutics
+							<br/><b>PHYS</b> -	Physics and Astronomy
+							<br/><b>PSYC</b> -	Psychology
+							<br/><b>SOCI</b> -	Social Sciences
+							<br/><b>VETE</b> -	Veterinary
+							<br/><b>MULT</b> -	Multidisciplinary
+							<br/>
+						</doc>
+					</param>
+					<param name="alias" type="xsd:string" style="query" default="true">
+						<doc title="field">
+							<br/>This parameter controls the default behavior of returning a superseded author profiles. Submitting this parameter as false will override the default behavior. This is only applicable for searches targeting author identifiers.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="facets" type="xsd:string" style="query">
+						<doc title="navigators">
+							<br/>Represents the navigator that should be included in the search results. One or more navigators can be specified on the request, delimited by a semicolon Different dimensions of the navigator will be represented within parentheses. These dimensions include: 
+							<br/>
+							<br/>count : the number of &quot;buckets&quot; to include (i.e. how many navigator entries)
+							<br/>sort  : how the navigators should be sorted. Options include na (Modifier name, ascending), fd (Modifier frequency, descending), and fdna (Modifier frequency descending, secondary sort through unity by name, ascending).
+							<br/>prefix  : filters the facet values to only those matching the prefix specified (not applicable for numeric values).
+							<br/>
+							<br/>In addition, qualifiers can be specified to include or exclude values from the response (i.e. filter). The options:
+							<br/>
+							<br/>include       : include only the value specified from the facet response.
+							<br/>include_above : include only values above the value specified from the facet response.
+							<br/>include_below : include only values below the value specified from the facet response.
+							<br/>exclude       : exclude only the value specified from the facet response.
+							<br/>exclude_above : exclude all values above the value specified from the facet response.
+							<br/>exclude_below : exclude all values below the value specified from the facet response.
+							<br/> 
+							<br/>ex. facets=authname(count=20,sort=na,prefix=Ma);exactsrctitle (prefix=J);subjarea(sort=fd);pubyear;srctype(sort=fdna)
+							<br/>
+							<br/>Available facets include: 
+							<br/> 
+							<br/><b>AF-ID</b>         - affiliation identifier
+							<br/><b>AUCITE</b>        - author citation
+							<br/><b>AU-ID</b>         - author identifier 
+							<br/><b>AUTHNAME</b>      - author identifier and author name
+							<br/><b>COUNTRY</b>       - affiliation country
+							<br/><b>EXACTSRCTITLE</b> - source title
+							<br/><b>FUND-SPONSOR</b>  - funding sponsor
+							<br/><b>LANGUAGE</b>      - language
+							<br/><b>OPENACCESS</b>    - open access status
+							<br/><b>PUBYEAR</b>       - publication year
+							<br/><b>RESTYPE</b>       - internal collection
+							<br/><b>SUBJAREA</b>      - subject area
+							<br/><b>SRCTYPE</b>       - content category
+						</doc>
+						<option value="af-id"/>
+						<option value="aucite"/>
+						<option value="au-id"/>
+						<option value="authname"/>
+						<option value="country"/>
+						<option value="exactsrctitle"/>
+						<option value="fund-sponsor"/>
+						<option value="language"/>
+						<option value="openaccess"/>
+						<option value="pubyear"/>
+						<option value="restype"/>
+						<option value="srctype"/>
+						<option value="subjarea"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/search/scopusSearchResp.json">
+						<doc title="SCOPUS JSON Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/atom+xml" element="ATOM+XML Example" href="https://${dochostname}/documentation/payloads/search/scopusSearchATOMResp.xml">
+						<doc title="SCOPUS ATOM Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/search/scopusSearchResp.xml">
+						<doc title="SCOPUS XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

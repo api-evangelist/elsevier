@@ -1,0 +1,117 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/elsevier-*-swagger.json — the seven first-party Swagger 2.0 documents harvested from
+  https://dev.elsevier.com/elsdoc/ on 2026-09-06
+status: candidate
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Elsevier does not ship an MCP server. This is a CANDIDATE tool surface derived from Elsevier's
+  own published operations so the gap is measurable — it is not something anyone can connect to,
+  and no endpoint below is real.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+search_findings:
+  official_server: false
+  searched:
+  - the Elsevier developer portal (dev.elsevier.com) — no MCP, no agent, no LLM integration page
+  - the ElsevierDev GitHub organisation — five repositories, all archived, none MCP-related
+  - npm and PyPI for a first-party @elsevier / elsevier MCP package — none
+  - '/.well-known/ discovery on every Elsevier host — no ai-plugin.json, no agent card'
+  third_party_servers:
+  - name: scopus-mcp
+    url: https://github.com/qwe4559999/scopus-mcp
+    first_party: false
+  - name: elsevier-mcp
+    url: https://lobehub.com/mcp/kemalabut-elsevier-mcp
+    first_party: false
+  third_party_note: >-
+    Community MCP servers exist for Scopus and for the Elsevier developer APIs generally. They
+    are independent projects that wrap the public API with a user-supplied ELSEVIER_API_KEY.
+    They are recorded here as evidence of demand, NOT as an Elsevier agent surface, and no
+    pointer is wired for them.
+agent_access_note: >-
+  Worth stating plainly alongside the absent server: dev.elsevier.com/robots.txt Disallows
+  GPTBot, ChatGPT-User and Google-Extended from the entire developer portal, and every
+  api.elsevier.com response carries a tdm-reservation header. Elsevier's current posture toward
+  agents is a reservation of rights, not an interface.
+candidate_tools:
+- name: scopus_search
+  rest: [ScopusSearch]
+  path: GET /content/search/scopus
+  description: Boolean search across the Scopus abstract and citation index.
+  consequence: read
+- name: sciencedirect_search
+  rest: [ScienceDirectSearchV2]
+  path: GET /content/search/sciencedirect
+  description: Search ScienceDirect full-text serial and non-serial content.
+  consequence: read
+- name: author_search
+  rest: [AuthorSearch]
+  path: GET /content/search/author
+  description: Find Scopus author profiles.
+  consequence: read
+- name: affiliation_search
+  rest: [AffiliationSearch]
+  path: GET /content/search/affiliation
+  description: Find Scopus institution profiles.
+  consequence: read
+- name: get_abstract
+  rest: [AbstractRetrieval, AbstractRetrievalEID]
+  path: GET /content/abstract/{scheme}/{id}
+  description: >-
+    Retrieve a publication abstract record by DOI, EID, PII, PubMed ID, PUI or Scopus ID.
+  consequence: read
+- name: get_article_full_text
+  rest: [ArticleRetrieval]
+  path: GET /content/article/{scheme}/{id}
+  description: Retrieve ScienceDirect full text, subject to entitlement.
+  consequence: read
+- name: get_author
+  rest: [AuthorRetrieval, AuthorRetrievalid, getAuthorByORCID]
+  path: GET /content/author/{scheme}/{id}
+  description: Retrieve a Scopus author profile by author id, EID or ORCID.
+  consequence: read
+- name: get_affiliation
+  rest: [AffiliationRetrieval]
+  path: GET /content/affiliation/{scheme}/{id}
+  description: Retrieve a Scopus institution profile.
+  consequence: read
+- name: get_citation_count
+  rest: [AbstractCitationCount, CitationsOverview]
+  path: GET /content/abstract/citation-count
+  description: Cited-by counts and year-by-year citation overview for a document.
+  consequence: read
+- name: check_entitlement
+  rest: [ArticleEntitlementRetrieval]
+  path: GET /content/article/entitlement/{scheme}/{id}
+  description: Ask whether the caller may read the full text of a given identifier.
+  consequence: read
+- name: get_serial_title
+  rest: [SerialTitleSearch, SerialTitleMetadata]
+  path: GET /content/serial/title
+  description: Journal metadata and coverage by ISSN or title search.
+  consequence: read
+- name: scival_metrics
+  rest: [authorMetrics, institutionMetrics, countryMetrics, topicMetrics, publicationMetrics, sourceMetrics, worldMetrics]
+  path: GET /analytics/scival/{entity}/metrics
+  description: SciVal research-performance metrics for an author, institution, country, topic, publication or source.
+  consequence: read
+  note: Requires a SciVal subscription; not part of the free non-commercial tier.
+- name: counter_usage_report
+  rest: [SUSHI reports]
+  path: GET /sushi/reports/{report_id}
+  description: COUNTER R5 / R5.1 usage statistics for a platform, database or title.
+  consequence: read
+  note: Access-controlled; not enabled on a key by default.
+summary:
+  tool_count: 13
+  derived_from_operations: 98
+  all_read_only: true
+  server_published: false

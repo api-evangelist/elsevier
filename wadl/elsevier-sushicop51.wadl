@@ -1,0 +1,449 @@
+<?xml version="1.0"?>
+<!--
+Describes the SUSHI COP5.1 interface for Elsevier API.
+
+Revision History:
+
+2025-01: Initial definition.
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" xmlns:els="urn:elsevier:rs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eapi="urn:elsevier:api" xmlns:err="http://www.elsevier.com/services/dtd" xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="SUSHI COP5.1 API">The <b>S</b>tandard <b>U</b>sage <b>S</b>tatistics <b>H</b>arvesting <b>I</b>nitiative protocol (SUSHI) has been established as the <a href="https://www.niso.org/standards-committees/sushi">ANSI/NISO Z39.93-2014</a> standard for API support of COUNTER compliant usage statistics.
+		<br/>The Elsevier SUSHI COP5 API provides COUNTER compliant usage statistics support for Elsevier customers using <a href="https://registry.countermetrics.org/platform/ab4d3560-1165-491d-a67e-9359d02c2a96">ScienceDirect</a>, <a href="https://registry.countermetrics.org/platform/15fee0c0-47d6-48d1-83b8-10385427ce79">Scopus</a>, <a href="https://registry.countermetrics.org/platform/11d41144-1616-41bf-8f9b-8e8d5d9356d9">ClinicalKey</a>, <a href="https://registry.countermetrics.org/platform/91069352-7766-44ad-97e5-230f82d1acc6">Engineering Village</a>, or <a href="https://registry.countermetrics.org/platform/f5ace0be-ad5e-4504-930e-b8cf376466ab">Embase</a>.
+		<br/>More information about Elsevier supported reports and metrics can be found at our <a href="https://www.elsevier.com/librarian/usage-reports">Librarian usage reports page</a>.
+		<br/>Please see our <a href="https://${gateway.els.domain.devportal}/sushicop5.html">SUSHI COP5 landing page</a> for general information, FAQ, and details regarding SUSHI and COUNTER Code of Practice 5.1 standards.
+		<br/>Refer to <a href="https://cop5.projectcounter.org/en/5.1/03-specifications/03-counter-report-common-attributes-and-elements.html#report-filters-and-report-attributes">Section 3.3.7</a> of the Technical Specifications for COUNTER Reports and the <a href="https://countermetrics.stoplight.io/docs/counter-sushi-api/au9uaf0yg84mo-counter-api">COUNTER_SUSHI API Specification</a> for the full list of filters and attributes supported by the various COUNTER reports.
+		<br/>A complete catalog of SUSHI COP5 error codes can be found in <a href="https://cop5.projectcounter.org/en/5.1/appendices/d-handling-errors-and-exceptions.html#appendix-d">Appendix D</a> of the COUNTER COP5 technical standards.
+	</doc>
+	<grammars/>
+	<resources base="https://api.elsevier.com/sushi/r51/">
+		<resource path="status/">
+			<doc title="SUSHI COP5.1 Status">Returns the current status of the SUSHI COP5.1 API service. The response includes the operating status of the API, the URL to the service's entry in the Register of COUNTER Compliant Content Providers, and an array of service alerts (if any).</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is optional for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example">
+						<doc title="SUSHI COP5 JSON Response">This is JSON representing the current status of the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="reports/">
+			<doc title="SUSHI COP5.1 Reports">Returns a list of reports supported by the Elsevier SUSHI COP5.1 API service. The response includes an array of reports, including the report identifier, the release number, the report name, a description, a list of supported report filters, and a list of supported report attributes.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>	
+					</param>
+					<param name="requestor_id" type="xsd:string" style="query">
+						<doc title="requestor_id">Elsevier API key associated with the requestor, whether it be an institution, third party, or consortium. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="customer_id" type="xsd:string" style="query">
+						<doc title="customer_id">Elsevier customer ID associated with a customer for which the requestor is authorized to harvest reports. This is a numerical ID prefixed with either "C" or "S", depending on the customer type. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="api_key" type="xsd:string" style="query">
+						<doc title="api_key">Unique code assigned by Elsevier to grant institution, consortium or 3rd party access to this API. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is <b>mandatory</b> for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON example">
+						<doc title="SUSHI COP5 JSON response">This is JSON representing the list of reports supported by the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+			<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="reports/{platform}">
+			<doc title="SUSHI COP5.1 Platform Reports">Returns the specified COUNTER COP5.1 platform usage report for authorized requestors. The response includes metrics that vary depending upon the specific platform usage report requested. For the optional parameters of customizable report please check the <a href="https://countermetrics.stoplight.io/docs/counter-sushi-api/au9uaf0yg84mo-counter-api">Specifications for the Restful COUNTER SUSHI API</a>.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>	
+					</param>
+					<param name="requestor_id" type="xsd:string" style="query">
+						<doc title="requestor_id">Elsevier API key associated with the requestor, whether it be an institution, third party, or consortium. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="customer_id" type="xsd:string" style="query">
+						<doc title="customer_id">Elsevier customer ID associated with a customer for which the requestor is authorized to harvest reports. This is a numerical ID prefixed with either "C" or "S", depending on the customer type. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="api_key" type="xsd:string" style="query">
+						<doc title="api_key">Unique code assigned by Elsevier to grant institution, consortium or 3rd party access to this API. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is <b>mandatory</b> for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+					<param name="begin_date" type="xsd:string" style="query">
+					    <doc title="begin_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+					        <br/>Example: begin_date=2018-03-09<br/>
+				        </doc>
+				    </param>
+				    <param name="end_date" type="xsd:string" style="query">
+				        <doc title="end_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+				            <br/>Example: end_date=2018-03-31
+				        </doc>
+				    </param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON example">
+						<doc title="SUSHI COP5 JSON response">This is JSON representing a platform report returned by the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="reports/{title}">
+			<doc title="SUSHI COP5.1 Title Reports">Returns the specified COUNTER COP5.1 journal or book usage report for authorized requestors. The response includes metrics that vary depending on the specific title usage report requested. For the optional parameters of customizable report please check the <a href="https://countermetrics.stoplight.io/docs/counter-sushi-api/au9uaf0yg84mo-counter-api">Specifications for the Restful COUNTER SUSHI API</a>.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>	
+					</param>
+					<param name="requestor_id" type="xsd:string" style="query">
+						<doc title="requestor_id">Elsevier API key associated with the requestor, whether it be an institution, third party, or consortium. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="customer_id" type="xsd:string" style="query">
+						<doc title="customer_id">Elsevier customer ID associated with a customer for which the requestor is authorized to harvest reports. This is a numerical ID prefixed with either "C" or "S", depending on the customer type. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="api_key" type="xsd:string" style="query">
+						<doc title="api_key">Unique code assigned by Elsevier to grant institution, consortium or 3rd party access to this API. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is <b>mandatory</b> for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+					<param name="begin_date" type="xsd:string" style="query">
+					    <doc title="begin_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+					        <br/>Example: begin_date=2018-03-09<br/>
+				        </doc>
+				    </param>
+				    <param name="end_date" type="xsd:string" style="query">
+				        <doc title="end_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+				            <br/>Example: end_date=2018-03-31
+				        </doc>
+				    </param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example">
+						<doc title="SUSHI COP5 JSON response">This is JSON representing a title report returned by the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+			<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="reports/{database}">
+			<doc title="SUSHI COP5.1 Database Reports">Returns the specified COUNTER COP5.1 database usage report for authorized requestors. For the optional parameters of customizable report please check the <a href="https://countermetrics.stoplight.io/docs/counter-sushi-api/au9uaf0yg84mo-counter-api">Specifications for the Restful COUNTER SUSHI API</a>.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>	
+					</param>
+					<param name="requestor_id" type="xsd:string" style="query">
+						<doc title="requestor_id">Elsevier API key associated with the requestor, whether it be an institution, third party, or consortium. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="customer_id" type="xsd:string" style="query">
+						<doc title="customer_id">Elsevier customer ID associated with a customer for which the requestor is authorized to harvest reports. This is a numerical ID prefixed with either "C" or "S", depending on the customer type. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="api_key" type="xsd:string" style="query">
+						<doc title="api_key">Unique code assigned by Elsevier to grant institution, consortium or 3rd party access to this API. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is <b>mandatory</b> for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+					<param name="begin_date" type="xsd:string" style="query">
+					    <doc title="begin_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+					        <br/>Example: begin_date=2018-03-09<br/>
+				        </doc>
+				    </param>
+				    <param name="end_date" type="xsd:string" style="query">
+				        <doc title="end_date">A filter to limit the date range of the response usage data. Must be in the format YYYY-MM-DD. This parameter is <b>mandatory</b> for this resource.
+				            <br/>Example: end_date=2018-03-31
+				        </doc>
+				    </param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON example">
+						<doc title="SUSHI COP5 JSON response">This is JSON representing a database report returned by the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+			<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="members/">
+			<doc title="SUSHI COP5.1 Members">Returns the list of consortium members or sites for multi-site customers. The response includes an array of customer account information, including for each member the customer ID (to use when requesting COUNTER reports), the requestor ID (to use when requesting COUNTER reports), the customer account name, and additional identifiers for the organization (if any). Note that if the customer ID specified in the parameter for the /members path is not a multi-site organization, then the response will simply return the details for that customer.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated.</doc>
+						<option value="application/json"/>
+					</param>
+					<param name="requestor_id" type="xsd:string" style="query">
+						<doc title="requestor_id">Elsevier API key associated with the requestor, whether it be an institution, third party, or consortium. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="customer_id" type="xsd:string" style="query">
+						<doc title="customer_id">Elsevier customer ID associated with a customer for which the requestor is authorized to harvest reports. This is a numerical ID prefixed with either "C" or "S", depending on the customer type. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="api_key" type="xsd:string" style="query">
+						<doc title="api_key">Unique code assigned by Elsevier to grant institution, consortium or 3rd party access to this API. This parameter is <b>mandatory</b> for this resource.</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query">
+						<doc title="platform">Elsevier platform code associated with the product for which the requestor wishes to harvest reports. This parameter is <b>mandatory</b> for this resource.</doc>
+						<option value="sc"/>
+						<option value="sd"/>
+						<option value="ev"/>
+						<option value="ck"/>
+						<option value="em"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example">
+						<doc title="SUSHI COP5 JSON Response">This is JSON representing a list of consortium members returned by the Elsevier SUSHI COP5 service.</doc>
+					</representation>
+				</response>
+			<response status="400">
+					<representation mediaType="application/json" element="Invalid Request Example">
+						<doc title="Invalid Request">This error indicates missing or incorrect parameters.</doc>
+					</representation>
+				</response>
+				<response status="401">
+				    <representation mediaType="application/json" element="Authentication Error Example">
+				        <doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (API key).</doc>
+				    </representation>
+				</response>
+				<response status="403">
+				    <representation mediaType="application/json" element="Authorization/Entitlements Error Example">
+				        <doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+				    </representation>
+				</response>
+				<response status="405">
+				    <representation mediaType="application/json" element="Invalid Method Example">
+				        <doc title="Invalid Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="406">
+				    <representation mediaType="application/json" element="Invalid Mime Type Example">
+				        <doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+				    </representation>
+				</response>
+				<response status="429">
+				    <representation mediaType="application/json" element="Quota Exceeeded Example">
+				        <doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+				    </representation>
+				</response>
+				<response status="500">
+					<representation mediaType="application/json" element="Generic Error Example">
+						<doc title="Generic Error">This error indicates that the service is unavailable or a fatal error has occurred.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

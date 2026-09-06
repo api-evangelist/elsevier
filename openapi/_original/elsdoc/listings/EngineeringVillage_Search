@@ -1,0 +1,203 @@
+{  
+   "get":{  
+            "tags":[  
+               "Engineering_Village_Search"
+            ],
+            "summary":"Engineering Village Search API",
+            "description":"This represents an Expert Search against Engineering Village databases. Expert Search provides search power and flexibility by incorporating advanced Boolean logic and including a rich variety of options.",
+            "operationId":"expertSearchUsingGET",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[  
+               {  
+                  "name":"apiKey",
+                  "in":"query",
+                  "description":"Required if no X-ELS-APIKey HTTP header, this represents a unique application developer key providing access to resource.",
+                  "default":"7f59af901d2d86f78a1fd60c1bf9426a",
+                  "required":true,
+                  "type":"string"
+               },
+               {  
+                  "name":"query",
+                  "in":"query",
+                  "description":"Expert search phrase. See help topics <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Expert_search_overview.htm'>here</a> for searching specific <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Expert_Search_Fields_and_Fields_Codes.htm'>fields</a>, and for using <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Proximity_Near_Operator_.htm'>proximity/near operators</a>, <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Boolean_Operators.htm'>Boolean operators</a>, <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Exact_Phrase_Searching.htm'>exact phrases</a>, <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Special_Characters.htm'>special characters</a>, <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Wildcards_and_Truncation.htm'>wildcards and truncation</a>, and <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Stop_Words.htm'>stop words</a>",
+                  "required":true,
+                  "type":"string"
+               },
+               {  
+                  "name":"database",
+                  "in":"query",
+                  "description":"<br/>List of databases to query. When no databases are specified, all databases to which application account is entitles are searched. Database codes include:<br/><br/>c - Compendex/EI Backfile<br/>i - Inspec/Inspec Archive<br/>n - NTIS<br/>pc - Paperchem<br/>cm - Chimica<br/>cb - CBNB<br/>el - EnCompassLIT<br/>ep - EnCompassPAT<br/>g - GEOBASE<br/>f - GeoRef<br/>u - US Patents<br/>e - EP Patents",
+                  "required":false,
+                  "type":"array",
+                  "items":{  
+                     "type":"string"
+                  },
+                  "collectionFormat":"multi",
+                  "enum":[                       "c",
+                     "i",
+                     "n",
+                     "pc",
+                     "cm",
+                     "cb",
+                     "el",
+                     "ep",
+                     "g",
+                     "f",
+                     "u",
+                     "e",
+                     "w"
+
+                  ]
+               },
+               {
+                  "name":"navigator",
+                  "in":"query",
+                  "description":"Navigator, a setting which determines if navigators should be returned if a is performed on search words, defaults to false if not set",
+                  "required":false,
+                  "type":"boolean"
+               },
+               {
+                  "name":"navigatorDataCount",
+                  "in":"query",
+                  "description":"Navigator data count, a setting which determines how many records for the navigator should be returned, minimum is 1 maximum is 160, default is 10",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {
+                  "name":"autoStemming",
+                  "in":"query",
+                  "description":"<a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Autostemming.htm'>Autostemming</a> a setting which determines if stemming is performed on search words, defaults to false if not set",
+                  "required":false,
+                  "type":"boolean"
+               },
+               {
+                  "name":"startYear",
+                  "in":"query",
+                  "description":"Start year, leave blank if providing updateNumber",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {
+                  "name":"endYear",
+                  "in":"query",
+                  "description":"End year, leave blank if providing updateNumber",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {
+                  "name":"updateNumber",
+                  "in":"query",
+                  "description":"Update week number, find records updated within the last N weeks; 1 &lt;= N &lt;=4, leave blank when setting startYear or endYear. See <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Date_Limits.htm'>here</a> for more information.",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {
+                  "name":"sortField",
+                  "in":"query",
+                  "description":"Sort Field, which can vary by database. Default setting is relevance if parameter is not provided. See <a href='http://help.engineeringvillage.com/Engineering_Village_Help_CSH.htm#Sort_by.htm'>here</a> for more information.<br/><br/>relevance - Relevance<br/>yr - Date (year)<br/>ausort - Author<br/>stsort - Source<br/>pnsort - Publisher<br/>pcb - Patent cited by",
+                  "required":false,
+                  "type":"string",
+                  "default":"relevance",
+                  "enum":[
+                     "relevance",
+                     "yr",
+                     "ausort",
+                     "stsource",
+                     "pnsort",
+                     "pcb"
+                  ]
+               },
+               {
+                  "name":"sortDirection",
+                  "in":"query",
+                  "description":"Sort direction. Default setting is \"dw\" if parameter is not provided",
+                  "required":false,
+                  "type":"string",
+                  "enum":[
+                     "dw",
+                     "up"
+                  ]
+               },
+               {
+                  "name":"offset",
+                  "in":"query",
+                  "description":"Page offset, used for pagination. To get page N, set offset = (N-1) * Page size. Defaults to 0 if not set.",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {
+                  "name":"pageSize",
+                  "in":"query",
+                  "description":"Requested page size, defaults to 25 if not set. Used for pagination with offset parameter. Actual page size will be set to the results count if the results count is less than the requested page size",
+                  "required":false,
+                  "type":"integer",
+                  "format":"int32"
+               },
+               {  
+                   "name":"insttoken",
+                   "in":"query",
+                   "description":"Specification for authorization, institution authtoken",
+                   "required":false,
+                   "type":"string"
+               },
+               {  
+                  "name":"access_token",
+                  "in":"query",
+                  "description":"Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is \"&lt;token&gt;\" (where the token represents the end-user session key). The presence of a bearer token implies the request will be executed against user-based entitlements.",
+                  "required":false,
+                  "type":"string"
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"Engineering Village Search Response",
+                  "schema":{  
+                     "$ref":"#/definitions/PageContainer"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid Request: This is an error that occurs when invalid information is submitted.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "401":{  
+                  "description":"Authentication Error: This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "500":{  
+                  "description":"Generic Error: This is a general purpose error condition, typically due to back-end processing errors.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "403":{  
+                  "description":"Authorization/Entitlements Error: This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               },
+               "429":{  
+                  "description":"Quota Exceeded: This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.",
+                  "schema":{  
+                     "$ref":"#/definitions/ServiceErrorWrap"
+                  }
+               }
+            }
+         }
+     
+   
+}

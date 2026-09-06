@@ -1,0 +1,765 @@
+<?xml version="1.0"?>
+<!--
+Describes the Author Retrieval interface for SciVerse API.
+
+Revision History:
+
+2010-08-26: Initial definition.
+
+2011-02-08: Updates for 11-1 release. Includes:
+			- new parameter for all interfaces (field)
+			- new response fields (affiliation-id, affiliation-url,h-index,coauthor-count)
+			- new view (ENHANCED)
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+            - addition of application/json as a valid Accept value
+            - new view DOCUMENTS
+            - addition of start/startref and count/refcount parameters
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+            - new ENTITLED view indicates whether requester has sufficient access to the resource
+            - added the new field citations to the response
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - support for new resource identifiers, including EID
+            - support for ORCID schema, including new views ORCID, ORCID_BIO, and ORCID_WORKS
+			- added query string overrides httpAccept, apiKey, reqId, and ver
+
+2014-03-04: Updates for Sprint 15 release. Includes:
+            - Added METRICS view
+
+2014-05-13: Updates for Sprint 18 release. Includes:
+            - Added resource to retrieve multiple author profiles via EID or AUTHOR_ID
+
+2014-06-03: Updates for Sprint 19. Includes:
+            - support for application/xml as response mime type
+
+2014-10-14: Updates for Sprint 25. Includes:
+            - support for self-citation exclusion
+
+2018-02-28: Updates for ELSAPI Sprint 55. Includes:
+            - remove parameters start and count
+
+2018-12-06: Updates for ELSAPI Sprint 68. Includes:
+            - remove parameter self-citation
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+             xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Author Retrieval API">This represents retrieval of a Scopus Author Profile. The document can contain links to <a href="https://${dochostname}/documentation/ScopusSearchAPI.wadl">Scopus Search</a> and <a href="https://${dochostname}/documentation/AffiliationRetrievalAPI.wadl">Affiliation Profiles</a>. The author profiles are indexed and can be searched using <a href="https://${dochostname}/documentation/AuthorSearchAPI.wadl">Author Search API</a>.
+	    <br/>
+	    <br/>Schemas for the &apos;author-profile&apos; element of the full author profile can be found at <a href="${gateway.els.schema.server.host.prod}/dtds/document/profile/">${gateway.els.schema.server.host.prod}/dtds/document/profile/</a>.
+	    <br/>
+	    <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthorRetrievalViews.htm">Author Retrieval Views</a>.
+            </doc>
+	<grammars>
+		<include href="bkapi-author-501.xsd"/>
+		<include href="https://orcid.github.com/ORCID-Mock-API-Web-Application/schemas/orcid-message/1.0.1/orcid-message-1.0.1.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/">
+		<resource path="author">
+			<doc title="Author Retrieval API">This represents retrieval of one or more SCOPUS Author Profiles by a unique Electronic or Author ID. Note that certain views and mime types are not supported under this resource, although specifying a single document identifier produces similar behavior to a single Author Profile resource request.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="text/xml">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="eid" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This represents the unique Electronic ID corresponding to a Scopus Author Profile. Multiple identifiers can be specified, delimited by commas.
+							<br/>
+							<br/>Note that either the eid or the author_id should be specified, but not both.
+						</doc>
+					</param>
+					<param name="author_id" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This represents the unique identifier corresponding to a Scopus Author Profile. Multiple identifiers can be specified, delimited by commas.
+							<br/>
+							<br/>Note that either the eid or the author_id should be specified, but not both.
+						</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="LIGHT">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthorRetrievalViews.htm">Author Retrieval Views</a>.
+							<br/>
+						</doc>
+						<option value="LIGHT"/>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="METRICS"/>
+						<option value="ENTITLED"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/multipleAuthorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/multipleAuthorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/multipleAuthorRetrievalResp.json">
+						<doc title="Author JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/rdf+xml" element="RDF Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalRDFResp.xml">
+						<doc title="Author RDF Response">This is RDF representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="author/author_id/{author_id}">
+			<doc title="Author Retrieval API">This represents retrieval of a SCOPUS Author Profile by the unique Author ID.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="text/xml">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="LIGHT">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthorRetrievalViews.htm">Author Retrieval Views</a>.
+						</doc>
+						<option value="LIGHT"/>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="METRICS"/>
+						<option value="DOCUMENTS"/>
+						<option value="ENTITLED"/>
+						<option value="ORCID"/>
+						<option value="ORCID_BIO"/>
+						<option value="ORCID_WORKS"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.
+						</doc>
+					</param>
+					<param name="alias" type="xsd:string" style="query" default="true">
+						<doc title="field">
+							<br/>This parameter controls the default behavior of returning a superseded author profile. Submitting this value as false will override the default behavior and return the author profile information, even if it has been superseded.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="startref" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. startref=5
+						</doc>
+					</param>
+					<param name="refcount" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default - if it does an error will be returned.
+							<br/>
+							<br/>ex. refcount=10
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.json">
+						<doc title="Author JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/rdf+xml" element="RDF Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalRDFResp.xml">
+						<doc title="Author RDF Response">This is RDF representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+xml" element="ORCID XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.xml">
+						<doc title="Author ORCID XML Response">This is XML ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+json" element="ORCID JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.json">
+						<doc title="Author ORCID JSON Response">This is the JSON ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="300">
+					<representation mediaType="text/xml" element="">
+						<doc title="Multiple Author Replacement">This represents the scenario when a single author profile has been superseded by multiple author profiles.</doc>
+					</representation>
+				</response>
+				<response status="301">
+					<representation mediaType="text/xml" element="">
+						<doc title="Single Author Replacement">This is redirection to a single author location when an author profile has been superseded.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="author/eid/{eid}">
+			<doc title="Author Retrieval API">This represents retrieval of a SCOPUS Author Profile by EID (Electronic Identifier).</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="text/xml">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="LIGHT">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthorRetrievalViews.htm">Author Retrieval Views</a>.
+						</doc>
+						<option value="LIGHT"/>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="METRICS"/>
+						<option value="DOCUMENTS"/>
+						<option value="ENTITLED"/>
+						<option value="ORCID"/>
+						<option value="ORCID_BIO"/>
+						<option value="ORCID_WORKS"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.
+						</doc>
+					</param>
+					<param name="alias" type="xsd:string" style="query" default="true">
+						<doc title="field">
+							<br/>This parameter controls the default behavior of returning a superseded author profile. Submitting this value as false will override the default behavior and return the author profile information, even if it has been superseded.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="startref" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. startref=5
+						</doc>
+					</param>
+					<param name="refcount" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default - if it does an error will be returned.
+							<br/>
+							<br/>ex. refcount=10
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.json">
+						<doc title="Author JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/rdf+xml" element="RDF Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalRDFResp.xml">
+						<doc title="Author RDF Response">This is RDF representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+xml" element="ORCID XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.xml">
+						<doc title="Author ORCID XML Response">This is XML ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+json" element="ORCID JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.json">
+						<doc title="Author ORCID JSON Response">This is the JSON ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="300">
+					<representation mediaType="text/xml" element="">
+						<doc title="Multiple Author Replacement">This represents the scenario when a single author profile has been superseded by multiple author profiles.</doc>
+					</representation>
+				</response>
+				<response status="301">
+					<representation mediaType="text/xml" element="">
+						<doc title="Single Author Replacement">This is redirection to a single author location when an author profile has been superseded.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+		<resource path="author/orcid/{orcid}">
+			<doc title="Author Retrieval API">This represents retrieval of a SCOPUS Author Profile by ORCID.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="text/xml">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON, ATOM, or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+						<option value="application/json"/>
+						<option value="application/x-orcid+xml"/>
+						<option value="application/x-orcid+json"/>
+						<option value="application/rdf+xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="LIGHT">
+						<doc title="view">
+							<br/>This alias represents the list of elements that will be returned in the response.
+							<br/>
+                            <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthorRetrievalViews.htm">Author Retrieval Views</a>.
+						</doc>
+						<option value="LIGHT"/>
+						<option value="STANDARD"/>
+						<option value="ENHANCED"/>
+						<option value="METRICS"/>
+						<option value="DOCUMENTS"/>
+						<option value="ENTITLED"/>
+						<option value="ORCID"/>
+						<option value="ORCID_BIO"/>
+						<option value="ORCID_WORKS"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.
+						</doc>
+					</param>
+					<param name="alias" type="xsd:string" style="query" default="true">
+						<doc title="field">
+							<br/>This parameter controls the default behavior of returning a superseded author profile. Submitting this value as false will override the default behavior and return the author profile information, even if it has been superseded.
+						</doc>
+						<option value="true"/>
+						<option value="false"/>
+					</param>
+					<param name="startref" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. startref=5
+						</doc>
+					</param>
+					<param name="refcount" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default - if it does an error will be returned.
+							<br/>
+							<br/>ex. refcount=10
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.xml">
+						<doc title="Author XML Response">This is XML representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalResp.json">
+						<doc title="Author JSON Response">This is JSON representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/rdf+xml" element="RDF Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalRDFResp.xml">
+						<doc title="Author RDF Response">This is RDF representing the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+xml" element="ORCID XML Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.xml">
+						<doc title="Author ORCID XML Response">This is XML ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/x-orcid+json" element="ORCID JSON Sample" href="https://${dochostname}/documentation/payloads/retrieval/authorRetrievalORCIDResp.json">
+						<doc title="Author ORCID JSON Response">This is the JSON ORCID representation of the requested document.</doc>
+					</representation>
+				</response>
+				<response status="300">
+					<representation mediaType="text/xml" element="">
+						<doc title="Multiple Author Replacement">This represents the scenario when a single author profile has been superseded by multiple author profiles.</doc>
+					</representation>
+				</response>
+				<response status="301">
+					<representation mediaType="text/xml" element="">
+						<doc title="Single Author Replacement">This is redirection to a single author location when an author profile has been superseded.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authentication Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="404">
+					<representation mediaType="text/xml" element="Resource Not Found Example" href="https://${dochostname}/documentation/payloads/resourceNotFound.xml">
+						<doc title="Resource Not Found Error">This is an error that occurs when the requested resource cannot be found.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml"  element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml"  element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml"  element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition, typically due to back-end processing errors.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

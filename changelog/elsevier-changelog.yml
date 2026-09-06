@@ -1,0 +1,103 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/release_notes.html
+provider: Elsevier
+providerId: elsevier
+description: Elsevier publishes a dated release-notes archive for the Research Products APIs. It runs
+  from 2014-12-16 to 2019-09-12 and then stops. 93 dated entries, none in the last seven years, while
+  the underlying contracts (SciVal topic clusters, SUSHI COP5.1, ScienceDirect Search V2) have plainly
+  moved on. Recording the recent window here means recording that the recent window is empty.
+url: https://dev.elsevier.com/release_notes.html
+scheme: dated entries grouped by API, tagged Enhancement / Bug-Fix / new / deprecated
+format: HTML accordion; no feed, no JSON, no per-entry permalink
+feed: null
+current_version: null
+current_version_note: No version number is attached to any entry. The APIs version per resource via X-ELS-ResourceVersion,
+  which the release notes never reference.
+entry_count: 93
+first_entry: '2014-12-16'
+last_entry: '2019-09-12'
+stale: true
+staleness_note: 'Last entry 2019-09-12, captured 2026-09-06 — 2,551 days. Changes shipped since then are
+  visible only in the contracts themselves. This is the single most consequential operational gap in the
+  Elsevier developer surface: an integrator has no supported way to learn that something changed.'
+entries:
+- date: '2019-09-12'
+  highlights:
+  - Affiliation Retrieval API
+  - Added support for retrieval of institution-hierarchy profiles (affiliation eid prefixed with 34 instead
+    of 10).
+  - Publish resource updates to retrieve authors via ORCID.
+  - Added support for getting key contributing topics for an institution.
+  - Removed ArticlesReviewsEditorials and ArticlesReviewsEditorialsShortSurveys from most metric operations.
+- date: '2019-08-22'
+  highlights:
+  - SUSHI COP5 Credentials API
+  - Addressed authorization failures (EBSCO).
+- date: '2019-08-06'
+  highlights:
+  - SUSHI COP5 Credentials API
+  - Addressed infrastructure issues causing authorization failures.
+- date: '2019-07-17'
+  highlights:
+  - Article Entitlement API
+  - Fixed issue when HTTP 500 is returned due to documents not being accessible for API use.
+  - Fixed issue that resulted in HTTP 500 errors when response payload is not returned by service (HTTP
+    403).
+- date: '2019-07-11'
+  highlights:
+  - Administrative
+  - Improved restart time for gateway in order to minimize downtimes.
+  - Removed shaped throttling in place of fixed throttling/rate limits. Previously when users exceeded
+    rate limits (qps) the request could potentially be queued, resulting in longer response times. This
+    has been revised to hard limits when exceeded results in HTTP 429 errors. This has been applied across
+    all APIs with the throttling limits adjusted to minimize potential client impacts.
+- date: '2019-06-27'
+  highlights:
+  - Publication of new Subject Areas, Top Institutions, and Book Chapters.
+- date: '2019-06-20'
+  highlights:
+  - Administrative
+  - New users to ELSAPI were not getting automatically subscribed to the notification list since late
+    2018. An update to the system automatically subscribed all of those users. In order for user to remove
+    themselves from this list they need to click on the unsubscribe link sent in the email notifications.
+  - Increased connection time-out from 1 to 2 minutes.
+  - Addressed issue where CORS headers were not being returned for non-successful responses.
+  - Fixed issue that prevented authtokens from working if passed in an OAuth manner.
+  - Embase Facets API (new)
+  - Exposed new resource to retrieve facets from Embase.
+  - Increased default quota.
+- date: '2019-05-30'
+  highlights:
+  - Abstract Retrieval API
+  - Added navigation links for REF view.
+  - Corrected issue of duplicate reference id appearing in REF view.
+  - Article Retrieval API
+  - Added navigation links for REF view.
+  - Corrected issue of broken links and other missing metadata within REF view entries.
+  - Added new resources for topic cluster.
+  - Serial Title Metadata API
+- date: '2019-05-15'
+  highlights:
+  - Article Retrieval API
+  - Removal of cdnRedirect functionality - this parameter will be ignored (i.e. no longer be supported).
+  - Embase Facets API (new)
+  - New resource for Embase.
+- date: '2019-04-19'
+  highlights:
+  - New footer logo for RELX.
+  - PlumX Metrics API
+  - New APIKeys will now be subject to quota restrictions of 20,000 successful requests every 7 days.
+  - Scopus Search API
+  - Addressed issue that caused duplicate affiliation entries to appear.
+- date: '2019-04-03'
+  highlights:
+  - Abstract Retrieval API
+  - Addition of cover date to REF view.
+- date: '2019-03-08'
+  highlights:
+  - Addressed issue preventing some users from registering for APIKeys.
+  - Administrative APIs
+  - Redefine configurations to ensure restricted access.
+  - Scopus Search API
+  - Addressed issue that caused ISBN response field to not be returned as a JSON array.

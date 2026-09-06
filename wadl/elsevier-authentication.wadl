@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+Describes the Authenticate API.
+
+Revision History:
+
+2011-05-07: Initial definition.
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - added query string overrides httpAccept, apiKey, reqId, and ver
+
+2016-07-12: Updates for Sprint 28 release. Includes:
+            - added platform options EV and EMBASE
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+             xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Authenticate API">This represents interfaces to create a secured authtoken.
+	  <br/>
+	  <br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AuthenticationViews.htm">Authenticate Views</a>.
+	</doc>
+	<grammars>
+		<include href="bkapi-authentication.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/authenticate/">
+		<resource path="">
+			<doc title="Authenticate API">This represents an IP authenticate request which creates a secured authtoken.</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types in which the response can be generated. This can also be submitted as the query string parameter &quot;httpAccept&quot;. This returns the response in JSON or XML mark-up.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token in which the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to API resources. This key can also be submitted as the query string parameter &quot;apiKey&quot;</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this token is used to validate the credentials needed to access content in this resource. This token can also be submitted through the HTTP header &quot;Authorization&quot; or the query string parameter &quot;access_token&quot;.</doc>
+					</param>
+					<param name="X-ELS-Insttoken" type="xsd:string" style="header">
+						<doc title="institution identifier">This represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource. This token can also be provided through the query string parameter &quot;insttoken&quot;.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. It will also be returned as an HTTP header in the corresponding response. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received. Note that submitting <b>new</b> always returns the latest response version.</doc>
+						<option value="new"/>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="text/xml"/>
+						<option value="application/json"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="insttoken" type="xsd:string" style="query">
+						<doc title="institution token">Override for HTTP header X-ELS-Insttoken, this represents a institution token. If provided, this key (in combination with its associated APIKey) is used to establish the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="choice" type="xsd:string" style="query">
+						<doc title="Path choice">
+							<br/>In the event multiple choices are available for the requesting IP this parameter represents the desired path choice for authentication. If not provided and the authentication is ambiguous (i.e. multiple path choices) a 300 status is returned.
+						</doc>
+					</param>
+					<param name="platform" type="xsd:string" style="query" default="SCIDIR">
+						<doc title="Application platform">
+							<br/>Indicates the application platform that should be authenticated.
+						</doc>
+						<option value="SCIDIR"/>
+						<option value="SCOPUS"/>
+						<option value="EV"/>
+						<option value="EMBASE"/>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/authentication/authResp.json">
+						<doc title="Authenticate JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/authentication/authResp.xml">
+						<doc title="Authenticate XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="300">
+					<representation mediaType="application/json" element="JSON Example" href="https://${dochostname}/documentation/payloads/authentication/authPathChoiceResp.json">
+						<doc title="Authenticate Choice JSON Response">This is JSON representing the unresolved choices for the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="300">
+					<representation mediaType="text/xml" element="XML Example" href="https://${dochostname}/documentation/payloads/authentication/authPathChoiceResp.xml">
+						<doc title="Authenticate Choice XML Response">This is XML representing the unresolved choices for the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="Invalid Request Example" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="Authenticate Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authenticate Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="403">
+					<representation mediaType="text/xml" element="Authorization Error Example" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authorization/Entitlements Error">This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation element="Invalid Method Example" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml"  element="Invalid Mime Type Example" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation element="Quota Exceeded Example" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation element="Generic Error Example" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

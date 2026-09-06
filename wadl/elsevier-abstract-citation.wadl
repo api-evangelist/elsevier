@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<!--
+Describes the Citation Overview interface for API.
+
+Revision History:
+
+2010-05-07: Initial definition for 11-2 release.
+            - moved citations resource from AbstractRetrievalAPI.wadl to this file.
+            - new resource (citation count)
+
+2011-09-01: Updates for 11-3 release. Includes:
+            - added application title
+
+2011-12-03: Updates for 11-4 release. Includes:
+            - added Authorization header field to support oauth
+
+2012-03-17: Updates for 12-1 release. Includes:
+            - new response code for Quota Exceeded
+
+2012-07-28: Updates for 12-2 release. Includes:
+            - change to sort field names (year -> sort-year and citationnum -> rowTotal)
+			- added query string overrides httpAccept, apiKey, reqId, and ver
+
+2014-04-22: Updates for Sprint 17. Includes:
+            - separation of Abstract Citations API and Abstract Citation Count API
+
+2014-06-03: Updates for Sprint 19. Includes:
+            - support for application/xml as response mime type
+
+2015-01-27: Updates for ELSAPI Sprint 3. Includes:
+            - rename from Abstract Citation API to Citation Overview API
+
+2016-12-06: Updates for primary description
+
+-->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd" 
+			 xmlns:els="urn:elsevier:rs" 
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+             xmlns:eapi="urn:elsevier:api" 
+             xmlns:res="http://www.elsevier.com/xml/bkapi/dtd" 
+             xmlns:err="http://www.elsevier.com/services/dtd" 
+			 xmlns="http://wadl.dev.java.net/2009/02">
+	<doc title="Citation Overview API">This represents the interfaces to retrieve document citation counts (SCOPUS content) broken down by year, with the option to exclude self-citations. To retrieve the total citations count for a document, use the <a href="https://${dochostname}/documentation/AbstractCitationCountAPI.wadl">Abstract Citation Count API</a>.
+	  <br/><br/>The following chart shows the <a href="https://${dochostname}/documentation/guides/AbstractCitationViews.htm">Citation Overview Views</a>.
+	</doc>
+	<grammars>
+		<include href="bkapi-abstract-citations.xsd"/>
+		<include href="Error.xsd"/>
+	</grammars>
+	<resources base="https://api.elsevier.com/content/abstract/">
+		<resource path="citations">
+			<doc title="Citation Overview API">This represents a retrieval of citation metadata, including counts and citation summaries, for specific documents (SCOPUS content).</doc>
+			<method name="GET" id="simple">
+				<request>
+					<param name="Accept" type="xsd:string" style="header" required="true" default="application/json">
+						<doc title="accept">This represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="Authorization" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This header field contains the OAuth bearer access token, where the format of the field is &quot;Bearer &lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements. The Authorization field overrides X-ELS-Authtoken.</doc>
+					</param>
+					<param name="X-ELS-APIKey" type="xsd:string" style="header" required="true">
+						<doc title="developer identifier">This represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="X-ELS-Authtoken" type="xsd:string" style="header">
+						<doc title="end-user session identifier">This represents a end-user session. If provided, this key is used to validate the credentials needed to access content in this resource.</doc>
+					</param>
+					<param name="X-ELS-ReqId" type="xsd:string" style="header">
+						<doc title="request identifier">This is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="X-ELS-ResourceVersion" type="xsd:string" style="header">
+						<doc title="resource version">Represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="httpAccept" type="xsd:string" style="query">
+						<doc title="accept">Override for HTTP header Accept, this represents the acceptable mime types for which the response can be generated.</doc>
+						<option value="application/json"/>
+						<option value="text/xml"/>
+						<option value="application/xml"/>
+					</param>
+					<param name="access_token" type="xsd:string" style="query">
+						<doc title="end-user session identifier">Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is &quot;&lt;token&gt;&quot; (where the token represents the end-user session key).  The presence of a bearer token implies the request will be executed against user-based entitlements.</doc>
+					</param>
+					<param name="apiKey" type="xsd:string" style="query">
+						<doc title="developer identifier">Override for HTTP header X-ELS-APIKey, this represents a unique application developer key providing access to resource.</doc>
+					</param>
+					<param name="reqId" type="xsd:string" style="query">
+						<doc title="request identifier">Override for HTTP header X-ELS-ReqId, this is a client-defined request identifier, which will be logged in all trace messages of the service. This identifier can be used to track a specific transaction in the service&apos;s message logs. Note that this should be a unique identifier for the client, and used to track a single transaction.</doc>
+					</param>
+					<param name="ver" type="xsd:string" style="query">
+						<doc title="resource version">Override for HTTP header X-ELS-ResourceVersion, this represents the version of the resource that should be received.</doc>
+					</param>
+					<param name="start" type="xsd:string" style="query">
+						<doc title="starting position">
+							<br/>Numeric value representing the results offset (i.e. starting position for the search results). The maximum for this value is a system-level default (varies with search cluster) minus the number of results requested. If not specified the offset will be set to zero (i.e. first search result)
+							<br/>
+							<br/>ex. start=5
+						</doc>
+					</param>
+					<param name="count" type="xsd:string" style="query">
+						<doc title="number of results">
+							<br/>Numeric value representing the maximum number of results to be returned for the search. If not provided this will be set to a system default based on service level.
+							<br/>In addition the number cannot exceed the maximum system default â?? if it does an error will be returned.
+							<br/>
+							<br/>ex. count=10
+						</doc>
+					</param>
+					<param name="view" type="xsd:string" style="query" default="STANDARD">
+						<doc title="view">
+							The following chart shows the <a href="https://${dochostname}/documentation/guides/AbstractCitationViews.htm">Citation Overview Views</a>.
+						</doc>
+						<option value="STANDARD"/>
+					</param>
+					<param name="field" type="xsd:string" style="query">
+						<doc title="field">
+							<br/>This alias represents the name of specific fields that should be returned. The list of fields include all of the fields returned in the response payload (see view).
+							<br/>Multiple fields can be specified, delimited by commas.
+						</doc>
+					</param>
+					<param name="sort" type="xsd:string" style="query">
+						<doc title="sort fields">
+							<br/>Represents the sort field name and order. A plus in front of the sort field name indicates ascending order, a minus indicates descending order. If sort order is not specified (i.e. no + or -) then the order defaults to ascending (ASC).
+							<br/>
+							<br/>Only one sort field can be specified at a time.
+							<br/>
+							<br/>+/-{field name}
+							<br/>
+							<br/>ex. sort=+sort-year
+						</doc>
+						<option value="sort-year"/>
+						<option value="rowTotal"/>
+					</param>
+					<param name="date" type="xsd:string" style="query">
+						<doc title="date restriction">
+							<br/>Represents the date range associated with the search, with the lowest granularity being year.
+							<br/>
+							<br/>ex. date=2002-2007
+						</doc>
+					</param>
+					<param name="citation" type="xsd:string" style="query">
+						<doc title="Self Citation">
+							<br/>Allows for the exclusion of self-citations. The default behavior is to include all citations.
+							<br/>
+						</doc>
+						<option value="exclude-self"/>
+						<option value="exclude-books"/>
+					</param>
+					<param name="author_id" type="xsd:string" style="query">
+						<doc title="Author Identifier">
+							<br/>Exclude citations for specified author. Ignored if citation=exclude-books
+							<br/>One or more author identifiers can be requested.
+							<br/>
+						</doc>
+					</param>		
+					<param name="scopus_id" type="xsd:string" style="query">
+						<doc title="Scopus Identifier">
+							<br/>One or more document identifiers can be requested.
+							<br/>
+						</doc>
+					</param>
+					<param name="doi" type="xsd:string" style="query">
+						<doc title="Document Object Identifier">
+							<br/>One or more document identifiers can be requested.
+							<br/>
+						</doc>
+					</param>
+					<param name="pii" type="xsd:string" style="query">
+						<doc title="Publication Item Identifier">
+							<br/>One or more document identifiers can be requested.
+							<br/>
+						</doc>
+					</param>
+					<param name="pubmed_id" type="xsd:string" style="query">
+						<doc title="PUBMED Identifier">
+							<br/>One or more document identifiers can be requested.
+							<br/>
+						</doc>
+					</param>
+				</request>
+				<response status="200">
+					<representation mediaType="application/json" element="abstractCitationResp.json" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationResp.json">
+						<doc title="Citation Overview JSON Response">This is JSON representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="text/xml" element="abstractCitationResp.xml" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationResp.xml">
+						<doc title="Citation Overview XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="200">
+					<representation mediaType="application/xml" element="abstractCitationResp.xml" href="https://${dochostname}/documentation/payloads/metadata/abstractCitationResp.xml">
+						<doc title="Citation Overview XML Response">This is XML representing the requested resource.</doc>
+					</representation>
+				</response>
+				<response status="400">
+					<representation mediaType="text/xml" element="invalidRequest.xml" href="https://${dochostname}/documentation/payloads/invalidRequest.xml">
+						<doc title="Invalid Request">This is an error that occurs when invalid information is submitted.</doc>
+					</representation>
+				</response>
+				<response status="401">
+					<representation mediaType="text/xml" element="authError.xml" href="https://${dochostname}/documentation/payloads/authError.xml">
+						<doc title="Authentication Error">This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).</doc>
+					</representation>
+				</response>
+				<response status="405">
+					<representation mediaType="text/xml" element="invalidHttpMethod.xml" href="https://${dochostname}/documentation/payloads/invalidHttpMethod.xml">
+						<doc title="Invalid HTTP Method">This is an error that occurs when the requested HTTP Method is invalid.</doc>
+					</representation>
+				</response>
+				<response status="406">
+					<representation mediaType="text/xml" element="invalidAcceptHeader.xml" href="https://${dochostname}/documentation/payloads/invalidAcceptHeader.xml">
+						<doc title="Invalid Mime Type">This is an error that occurs when the requested mime type is invalid.</doc>
+					</representation>
+				</response>
+				<response status="429">
+					<representation mediaType="text/xml" element="quotaExceeded.xml" href="https://${dochostname}/documentation/payloads/quotaExceeded.xml">
+						<doc title="Quota Exceeded">This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.</doc>
+					</representation>
+				</response>
+				<response status="500">
+					<representation mediaType="text/xml" element="genericError.xml" href="https://${dochostname}/documentation/payloads/genericError.xml">
+						<doc title="Generic Error">This is a general purpose error condition.</doc>
+					</representation>
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

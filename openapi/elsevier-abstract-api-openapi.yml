@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Elsevier Scopus APIs Abstract API
+  title: Elsevier Scopus Abstract API
   description: 'Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.
 
     '
@@ -107,17 +107,12 @@ paths:
           description: Abstract record
 components:
   parameters:
-    ViewParam:
-      name: view
-      in: query
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
       schema:
         type: string
-        enum:
-        - META
-        - META_ABS
-        - FULL
-        - REF
-        - ENTITLED
     AcceptHeader:
       name: Accept
       in: header
@@ -130,12 +125,17 @@ components:
         - application/xml
         - application/atom+xml
         - application/rdf+xml
-    InstTokenHeader:
-      name: X-ELS-Insttoken
-      in: header
-      required: false
+    ViewParam:
+      name: view
+      in: query
       schema:
         type: string
+        enum:
+        - META
+        - META_ABS
+        - FULL
+        - REF
+        - ENTITLED
   securitySchemes:
     apiKey:
       type: apiKey

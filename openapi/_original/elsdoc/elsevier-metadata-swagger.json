@@ -1,0 +1,56 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0"
+  },
+  "tags":[  
+   	  {  
+         "name":"Abstract_Citation_Count",
+         "description":"Abstract Citation count API"
+      },
+      {  
+         "name":"Citations_Overview",
+         "description":"Citations Overview API"
+      },
+       {  
+         "name":"Nonserial_Title",
+         "description":"Nonserial Title API"
+      },
+      {  
+         "name":"Serial_Title",
+         "description":"Serial Title API"
+      }
+      ],
+  "host": "api.elsevier.com",
+  "basePath": "/content",
+  "schemes": [
+    "https",
+    "http"
+  ], 
+  
+  "paths": {
+  "/abstract/citation-count": {
+      "$ref": "./listings/Abstract_Citation_Count#/abstractcitationcount"
+    },
+    "/abstract/citations": {
+      "$ref": "./listings/Citations_Overview#/abstractcitationoverview"
+    },
+    "/nonserial/title": {
+      "$ref": "./listings/Nonserial_Title#/nonserialtitle"
+    },
+    "/nonserial/title/isbn/{isbn}": {
+      "$ref": "./listings/Nonserial_Title#/nonserialtitleisbn"
+    },
+    "/serial/title": {
+      "$ref": "./listings/Serial_Title#/serialtitle"
+    },
+    "/serial/title/issn/{issn}": {
+      "$ref": "./listings/Serial_Title#/serialtitleissn"
+    }
+  },
+  "definitions": {
+    
+    
+    
+  }
+}

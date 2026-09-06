@@ -1,0 +1,46 @@
+generated: '2026-09-06'
+method: generated
+source: >-
+  openapi/elsevier-*-swagger.json (7 first-party Swagger 2.0 contracts), wadl/ (37 first-party
+  WADL contracts), and the Elsevier developer portal how-to guides
+provider: Elsevier
+providerId: elsevier
+description: >-
+  Packaged Agent Skills for the Elsevier Research Products APIs. Every operationId named in
+  these skills was grepped out of Elsevier's own published contracts; none was invented. Elsevier
+  publishes no skills, no AGENTS.md and no llms.txt of its own.
+provider_published: false
+skills:
+- name: elsevier-literature-search
+  file: elsevier-literature-search.md
+  description: >-
+    Choose between Scopus and ScienceDirect, page a result set past the 5,000-item cap with
+    cursor pagination, and stay inside the per-API weekly quota.
+  operations: [ScopusSearch, ScienceDirectSearchV2, AffiliationSearch, AuthorSearch]
+- name: elsevier-citation-metrics
+  file: elsevier-citation-metrics.md
+  description: >-
+    Batch cited-by counts, and understand why the Citation Overview API returns counts but never
+    the citing articles.
+  operations: [AbstractCitationCount, CitationsOverview]
+- name: elsevier-author-profile
+  file: elsevier-author-profile.md
+  description: >-
+    Resolve a researcher from ORCID or name to a Scopus author profile, handle the duplicate
+    profiles the matching algorithm creates by design, and pull SciVal author metrics.
+  operations: [getAuthorByORCID, AuthorSearch, AuthorRetrievalid, AuthorRetrieval, ScopusSearch, authorMetrics]
+- name: elsevier-fulltext-entitlement
+  file: elsevier-fulltext-entitlement.md
+  description: >-
+    Check entitlement before fetching full text so an agent stops generating 403s, then retrieve
+    the article and its objects under the TDM provisions.
+  operations: [ArticleEntitlementRetrieval, ArticleRetrieval, ObjectRetrieval, ArticleMetadata]
+- name: elsevier-scival-benchmarking
+  file: elsevier-scival-benchmarking.md
+  description: >-
+    The resolve-entity-then-request-metrics pattern every SciVal endpoint follows, including the
+    offset/limit pagination that differs from the content APIs.
+  operations: [institutionSearch, getInstitution, institutionMetrics, countryMetrics, topicMetrics, getTopicsByInstitutionId, worldMetrics]
+summary:
+  skill_count: 5
+  grounded_in: 98 unique operations across 7 first-party contracts
