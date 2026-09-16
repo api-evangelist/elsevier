@@ -1,47 +1,33 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/elsevier-openapi.yml
+source: openapi/elsevier-abstract-api-openapi.yml, openapi/elsevier-abstract-citation-count-api-openapi.yml,
+  openapi/elsevier-abstract-retrieval-api-openapi.yml, openapi/elsevier-affiliation-retrieval-api-openapi.yml,
+  openapi/elsevier-affiliation-search-api-openapi.yml, openapi/elsevier-article-entitlement-retrieval-api-openapi.yml,
+  openapi/elsevier-article-metadata-api-openapi.yml, openapi/elsevier-article-retrieval-api-openapi.yml,
+  openapi/elsevier-author-retrieval-api-openapi.yml, openapi/elsevier-author-search-api-openapi.yml,
+  openapi/elsevier-citations-overview-api-openapi.yml, openapi/elsevier-engineering-village-retrieval-api-openapi.yml,
+  openapi/elsevier-engineering-village-search-api-openapi.yml, openapi/elsevier-nonserial-title-api-openapi.yml,
+  openapi/elsevier-object-retrieval-api-openapi.yml, openapi/elsevier-sciencedirect-search-v2-api-openapi.yml,
+  openapi/elsevier-scival-author-lookup-api-api-openapi.yml, openapi/elsevier-scival-country-group-lookup-api-v1-api-openapi.yml,
+  openapi/elsevier-scival-country-lookup-api-v1-api-openapi.yml, openapi/elsevier-scival-institution-group-lookup-api-v1-api-openapi.yml,
+  openapi/elsevier-scival-institution-lookup-api-v1-api-openapi.yml, openapi/elsevier-scival-publication-lookup-api-v1-api-openapi.yml,
+  openapi/elsevier-scival-scopus-source-lookup-api-api-openapi.yml, openapi/elsevier-scival-subject-area-lookup-api-api-openapi.yml,
+  openapi/elsevier-scival-topic-cluster-lookup-api-api-openapi.yml, openapi/elsevier-scival-topic-lookup-api-api-openapi.yml,
+  openapi/elsevier-scival-world-lookup-api-api-openapi.yml, openapi/elsevier-scopus-search-api-openapi.yml,
+  openapi/elsevier-search-api-openapi.yml, openapi/elsevier-serial-title-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 8
+  operations: 106
   by_action_class:
-    connected: 8
+    connected: 105
+    acting: 1
   by_consequence:
-    read: 8
+    read: 105
+    write: 1
   human_in_the_loop_required: 0
 operations:
-- path: /content/search/scopus
-  method: get
-  operationId: scopusSearch
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /content/search/author
-  method: get
-  operationId: authorSearch
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /content/search/affiliation
-  method: get
-  operationId: affiliationSearch
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /content/abstract/scopus_id/{scopus_id}
   method: get
   operationId: getAbstractByScopusId
@@ -85,6 +71,1022 @@ operations:
 - path: /content/abstract/pubmed_id/{pubmed_id}
   method: get
   operationId: getAbstractByPubmedId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/citation-count
+  method: get
+  operationId: AbstractCitationCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/doi/{doi}
+  method: get
+  operationId: AbstractRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/eid/{eid}
+  method: get
+  operationId: AbstractRetrievalEID
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/pii/{pii}
+  method: get
+  operationId: AbstractRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/pubmed_id/{pubmed_id}
+  method: get
+  operationId: AbstractRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/pui/{pui}
+  method: get
+  operationId: AbstractRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/scopus_id/{scopus_id}
+  method: get
+  operationId: AbstractRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /affiliation/affiliation_id/{affiliation_id}
+  method: get
+  operationId: AffiliationRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /affiliation/eid/{eid}
+  method: get
+  operationId: AffiliationRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search/affiliation
+  method: get
+  operationId: AffiliationSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/entitlement/doi/{doi}
+  method: get
+  operationId: ArticleEntitlementRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/entitlement/eid/{eid}
+  method: get
+  operationId: ArticleEntitlementRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/entitlement/pii/{pii}
+  method: get
+  operationId: ArticleEntitlementRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/entitlement/pubmed_id/{pubmed_id}
+  method: get
+  operationId: ArticleEntitlementRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/entitlement/scopus_id/{scopus_id}
+  method: get
+  operationId: ArticleEntitlementRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /metadata/article
+  method: get
+  operationId: ArticleMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/doi/{doi}
+  method: get
+  operationId: ArticleRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/eid/{eid}
+  method: get
+  operationId: ArticleRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/pii/{pii}
+  method: get
+  operationId: ArticleRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /article/pubmed_id/{pubmed_id}
+  method: get
+  operationId: ArticleRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /author/eid/{eid}
+  method: get
+  operationId: AuthorRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /author/author_id/{author_id}
+  method: get
+  operationId: AuthorRetrievalid
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search/author
+  method: get
+  operationId: AuthorSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /abstract/citations
+  method: get
+  operationId: CitationsOverview
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ev/records
+  method: get
+  operationId: fetchRecordUsingGET
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ev/results
+  method: get
+  operationId: expertSearchUsingGET
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /nonserial/title
+  method: get
+  operationId: NonserialTitleSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /nonserial/title/isbn/{isbn}
+  method: get
+  operationId: NonserialTitleMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/doi/{doi}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/doi/{doi}/ref/{ref}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/doi/{doi}/ref/{ref}/high
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/doi/{doi}/ref/{ref}/standard
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/doi/{doi}/ref/{ref}/thumbnail
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/eid/{eid}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pii/{pii}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pii/{pii}/ref/{ref}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pii/{pii}/ref/{ref}/high
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pii/{pii}/ref/{ref}/standard
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pii/{pii}/ref/{ref}/thumbnail
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pubmed_id/{pubmed_id}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pubmed_id/{pubmed_id}/ref/{ref}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pubmed_id/{pubmed_id}/ref/{ref}/high
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pubmed_id/{pubmed_id}/ref/{ref}/standard
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/pubmed_id/{pubmed_id}/ref/{ref}/thumbnail
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/scopus_id/{scopus_id}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/scopus_id/{scopus_id}/ref/{ref}
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/scopus_id/{scopus_id}/ref/{ref}/high
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/scopus_id/{scopus_id}/ref/{ref}/standard
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /object/scopus_id/{scopus_id}/ref/{ref}/thumbnail
+  method: get
+  operationId: ObjectRetrieval
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search/sciencedirect
+  method: get
+  operationId: ScienceDirectSearchV2
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search/sciencedirect
+  method: put
+  operationId: ScienceDirectSearchV2
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /author/institutionId/{institutionId}
+  method: get
+  operationId: getAuthorsByInstitutionId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /author/metrics
+  method: get
+  operationId: authorMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /author/orcid/{orcid}
+  method: get
+  operationId: getAuthorByORCID
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /author/{id}
+  method: get
+  operationId: getAuthor
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /countryGroup/metrics
+  method: get
+  operationId: countryGroupMetricsV1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /countryGroup/search
+  method: get
+  operationId: countryGroupSearchV1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /countryGroup/{id}
+  method: get
+  operationId: getCountryGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /country/code/{code}
+  method: get
+  operationId: getCountryByCode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /country/metrics
+  method: get
+  operationId: countryMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /country/search
+  method: get
+  operationId: countrySearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /country/{id}
+  method: get
+  operationId: getCountry
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institutionGroup/metrics
+  method: get
+  operationId: institutionGroupMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institutionGroup/search
+  method: get
+  operationId: institutionGroupSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institutionGroup/{id}
+  method: get
+  operationId: getInstitutionGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution
+  method: get
+  operationId: getInstitutions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/count
+  method: get
+  operationId: institutionCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/countryGroupId/{countryGroupId}
+  method: get
+  operationId: getInstitutionsByCountryGroupId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/countryId/{countryId}
+  method: get
+  operationId: getInstitutionsByCountryId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/metrics
+  method: get
+  operationId: institutionMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/search
+  method: get
+  operationId: institutionSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /institution/{id}
+  method: get
+  operationId: getInstitution
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publication/metrics
+  method: get
+  operationId: publicationMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publication/{id}
+  method: get
+  operationId: getDocument
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /scopusSource/metrics
+  method: get
+  operationId: sourceMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /scopusSource/search
+  method: get
+  operationId: sourceSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /scopusSource/{id}
+  method: get
+  operationId: getSource
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subjectArea/classificationType/{classificationType}
+  method: get
+  operationId: getSubjectAreasByClassification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subjectArea/search
+  method: get
+  operationId: subjectAreaSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /subjectArea/{id}
+  method: get
+  operationId: getSubjectArea
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/countryId/{countryId}
+  method: get
+  operationId: getTopicClustersByCountryId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/institutionId/{institutionId}
+  method: get
+  operationId: getTopicClustersByInstitutionId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/metrics
+  method: get
+  operationId: topicClusterMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/metrics/countryId/{countryId}
+  method: get
+  operationId: countryTopicClusterMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/metrics/institutionId/{institutionId}
+  method: get
+  operationId: institutionTopicClusterMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/scopusSourceId/{sourceId}
+  method: get
+  operationId: getTopicClustersBySourceId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topicCluster/{id}
+  method: get
+  operationId: getTopicCluster
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/countryId/{countryId}
+  method: get
+  operationId: getTopicsByCountryId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/institutionId/{institutionId}
+  method: get
+  operationId: getTopicsByInstitutionId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/metrics
+  method: get
+  operationId: topicMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/metrics/countryId/{countryId}
+  method: get
+  operationId: countryTopicMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/metrics/institutionId/{institutionId}
+  method: get
+  operationId: institutionTopicMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/scopusSourceId/{sourceId}
+  method: get
+  operationId: getTopicsBySourceId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /topic/{id}
+  method: get
+  operationId: getTopic
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /world/metrics
+  method: get
+  operationId: worldMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /search/scopus
+  method: get
+  operationId: ScopusSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /content/search/scopus
+  method: get
+  operationId: scopusSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /content/search/author
+  method: get
+  operationId: authorSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /content/search/affiliation
+  method: get
+  operationId: affiliationSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serial/title
+  method: get
+  operationId: SerialTitleSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serial/title/issn/{issn}
+  method: get
+  operationId: SerialTitleMetadata
   x-agentic-access:
     action-class: connected
     consequence: read
