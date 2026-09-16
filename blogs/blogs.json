@@ -2,6 +2,13 @@
   "repo": "elsevier",
   "feeds": [
     {
+      "source": "https://github.com/ElsevierDev",
+      "feed_url": "https://github.com/ElsevierDev",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://dev.elsevier.com/support.html",
       "feed_url": "https://dev.elsevier.com/support.html",
       "title": "",
@@ -16,7 +23,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-09-06T19:17:18Z",
+  "fetched": "2026-09-13T13:00:00Z",
   "post_count": 3,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,

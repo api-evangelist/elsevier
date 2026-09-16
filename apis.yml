@@ -52,89 +52,6 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/elsevier/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
-- aid: elsevier:elsevier-scopus-apis
-  name: Elsevier Scopus APIs
-  description: >-
-    Scopus delivers a comprehensive view of the world of research, allowing tracking, analysis, and visualization
-    of research data across publishers, journals, books, conference proceedings, and trade publications.
-  humanURL: https://dev.elsevier.com/sc_apis.html
-  baseURL: https://api.elsevier.com/content
-  tags:
-  - Citations
-  - Research
-  - Scientific
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-scopus-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-scopus-overlay.yaml
-  - type: Documentation
-    url: https://dev.elsevier.com/scopus.html
-  - type: Specification
-    url: https://dev.elsevier.com/api_docs.html
-  - type: Console
-    url: https://dev.elsevier.com/scopus.html
-- aid: elsevier:elsevier-sciencedirect-apis
-  name: Elsevier ScienceDirect APIs
-  description: >-
-    ScienceDirect APIs expose peer-reviewed full-text scientific, technical and medical content from all
-    scholarly publications indexed by ScienceDirect, Elsevier's premier scientific platform.
-  humanURL: https://dev.elsevier.com/sd_apis.html
-  baseURL: https://api.elsevier.com/content
-  tags:
-  - Full Text
-  - Journals
-  - Scientific
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-sciencedirect-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-sciencedirect-overlay.yaml
-  - type: Documentation
-    url: https://dev.elsevier.com/sciencedirect.html
-  - type: Specification
-    url: https://dev.elsevier.com/api_docs.html
-  - type: Console
-    url: https://dev.elsevier.com/sciencedirect.html
-- aid: elsevier:elsevier-scival-api
-  name: Elsevier SciVal API
-  description: >-
-    The SciVal API gives access to a comprehensive set of metrics for researchers (Scopus Author profiles)
-    and 8,500+ institutions available in SciVal, Elsevier's platform for research performance benchmarking.
-  humanURL: https://dev.elsevier.com/scival_apis.html
-  baseURL: https://api.elsevier.com/analytics/scival
-  tags:
-  - Benchmarking
-  - Metrics
-  - Research
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-scival-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-scival-overlay.yaml
-  - type: Documentation
-    url: https://dev.elsevier.com/scival.html
-  - type: Specification
-    url: https://dev.elsevier.com/api_docs.html
-- aid: elsevier:elsevier-engineering-village-api
-  name: Elsevier Engineering Village API
-  description: >-
-    Engineering Village APIs provide programmatic access to engineering research literature, indexed publications,
-    and engineering-focused content across multiple databases.
-  humanURL: https://dev.elsevier.com/ev_apis.html
-  baseURL: https://api.elsevier.com/content
-  tags:
-  - Engineering
-  - Research
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-engineering-village-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-engineering-village-overlay.yaml
-  - type: WADL
-    url: wadl/elsevier-engineering-village.wadl
-  - type: Documentation
-    url: https://dev.elsevier.com/ev_apis.html
 - aid: elsevier:elsevier-embase-api
   name: Elsevier Embase API
   description: >-
@@ -151,51 +68,13 @@ apis:
     url: wadl/elsevier-embase.wadl
   - type: Documentation
     url: https://dev.elsevier.com/embase_apis.html
-- aid: elsevier:elsevier-retrieval-apis
-  name: Elsevier Retrieval APIs
-  description: >-
-    The Retrieval APIs return a single record by identifier across the Elsevier corpus — abstracts,
-    full-text articles, article objects, entitlements, author profiles and affiliation profiles — reachable
-    interchangeably by DOI, EID, PII, PubMed ID or Scopus ID. 41 paths on api.elsevier.com/content.
-  humanURL: https://dev.elsevier.com/api_docs.html
-  baseURL: https://api.elsevier.com/content
-  tags:
-  - Retrieval
-  - Full Text
-  - Research
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-retrieval-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-retrieval-overlay.yaml
-  - type: Console
-    url: https://dev.elsevier.com/retrieval.html
-- aid: elsevier:elsevier-metadata-apis
-  name: Elsevier Metadata APIs
-  description: >-
-    The Metadata APIs cover citation counts, the Citations Overview, and serial and non-serial title
-    metadata and search — the bibliographic layer over Scopus rather than the content itself. Six paths
-    on api.elsevier.com/content.
-  humanURL: https://dev.elsevier.com/api_docs.html
-  baseURL: https://api.elsevier.com/content
-  tags:
-  - Metadata
-  - Citations
-  - Journals
-  properties:
-  - type: OpenAPI
-    url: openapi/elsevier-metadata-swagger.json
-  - type: Overlay
-    url: overlays/elsevier-metadata-overlay.yaml
-  - type: Console
-    url: https://dev.elsevier.com/metadata.html
 - aid: elsevier:elsevier-sushi-api
   name: Elsevier COUNTER SUSHI API
   description: >-
-    Elsevier's COUNTER Code of Practice Release 5 and 5.1 API, delivering standards-compliant usage
-    statistics and reports over SUSHI. Base https://api.elsevier.com/sushi/ for COP5 and
-    https://api.elsevier.com/sushi/r51/ for COP5.1, with /status, /members and /reports endpoints.
-    Access requires a COUNTER requestor ID and a preconfigured key issued by Elsevier support.
+    Elsevier's COUNTER Code of Practice Release 5 and 5.1 API, delivering standards-compliant usage statistics
+    and reports over SUSHI. Base https://api.elsevier.com/sushi/ for COP5 and https://api.elsevier.com/sushi/r51/
+    for COP5.1, with /status, /members and /reports endpoints. Access requires a COUNTER requestor ID
+    and a preconfigured key issued by Elsevier support.
   humanURL: https://dev.elsevier.com/sushicop5.html
   baseURL: https://api.elsevier.com/sushi
   tags:
@@ -235,13 +114,882 @@ apis:
     url: openapi/elsevier-search-api-openapi.yml
   - type: Overlay
     url: overlays/elsevier-search-api-overlay.yaml
-  - type: OpenAPI
-    url: openapi/elsevier-search-swagger.json
   - type: Overlay
     url: overlays/elsevier-search-overlay.yaml
   - type: Console
     url: https://dev.elsevier.com/search.html
+- aid: elsevier:elsevier-abstract-citation-count-api
+  name: Elsevier Abstract Citation Count API
+  description: Abstract Citation count API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Abstract_Citation_Count
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-abstract-citation-count-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-abstract-retrieval-api
+  name: Elsevier Abstract Retrieval API
+  description: Abstract Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Abstract_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-abstract-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-affiliation-retrieval-api
+  name: Elsevier Affiliation Retrieval API
+  description: Affiliation Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Affiliation_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-affiliation-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-affiliation-search-api
+  name: Elsevier Affiliation Search API
+  description: Affiliation Search API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Affiliation_Search
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-affiliation-search-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-article-entitlement-retrieval-api
+  name: Elsevier Article Entitlement Retrieval API
+  description: Article Entitlement Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Article_Entitlement_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-article-entitlement-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-article-metadata-api
+  name: Elsevier Article Metadata API
+  description: Article Metadata API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Article_Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-article-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-article-retrieval-api
+  name: Elsevier Article Retrieval API
+  description: Article Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Article_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-article-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-author-retrieval-api
+  name: Elsevier Author Retrieval API
+  description: Author Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Author_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-author-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-author-search-api
+  name: Elsevier Author Search API
+  description: Author Search API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Author_Search
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-author-search-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-citations-overview-api
+  name: Elsevier Citations Overview API
+  description: Citations Overview API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Citations_Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-citations-overview-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-engineering-village-retrieval-api
+  name: Elsevier Engineering Village Retrieval API
+  description: Engineering Village Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Engineering_Village_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-engineering-village-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-engineering-village-search-api
+  name: Elsevier Engineering Village Search API
+  description: Engineering Village Search API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Engineering_Village_Search
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-engineering-village-search-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-nonserial-title-api
+  name: Elsevier Nonserial Title API
+  description: Nonserial Title API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Nonserial_Title
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-nonserial-title-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-object-retrieval-api
+  name: Elsevier Object Retrieval API
+  description: Object Retrieval API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Object_Retrieval
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-object-retrieval-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-sciencedirect-search-v2-api
+  name: Elsevier Science Direct Search V2 API
+  description: ScienceDirect Search V2 API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - ScienceDirect_Search_V2
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-sciencedirect-search-v2-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-author-lookup-api-api
+  name: Elsevier SciVal Author Lookup API
+  description: >-
+    The SciVal Author Lookup API API from Elsevier — 4 operation(s) for scival author lookup api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Author Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-author-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-country-group-lookup-api-v1-api
+  name: Elsevier SciVal Country Group Lookup API V1 API
+  description: >-
+    The SciVal Country Group Lookup API V1 API from Elsevier — 3 operation(s) for scival country group
+    lookup api v1.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Country Group Lookup API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-country-group-lookup-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-country-lookup-api-v1-api
+  name: Elsevier SciVal Country Lookup API V1 API
+  description: >-
+    The SciVal Country Lookup API V1 API from Elsevier — 4 operation(s) for scival country lookup api
+    v1.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Country Lookup API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-country-lookup-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-institution-group-lookup-api-v1-api
+  name: Elsevier SciVal Institution Group Lookup API V1 API
+  description: >-
+    The SciVal Institution Group Lookup API V1 API from Elsevier — 3 operation(s) for scival institution
+    group lookup api v1.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Institution Group Lookup API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-institution-group-lookup-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-institution-lookup-api-v1-api
+  name: Elsevier SciVal Institution Lookup API V1 API
+  description: >-
+    The SciVal Institution Lookup API V1 API from Elsevier — 7 operation(s) for scival institution lookup
+    api v1.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Institution Lookup API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-institution-lookup-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-publication-lookup-api-v1-api
+  name: Elsevier SciVal Publication Lookup API V1 API
+  description: >-
+    The SciVal Publication Lookup API V1 API from Elsevier — 2 operation(s) for scival publication lookup
+    api v1.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Publication Lookup API V1
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-publication-lookup-api-v1-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-scopus-source-lookup-api-api
+  name: Elsevier SciVal Scopus Source Lookup API
+  description: >-
+    The SciVal Scopus Source Lookup API API from Elsevier — 3 operation(s) for scival scopus source lookup
+    api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Scopus Source Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-scopus-source-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-subject-area-lookup-api-api
+  name: Elsevier SciVal Subject Area Lookup API
+  description: >-
+    The SciVal Subject Area Lookup API API from Elsevier — 3 operation(s) for scival subject area lookup
+    api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Subject Area Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-subject-area-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-topic-cluster-lookup-api-api
+  name: Elsevier SciVal Topic Cluster Lookup API
+  description: >-
+    The SciVal Topic Cluster Lookup API API from Elsevier — 7 operation(s) for scival topic cluster lookup
+    api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Topic Cluster Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-topic-cluster-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-topic-lookup-api-api
+  name: Elsevier SciVal Topic Lookup API
+  description: >-
+    The SciVal Topic Lookup API API from Elsevier — 7 operation(s) for scival topic lookup api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal Topic Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-topic-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scival-world-lookup-api-api
+  name: Elsevier SciVal World Lookup API
+  description: >-
+    The SciVal World Lookup API API from Elsevier — 1 operation(s) for scival world lookup api.
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - SciVal World Lookup API
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scival-world-lookup-api-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-scopus-search-api
+  name: Elsevier Scopus Search API
+  description: Scopus Search API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Scopus_Search
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-scopus-search-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
+- aid: elsevier:elsevier-serial-title-api
+  name: Elsevier Serial Title API
+  description: Serial Title API
+  humanURL: https://dev.elsevier.com/sc_apis.html
+  baseURL: https://api.elsevier.com/content
+  tags:
+  - Serial_Title
+  properties:
+  - type: OpenAPI
+    url: openapi/elsevier-serial-title-api-openapi.yml
+  - type: Documentation
+    url: https://dev.elsevier.com/scopus.html
+  - type: Specification
+    url: https://dev.elsevier.com/api_docs.html
+  - type: Console
+    url: https://dev.elsevier.com/scopus.html
+  - type: Documentation
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Console
+    url: https://dev.elsevier.com/sciencedirect.html
+  - type: Documentation
+    url: https://dev.elsevier.com/scival.html
+  - type: WADL
+    url: wadl/elsevier-engineering-village.wadl
+  - type: Documentation
+    url: https://dev.elsevier.com/ev_apis.html
+  - type: Console
+    url: https://dev.elsevier.com/retrieval.html
+  - type: Console
+    url: https://dev.elsevier.com/metadata.html
 common:
+  - type: Overlay
+    url: overlays/elsevier-scopus-overlay.yaml
+  - type: Overlay
+    url: overlays/elsevier-sciencedirect-overlay.yaml
+  - type: Overlay
+    url: overlays/elsevier-scival-overlay.yaml
+  - type: Overlay
+    url: overlays/elsevier-engineering-village-overlay.yaml
+  - type: Overlay
+    url: overlays/elsevier-retrieval-overlay.yaml
+  - type: Overlay
+    url: overlays/elsevier-metadata-overlay.yaml
   - type: Website
     url: https://www.elsevier.com/
   - type: AgenticAccess
