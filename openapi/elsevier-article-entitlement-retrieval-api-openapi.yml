@@ -1,0 +1,297 @@
+openapi: 3.2.0
+info:
+  title: Elsevier Article Entitlement Retrieval API
+  version: '2.0'
+  description: 'Operations tagged Article_Entitlement_Retrieval across 2 of this provider''s published API definitions: elsevier-retrieval-swagger.json, elsevier-sciencedirect-swagger.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.elsevier.com/content
+- url: http://api.elsevier.com/content
+tags:
+- name: Article_Entitlement_Retrieval
+  description: Article Entitlement Retrieval API
+paths:
+  /article/entitlement/doi/{doi}:
+    get:
+      tags:
+      - Article_Entitlement_Retrieval
+      description: 'Article entitlement retrieval via DOI exposes interfaces associated with Article entitlement retrieval API. Multiple DOI values can be submitted by including them as a comma-delimited list.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: ArticleEntitlementRetrieval
+      parameters:
+      - description: doi value or comma-delimited list
+        in: path
+        name: doi
+        required: true
+        schema:
+          type: string
+          default: 10.1016/S0014-5793(01)03313-0
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema: {}
+            application/json:
+              schema: {}
+      summary: Article Entitlement Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+  /article/entitlement/eid/{eid}:
+    get:
+      tags:
+      - Article_Entitlement_Retrieval
+      description: 'Article entitlement retrieval via EID exposes interfaces associated with Article entitlement retrieval API. Multiple EID values can be submitted by including them as a comma-delimited list.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: ArticleEntitlementRetrieval
+      parameters:
+      - description: eid value or comma-delimited list
+        in: path
+        name: eid
+        required: true
+        schema:
+          type: string
+          default: 2-s2.0-0037070197
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema: {}
+            application/json:
+              schema: {}
+      summary: Article Entitlement Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+  /article/entitlement/pii/{pii}:
+    get:
+      tags:
+      - Article_Entitlement_Retrieval
+      description: 'Article entitlement retrieval via PII exposes interfaces associated with Article entitlement retrieval API. Multiple PII values can be submitted by including them as a comma-delimited list.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: ArticleEntitlementRetrieval
+      parameters:
+      - description: pii value or comma-delimited list
+        in: path
+        name: pii
+        required: true
+        schema:
+          type: string
+          default: S0014579301033130
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema:
+                items: {}
+                type: array
+            application/json:
+              schema:
+                items: {}
+                type: array
+      summary: Article Entitlement Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+  /article/entitlement/pubmed_id/{pubmed_id}:
+    get:
+      tags:
+      - Article_Entitlement_Retrieval
+      description: 'Article entitlement retrieval via Medline/Pubmed ID exposes interfaces associated with Article entitlement retrieval API. Multiple Medline/Pubmed ID values can be submitted by including them as a comma-delimited list.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: ArticleEntitlementRetrieval
+      parameters:
+      - description: pubmed_id value or comma-delimited list
+        in: path
+        name: pubmed_id
+        required: true
+        schema:
+          type: string
+          default: '11852050'
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema:
+                items: {}
+                type: array
+            application/json:
+              schema:
+                items: {}
+                type: array
+      summary: Article Entitlement Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+  /article/entitlement/scopus_id/{scopus_id}:
+    get:
+      tags:
+      - Article_Entitlement_Retrieval
+      description: 'Article entitlement retrieval via Scopus ID exposes interfaces associated with Article entitlement retrieval API. Multiple Scopus ID values can be submitted by including them as a comma-delimited list.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: ArticleEntitlementRetrieval
+      parameters:
+      - description: scopus_id value or comma-delimited list
+        in: path
+        name: scopus_id
+        required: true
+        schema:
+          type: string
+          default: 0037070197
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema:
+                items: {}
+                type: array
+            application/json:
+              schema:
+                items: {}
+                type: array
+      summary: Article Entitlement Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+x-refined-from:
+- elsevier-retrieval-swagger.json
+- elsevier-sciencedirect-swagger.json
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/engineeringvillage
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-engineering-village-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

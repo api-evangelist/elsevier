@@ -1,0 +1,263 @@
+openapi: 3.2.0
+info:
+  title: Elsevier Engineering Village Retrieval API
+  version: '2.0'
+  description: 'Operations tagged Engineering_Village_Retrieval across 2 of this provider''s published API definitions: elsevier-engineering-village-swagger.json, elsevier-retrieval-swagger.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.elsevier.com/content
+- url: http://api.elsevier.com/content
+tags:
+- name: Engineering_Village_Retrieval
+  description: Engineering Village Retrieval API
+paths:
+  /ev/records:
+    get:
+      tags:
+      - Engineering_Village_Retrieval
+      summary: Engineering Village Retrieval API
+      description: This represents arecord retrieval from the Engineering Village databases.
+      operationId: fetchRecordUsingGET
+      parameters:
+      - name: apiKey
+        in: query
+        description: Required if no X-ELS-APIKey HTTP header, this represents a unique application developer key providing access to resource.
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - name: docId
+        in: query
+        description: DocId values corresponding to record to retreieve. The docId values are found in the DOC/DOC-ID values of the results returned by the Engineering Village Search API.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Override for HTTP header Authorization, this contains the OAuth bearer access token, where the format of the field is "&lt;token&gt;" (where the token represents the end-user session key). The presence of a bearer token implies the request will be executed against user-based entitlements.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Engineering Village Retrieval Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageContainer'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PageContainer'
+        '400':
+          description: 'Invalid Request: This is an error that occurs when invalid information is submitted.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+        '401':
+          description: 'Authentication Error: This is an error that occurs when a user cannot be authenticated due to missing/invalid credentials (authtoken or APIKey).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+        '500':
+          description: 'Generic Error: This is a general purpose error condition, typically due to back-end processing errors.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+        '403':
+          description: 'Authorization/Entitlements Error: This is an error that occurs when a user cannot be authenticated or entitlements cannot be validated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+        '429':
+          description: 'Quota Exceeded: This is an error that occurs when a requester has exceeded the quota limits associated with their API Key.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorWrap'
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+components:
+  schemas:
+    PageContainerItems:
+      properties:
+        PAGE-RESULTS:
+          $ref: '#/components/schemas/PageResults'
+        RESULTS-COUNT:
+          type: integer
+          format: int32
+        RESULTS-PER-PAGE:
+          type: integer
+          format: int32
+    DocID:
+      properties:
+        DB:
+          $ref: '#/components/schemas/Database'
+        DOC-ID:
+          type: string
+        HITINDEX:
+          type: integer
+          format: int32
+        TAGDATE:
+          type: string
+    PageContainer:
+      properties:
+        PAGE:
+          $ref: '#/components/schemas/PageContainerItems'
+    ContributorAffiliation:
+      properties:
+        AFID:
+          type: array
+          description: Affiliation ID list
+          items:
+            type: string
+    PageEntry:
+      properties:
+        EI-DOCUMENT:
+          $ref: '#/components/schemas/CitationEiDoc'
+    Afs:
+      properties:
+        AF:
+          type: array
+          description: Authors affiliation list
+          items:
+            $ref: '#/components/schemas/Affiliation'
+    Eds:
+      properties:
+        ED:
+          type: array
+          description: Editor list
+          items:
+            $ref: '#/components/schemas/ContributorInfo'
+    PageResults:
+      properties:
+        PAGE-ENTRY:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageEntry'
+    CitationEiDoc:
+      properties:
+        AFS:
+          description: Authors affiliation
+          $ref: '#/components/schemas/Afs'
+        AUS:
+          description: Authors
+          $ref: '#/components/schemas/Aus'
+        DOC:
+          $ref: '#/components/schemas/DocID'
+        DOCUMENTPROPERTIES:
+          type: object
+          additionalProperties:
+            type: string
+        EDS:
+          description: Editors
+          $ref: '#/components/schemas/Eds'
+        EFS:
+          description: Editors affiliation
+          $ref: '#/components/schemas/Efs'
+        FT:
+          $ref: '#/components/schemas/FT'
+        VIEW:
+          type: string
+        docProperties:
+          $ref: '#/components/schemas/DocProperties'
+    ContributorInfo:
+      properties:
+        AFS:
+          description: Affiliations
+          $ref: '#/components/schemas/ContributorAffiliation'
+        CO:
+          type: string
+          description: Country
+        EMAIL:
+          type: string
+        ID:
+          type: string
+        NAME:
+          type: string
+    Status:
+      properties:
+        statusCode:
+          type: string
+        statusText:
+          type: string
+    ServiceError:
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+    DocProperties:
+      properties:
+        any:
+          type: object
+          additionalProperties:
+            type: string
+    FT:
+      properties:
+        FTLINK:
+          type: string
+    Database:
+      properties:
+        DBNAME:
+          type: string
+        ID:
+          type: string
+    ServiceErrorWrap:
+      properties:
+        service-error:
+          $ref: '#/components/schemas/ServiceError'
+    Efs:
+      properties:
+        EF:
+          type: array
+          description: Editors affiliation list
+          items:
+            $ref: '#/components/schemas/Affiliation'
+    Affiliation:
+      properties:
+        ID:
+          type: string
+        NAME:
+          type: string
+    Aus:
+      properties:
+        AU:
+          type: array
+          description: Author list
+          items:
+            $ref: '#/components/schemas/ContributorInfo'
+x-refined-from:
+- elsevier-engineering-village-swagger.json
+- elsevier-retrieval-swagger.json
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/engineeringvillage
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-engineering-village-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

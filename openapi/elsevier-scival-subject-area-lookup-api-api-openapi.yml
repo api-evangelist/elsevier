@@ -1,0 +1,361 @@
+openapi: 3.2.0
+info:
+  title: Elsevier SciVal SciVal Subject Area Lookup API
+  version: 3.0.1
+servers:
+- url: https://api.elsevier.com/analytics/scival
+tags:
+- name: SciVal Subject Area Lookup API
+paths:
+  /subjectArea/classificationType/{classificationType}:
+    get:
+      parameters:
+      - description: The subject classification type for which to return subject areas
+        in: path
+        name: classificationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - KAKEN
+          - QS
+          - REF2014
+          - THE
+          - SDG
+          - POL
+          - NIRF
+          default: ASJC
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreasResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreasResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreasResponse'
+            application/vnd.scival.v2+json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreasResponse'
+            application/vnd.scival.v2+xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreasResponse'
+        '401':
+          description: Request not authorized
+        '404':
+          description: No subject areas were found
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Subject Area Lookup API
+      operationId: getSubjectAreasByClassification
+      summary: Get subject areas by classification type
+  /subjectArea/search:
+    get:
+      parameters:
+      - description: Search query string. Valid fields are name and classificatoin. Valid operators are OR and AND.
+        in: query
+        name: query
+        required: true
+        x-example: name(biology) AND classification(ASJC)
+        schema:
+          type: string
+      - description: The number of results to return
+        in: query
+        name: limit
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - description: For paginating results, this is how many pages of results to skip before returning results
+        in: query
+        name: offset
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaSearchResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaSearchResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaSearchResponse'
+            application/vnd.scival.v2+json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaSearchResponse'
+            application/vnd.scival.v2+xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaSearchResponse'
+        '400':
+          description: Query not specified
+        '401':
+          description: Request not authorized
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Subject Area Lookup API
+      operationId: subjectAreaSearch
+      summary: Find subject areas by name or classification
+  /subjectArea/{id}:
+    get:
+      parameters:
+      - description: Id of requested subject area
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+          default: 13
+      - description: The subject classification type for which to return subject areas
+        in: query
+        name: classificationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - KAKEN
+          - QS
+          - REF2014
+          - THE
+          - SDG
+          - POL
+          - NIRF
+          default: ASJC
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaResponse'
+            application/vnd.scival.v2+json:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaResponse'
+            application/vnd.scival.v2+xml:
+              schema:
+                $ref: '#/components/schemas/SubjectAreaResponse'
+        '401':
+          description: Request not authorized
+        '404':
+          description: No subject areas were found
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Subject Area Lookup API
+      operationId: getSubjectArea
+      summary: Get subject area by id
+components:
+  schemas:
+    SubjectAreaSearchResult:
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/Discipline'
+          type: array
+        classificationType:
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - QS
+          - KAKEN
+          - THE
+          - POL
+          - SDG
+          - SCADC
+          - NIRF
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    Discipline:
+      properties:
+        circleOrder:
+          format: int32
+          type: integer
+        classificationType:
+          type: string
+        color:
+          type: string
+        hasASJCMapping:
+          type: boolean
+        id:
+          format: int32
+          type: integer
+        localCode:
+          type: string
+        localName:
+          type: string
+        mappingChecked:
+          type: boolean
+        name:
+          type: string
+        subjectId:
+          format: int32
+          type: integer
+        subjectURI:
+          type: string
+        uri:
+          type: string
+      type: object
+    SubjectAreaSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    SubjectAreaResult:
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+        classificationName:
+          type: string
+        classificationType:
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - QS
+          - KAKEN
+          - THE
+          - POL
+          - SDG
+          - SCADC
+          - NIRF
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    SubjectAreasResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectAreas:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+      type: object
+    SubjectAreaResponse:
+      properties:
+        discipline:
+          $ref: '#/components/schemas/Discipline'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectArea:
+          $ref: '#/components/schemas/SubjectAreaResult'
+      type: object
+x-components: {}
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/scival
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-scival-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

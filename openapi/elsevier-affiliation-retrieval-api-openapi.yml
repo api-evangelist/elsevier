@@ -1,0 +1,136 @@
+openapi: 3.2.0
+info:
+  title: Elsevier Affiliation Retrieval API
+  version: '2.0'
+  description: 'Operations tagged Affiliation_Retrieval across 2 of this provider''s published API definitions: elsevier-retrieval-swagger.json, elsevier-scopus-swagger.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.elsevier.com/content
+- url: http://api.elsevier.com/content
+tags:
+- name: Affiliation_Retrieval
+  description: Affiliation Retrieval API
+paths:
+  /affiliation/affiliation_id/{affiliation_id}:
+    get:
+      tags:
+      - Affiliation_Retrieval
+      description: 'Affiliation retrieval via affiliation_id exposes interfaces associated with Scopus Affiliation Retrieval API.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: AffiliationRetrieval
+      parameters:
+      - description: affiliation_id value
+        in: path
+        name: affiliation_id
+        required: true
+        schema:
+          type: string
+          default: '60016849'
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+          default: text/xml
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema: {}
+            application/xml:
+              schema: {}
+            application/json:
+              schema: {}
+            application/rdf+xml:
+              schema: {}
+      summary: Affiliation Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+  /affiliation/eid/{eid}:
+    get:
+      tags:
+      - Affiliation_Retrieval
+      description: 'Affiliation retrieval via EID exposes interfaces associated with Scopus Affiliation Retrieval API.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: AffiliationRetrieval
+      parameters:
+      - description: eid value
+        in: path
+        name: eid
+        required: true
+        schema:
+          type: string
+          default: 10-s2.0-60016849
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+          default: text/xml
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            text/xml:
+              schema: {}
+            application/xml:
+              schema: {}
+            application/json:
+              schema: {}
+            application/rdf+xml:
+              schema: {}
+      summary: Affiliation Retrieval API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+x-refined-from:
+- elsevier-retrieval-swagger.json
+- elsevier-scopus-swagger.json
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/engineeringvillage
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-engineering-village-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

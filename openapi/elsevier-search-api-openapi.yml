@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Elsevier Scopus APIs Abstract Search API
-  description: 'Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.
-
-    '
+  title: Elsevier Scopus Search API
+  description: Subset of the Elsevier Developer (api.elsevier.com) Scopus APIs covering Scopus Search, Author Search, Affiliation Search, and Abstract Retrieval. All endpoints authenticate via the X-ELS-APIKey header; institutional and end-user tokens are supported through optional headers.
   version: 1.0.0
   contact:
     name: Elsevier Developer Portal

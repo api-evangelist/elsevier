@@ -1,0 +1,251 @@
+openapi: 3.2.0
+info:
+  title: Elsevier SciVal SciVal World Lookup API
+  version: 3.0.1
+servers:
+- url: https://api.elsevier.com/analytics/scival
+tags:
+- name: SciVal World Lookup API
+paths:
+  /world/metrics:
+    get:
+      parameters:
+      - description: Types of the desired metrics
+        in: query
+        name: metricTypes
+        required: true
+        schema:
+          type: string
+          enum:
+          - AcademicCorporateCollaboration
+          - AcademicCorporateCollaborationImpact
+          - Collaboration
+          - CitationCount
+          - CitationsPerPublication
+          - CitingPatentCount
+          - CollaborationImpact
+          - CitedPublications
+          - FieldWeightedCitationImpact
+          - HIndices
+          - ScholarlyOutput
+          - PatentCitationCount
+          - PatentCitationsPerPublication
+          - PatentCitedPublicationCount
+          - PublicationsInTopJournalPercentiles
+          - OutputsInTopCitationPercentiles
+      - description: Year range of returned metric (see response values for metricStartYear and metricEndYear for actual years)
+        in: query
+        name: yearRange
+        schema:
+          type: string
+          enum:
+          - 3yrs
+          - 3yrsAndCurrent
+          - 3yrsAndCurrentAndFuture
+          - 5yrs
+          - 5yrsAndCurrent
+          - 5yrsAndCurrentAndFuture
+          - 10yrs
+          default: 5yrs
+      - description: The URI(s) of the subject area(s) to filter the returned metrics by. Provide multiple URIs as a comma-separated list; results use OR logic (a publication matches if it belongs to any selected subject area).
+        in: query
+        name: subjectAreaFilterURI
+        schema:
+          type: string
+          default: ''
+      - description: Whether to include self-cited documents (not applicable to all metrics)
+        in: query
+        name: includeSelfCitations
+        schema:
+          type: boolean
+          default: true
+      - description: Whether to return results broken down by year (not applicable to all metrics)
+        in: query
+        name: byYear
+        schema:
+          type: boolean
+          default: true
+      - description: Publication types to include (not applicable to all metrics)
+        in: query
+        name: includedDocs
+        schema:
+          type: string
+          enum:
+          - AllPublicationTypes
+          - ArticlesOnly
+          - ArticlesReviews
+          - ArticlesReviewsConferencePapers
+          - ArticlesReviewsConferencePapersBooksAndBookChapters
+          - ArticlesConferencePapers
+          - BooksAndBookChapters
+          default: AllPublicationTypes
+      - description: Desired journal impact type (not applicable to all metrics)
+        in: query
+        name: journalImpactType
+        schema:
+          type: string
+          enum:
+          - CiteScore
+          - SNIP
+          - SJR
+          default: CiteScore
+      - description: Whether to show results as field-weighted (not applicable to all metrics)
+        in: query
+        name: showAsFieldWeighted
+        schema:
+          type: boolean
+          default: false
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            application/vnd.scival.v2+json:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            application/vnd.scival.v2+xml:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+        '401':
+          description: Request not authorized
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal World Lookup API
+      operationId: worldMetrics
+      summary: Get world metrics
+components:
+  schemas:
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
+      type: object
+    MetricBaseObject:
+      discriminator:
+        propertyName: metricType
+      properties:
+        the discriminator field:
+          enum:
+          - AcademicCorporateCollaboration
+          - AcademicCorporateCollaborationImpact
+          - AuthorCount
+          - AuthorshipBreakdown
+          - CitationCount
+          - CitationsPerPublication
+          - CitedPublications
+          - CitingPatentCount
+          - Collaboration
+          - CollaborationImpact
+          - CorePapers
+          - FieldWeightedCitationImpact
+          - FieldWeightedViewsImpact
+          - HIndices
+          - InstitutionCount
+          - JournalImpact
+          - MostRecentlyPublishedPapers
+          - PublicationsInTopJournalPercentiles
+          - OutputsInTopCitationPercentiles
+          - PaperPercentile
+          - PatentCitationCount
+          - PatentCitationsPerPublication
+          - PatentCitedPublicationCount
+          - ProminencePercentile
+          - PublicationShare
+          - PublicationShareGrowth
+          - RelatedTopics
+          - ScholarlyOutput
+          - TopAuthors
+          - TopCitedPublications
+          - TopInstitutions
+          - TopJournals
+          - TopKeywords
+          - TopTopics
+          - ViewsCount
+          - ViewsPerPublication
+          type: string
+        value:
+          type: object
+        valueByMonth:
+          additionalProperties:
+            type: object
+          type: object
+        valueByYear:
+          additionalProperties:
+            type: object
+          type: object
+        values:
+          items:
+            type: object
+          type: array
+      required:
+      - the discriminator field
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+x-components: {}
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/scival
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-scival-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

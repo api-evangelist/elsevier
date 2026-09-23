@@ -1,0 +1,484 @@
+openapi: 3.2.0
+info:
+  title: Elsevier SciVal SciVal Author Lookup API
+  version: 3.0.1
+servers:
+- url: https://api.elsevier.com/analytics/scival
+tags:
+- name: SciVal Author Lookup API
+paths:
+  /author/institutionId/{institutionId}:
+    get:
+      parameters:
+      - description: SciVal institution id of requested authors
+        in: path
+        name: institutionId
+        required: true
+        x-example: 508175
+        schema:
+          type: integer
+          format: int64
+      - description: Year range of returned authors
+        in: query
+        name: yearRange
+        schema:
+          type: string
+          enum:
+          - 3yrs
+          - 3yrsAndCurrent
+          - 3yrsAndCurrentAndFuture
+          - 5yrs
+          - 5yrsAndCurrent
+          - 5yrsAndCurrentAndFuture
+          - 10yrs
+          default: 5yrs
+      - description: The number of authors to return
+        in: query
+        name: limit
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - description: For paginating results, this is how many pages of authors to skip before returning results
+        in: query
+        name: offset
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorsResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorsResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorsResponse'
+        '400':
+          description: The offset for this request must be greater than zero
+        '401':
+          description: Request not authorized
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Author Lookup API
+      description: a maximum of 500 authors are available per institution, sorted by the author's scholarly output in descending order
+      operationId: getAuthorsByInstitutionId
+      summary: Get authors by SciVal institution id
+  /author/metrics:
+    get:
+      parameters:
+      - description: Types of the desired metrics
+        in: query
+        name: metricTypes
+        required: true
+        schema:
+          type: string
+          enum:
+          - AcademicCorporateCollaboration
+          - AcademicCorporateCollaborationImpact
+          - Collaboration
+          - CitationCount
+          - CitationsPerPublication
+          - CitingPatentCount
+          - CollaborationImpact
+          - CitedPublications
+          - FieldWeightedCitationImpact
+          - HIndices
+          - ScholarlyOutput
+          - PatentCitationCount
+          - PatentCitationsPerPublication
+          - PatentCitedPublicationCount
+          - PublicationsInTopJournalPercentiles
+          - OutputsInTopCitationPercentiles
+          - ViewsPerPublication
+      - description: Author ids to return metrics for
+        in: query
+        name: authors
+        required: true
+        x-example: 6701858763,20433296900
+        schema:
+          type: string
+      - description: Year range of returned metric (see response values for metricStartYear and metricEndYear for actual years)
+        in: query
+        name: yearRange
+        schema:
+          type: string
+          enum:
+          - 3yrs
+          - 3yrsAndCurrent
+          - 3yrsAndCurrentAndFuture
+          - 5yrs
+          - 5yrsAndCurrent
+          - 5yrsAndCurrentAndFuture
+          - 10yrs
+          default: 5yrs
+      - description: The URI(s) of the subject area(s) to filter the returned metrics by. Provide multiple URIs as a comma-separated list; results use OR logic (a publication matches if it belongs to any selected subject area).
+        in: query
+        name: subjectAreaFilterURI
+        schema:
+          type: string
+          default: ''
+      - description: Whether to include self-cited documents (not applicable to all metrics)
+        in: query
+        name: includeSelfCitations
+        schema:
+          type: boolean
+          default: true
+      - description: Whether to return results broken down by year (not applicable to all metrics)
+        in: query
+        name: byYear
+        schema:
+          type: boolean
+          default: true
+      - description: Publication types to include (not applicable to all metrics)
+        in: query
+        name: includedDocs
+        schema:
+          type: string
+          enum:
+          - AllPublicationTypes
+          - ArticlesOnly
+          - ArticlesReviews
+          - ArticlesReviewsConferencePapers
+          - ArticlesReviewsConferencePapersBooksAndBookChapters
+          - ArticlesConferencePapers
+          - BooksAndBookChapters
+          default: AllPublicationTypes
+      - description: Desired journal impact type (not applicable to all metrics)
+        in: query
+        name: journalImpactType
+        schema:
+          type: string
+          enum:
+          - CiteScore
+          - SNIP
+          - SJR
+          default: CiteScore
+      - description: Whether to show results as field-weighted (not applicable to all metrics)
+        in: query
+        name: showAsFieldWeighted
+        schema:
+          type: boolean
+          default: false
+      - description: Desired citation impact type (not applicable to all metrics)
+        in: query
+        name: indexType
+        schema:
+          type: string
+          enum:
+          - hIndex
+          - h5Index
+          - gIndex
+          - mIndex
+          default: hIndex
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/MetricResponse'
+        '400':
+          description: No entities specified
+        '401':
+          description: Request not authorized
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Author Lookup API
+      operationId: authorMetrics
+      summary: Get author metrics by id(s)
+  /author/orcid/{orcid}:
+    get:
+      parameters:
+      - description: ORCiD of requested author
+        in: path
+        name: orcid
+        required: true
+        x-example: 0000-0001-6031-4923
+        schema:
+          type: string
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+        '401':
+          description: Request not authorized
+        '404':
+          description: Author not found
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Author Lookup API
+      operationId: getAuthorByORCID
+      summary: Get an author by ORCiD
+  /author/{id}:
+    get:
+      parameters:
+      - description: Id of requested author
+        in: path
+        name: id
+        required: true
+        x-example: 6701858763
+        schema:
+          type: integer
+          format: int64
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Specification for authorization, institution authtoken
+        in: query
+        name: insttoken
+        required: false
+        schema:
+          type: string
+      - description: Specification for active session, secured authtoken
+        in: query
+        name: access_token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/AuthorResponse'
+        '401':
+          description: Request not authorized
+        '404':
+          description: Author not found
+        '500':
+          description: Unknown error encountered
+      tags:
+      - SciVal Author Lookup API
+      operationId: getAuthor
+      summary: Get an author by id
+components:
+  schemas:
+    AuthorResponse:
+      properties:
+        author:
+          $ref: '#/components/schemas/AuthorResult'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+      type: object
+    AuthorsResponse:
+      properties:
+        authors:
+          items:
+            $ref: '#/components/schemas/AuthorResult'
+          type: array
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        totalCount:
+          format: int32
+          type: integer
+      type: object
+    AuthorResult:
+      properties:
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
+      type: object
+    MetricBaseObject:
+      discriminator:
+        propertyName: metricType
+      properties:
+        the discriminator field:
+          enum:
+          - AcademicCorporateCollaboration
+          - AcademicCorporateCollaborationImpact
+          - AuthorCount
+          - AuthorshipBreakdown
+          - CitationCount
+          - CitationsPerPublication
+          - CitedPublications
+          - CitingPatentCount
+          - Collaboration
+          - CollaborationImpact
+          - CorePapers
+          - FieldWeightedCitationImpact
+          - FieldWeightedViewsImpact
+          - HIndices
+          - InstitutionCount
+          - JournalImpact
+          - MostRecentlyPublishedPapers
+          - PublicationsInTopJournalPercentiles
+          - OutputsInTopCitationPercentiles
+          - PaperPercentile
+          - PatentCitationCount
+          - PatentCitationsPerPublication
+          - PatentCitedPublicationCount
+          - ProminencePercentile
+          - PublicationShare
+          - PublicationShareGrowth
+          - RelatedTopics
+          - ScholarlyOutput
+          - TopAuthors
+          - TopCitedPublications
+          - TopInstitutions
+          - TopJournals
+          - TopKeywords
+          - TopTopics
+          - ViewsCount
+          - ViewsPerPublication
+          type: string
+        value:
+          type: object
+        valueByMonth:
+          additionalProperties:
+            type: object
+          type: object
+        valueByYear:
+          additionalProperties:
+            type: object
+          type: object
+        values:
+          items:
+            type: object
+          type: array
+      required:
+      - the discriminator field
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+x-components: {}
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/scival
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-scival-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'

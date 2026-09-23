@@ -1,0 +1,85 @@
+openapi: 3.2.0
+info:
+  title: Elsevier Affiliation Search API
+  version: '2.0'
+  description: 'Operations tagged Affiliation_Search across 2 of this provider''s published API definitions: elsevier-scopus-swagger.json, elsevier-search-swagger.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.elsevier.com/content
+- url: http://api.elsevier.com/content
+tags:
+- name: Affiliation_Search
+  description: Affiliation Search API
+paths:
+  /search/affiliation:
+    get:
+      tags:
+      - Affiliation_Search
+      description: 'Affiliation search exposes interfaces associated with Scopus-based affiliation profiles.
+
+        API key in this example was setup with authorized CORS domains.'
+      operationId: AffiliationSearch
+      parameters:
+      - description: Affiliation search query string
+        in: query
+        name: query
+        required: true
+        schema:
+          type: string
+          default: affil(Broad Institute)
+      - description: Your API key
+        in: query
+        name: apiKey
+        required: true
+        schema:
+          type: string
+          default: 7f59af901d2d86f78a1fd60c1bf9426a
+      - description: Requested content type, overrides HTTP header value
+        in: query
+        name: httpAccept
+        required: false
+        schema:
+          type: string
+      - name: insttoken
+        in: query
+        description: Specification for authorization, institution authtoken
+        required: false
+        schema:
+          type: string
+      - name: access_token
+        in: query
+        description: Specification for active session, secured authtoken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/affiliation'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/affiliation'
+      summary: Affiliation Search API
+    servers:
+    - url: https://api.elsevier.com/content
+    - url: http://api.elsevier.com/content
+components:
+  schemas:
+    affiliation:
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+x-refined-from:
+- elsevier-scopus-swagger.json
+- elsevier-search-swagger.json
+x-apievangelist-provenance:
+  method: searched
+  source: https://dev.elsevier.com/elsdoc/engineeringvillage
+  note: 'Verbatim copy is openapi/_original/elsdoc/elsevier-engineering-village-swagger.json. This copy differs from the source in exactly two mechanical ways: Elsevier''s external path $refs (./listings/<Name>#/<op>) were inlined from the provider''s own listing documents (also saved verbatim under openapi/_original/elsdoc/listings/), and info.title was filled in where the provider left it empty. No operation, parameter, response or schema content was authored by API Evangelist.'
+  retrieved: '2026-09-06'
