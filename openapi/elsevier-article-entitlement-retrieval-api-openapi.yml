@@ -70,7 +70,7 @@ paths:
       description: 'Article entitlement retrieval via EID exposes interfaces associated with Article entitlement retrieval API. Multiple EID values can be submitted by including them as a comma-delimited list.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleEntitlementRetrieval
+      operationId: getArticleEntitlementEidByEid
       parameters:
       - description: eid value or comma-delimited list
         in: path
@@ -113,6 +113,8 @@ paths:
             application/json:
               schema: {}
       summary: Article Entitlement Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleEntitlementRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -123,7 +125,7 @@ paths:
       description: 'Article entitlement retrieval via PII exposes interfaces associated with Article entitlement retrieval API. Multiple PII values can be submitted by including them as a comma-delimited list.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleEntitlementRetrieval
+      operationId: getArticleEntitlementPiiByPii
       parameters:
       - description: pii value or comma-delimited list
         in: path
@@ -170,6 +172,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Entitlement Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleEntitlementRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -180,7 +184,7 @@ paths:
       description: 'Article entitlement retrieval via Medline/Pubmed ID exposes interfaces associated with Article entitlement retrieval API. Multiple Medline/Pubmed ID values can be submitted by including them as a comma-delimited list.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleEntitlementRetrieval
+      operationId: getArticleEntitlementPubmedIdByPubmedId
       parameters:
       - description: pubmed_id value or comma-delimited list
         in: path
@@ -227,6 +231,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Entitlement Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleEntitlementRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -237,7 +243,7 @@ paths:
       description: 'Article entitlement retrieval via Scopus ID exposes interfaces associated with Article entitlement retrieval API. Multiple Scopus ID values can be submitted by including them as a comma-delimited list.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleEntitlementRetrieval
+      operationId: getArticleEntitlementScopusIdByScopusId
       parameters:
       - description: scopus_id value or comma-delimited list
         in: path
@@ -284,6 +290,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Entitlement Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleEntitlementRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content

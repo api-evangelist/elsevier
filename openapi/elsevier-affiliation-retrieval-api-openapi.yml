@@ -75,7 +75,7 @@ paths:
       description: 'Affiliation retrieval via EID exposes interfaces associated with Scopus Affiliation Retrieval API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: AffiliationRetrieval
+      operationId: getAffiliationEidByEid
       parameters:
       - description: eid value
         in: path
@@ -123,6 +123,8 @@ paths:
             application/rdf+xml:
               schema: {}
       summary: Affiliation Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: AffiliationRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content

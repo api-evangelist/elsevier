@@ -227,73 +227,14 @@ paths:
       summary: Get subject area by id
 components:
   schemas:
-    SubjectAreaSearchResult:
+    SubjectAreaResponse:
       properties:
-        children:
-          items:
-            $ref: '#/components/schemas/Discipline'
-          type: array
-        classificationType:
-          enum:
-          - ASJC
-          - FOR
-          - FOS
-          - QS
-          - KAKEN
-          - THE
-          - POL
-          - SDG
-          - SCADC
-          - NIRF
-          type: string
-        id:
-          format: int64
-          type: integer
+        discipline:
+          $ref: '#/components/schemas/Discipline'
         link:
           $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
-      type: object
-    Discipline:
-      properties:
-        circleOrder:
-          format: int32
-          type: integer
-        classificationType:
-          type: string
-        color:
-          type: string
-        hasASJCMapping:
-          type: boolean
-        id:
-          format: int32
-          type: integer
-        localCode:
-          type: string
-        localName:
-          type: string
-        mappingChecked:
-          type: boolean
-        name:
-          type: string
-        subjectId:
-          format: int32
-          type: integer
-        subjectURI:
-          type: string
-        uri:
-          type: string
-      type: object
-    SubjectAreaSearchResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/SubjectAreaSearchResult'
-          type: array
+        subjectArea:
+          $ref: '#/components/schemas/SubjectAreaResult'
       type: object
     ResponseLink:
       properties:
@@ -303,6 +244,15 @@ components:
           type: string
         '@type':
           type: string
+      type: object
+    SubjectAreasResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectAreas:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
       type: object
     SubjectAreaResult:
       properties:
@@ -335,23 +285,73 @@ components:
         uri:
           type: string
       type: object
-    SubjectAreasResponse:
+    SubjectAreaSearchResult:
+      properties:
+        children:
+          items:
+            $ref: '#/components/schemas/Discipline'
+          type: array
+        classificationType:
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - QS
+          - KAKEN
+          - THE
+          - POL
+          - SDG
+          - SCADC
+          - NIRF
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    SubjectAreaSearchResponse:
       properties:
         link:
           $ref: '#/components/schemas/ResponseLink'
-        subjectAreas:
+        results:
           items:
             $ref: '#/components/schemas/SubjectAreaSearchResult'
           type: array
       type: object
-    SubjectAreaResponse:
+    Discipline:
       properties:
-        discipline:
-          $ref: '#/components/schemas/Discipline'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        subjectArea:
-          $ref: '#/components/schemas/SubjectAreaResult'
+        circleOrder:
+          format: int32
+          type: integer
+        classificationType:
+          type: string
+        color:
+          type: string
+        hasASJCMapping:
+          type: boolean
+        id:
+          format: int32
+          type: integer
+        localCode:
+          type: string
+        localName:
+          type: string
+        mappingChecked:
+          type: boolean
+        name:
+          type: string
+        subjectId:
+          format: int32
+          type: integer
+        subjectURI:
+          type: string
+        uri:
+          type: string
       type: object
 x-components: {}
 x-apievangelist-provenance:

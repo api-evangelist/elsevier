@@ -91,7 +91,7 @@ paths:
       description: 'Article retrieval via EID exposes interfaces associated with Article Retrieval API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleRetrieval
+      operationId: getArticleEidByEid
       parameters:
       - description: eid value
         in: path
@@ -154,6 +154,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -164,7 +166,7 @@ paths:
       description: 'Article retrieval via PII exposes interfaces associated with Article Retrieval API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleRetrieval
+      operationId: getArticlePiiByPii
       parameters:
       - description: pii value
         in: path
@@ -227,6 +229,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -237,7 +241,7 @@ paths:
       description: 'Article retrieval via Medline/Pubmed ID exposes interfaces associated with Article Retrieval API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ArticleRetrieval
+      operationId: getArticlePubmedIdByPubmedId
       parameters:
       - description: pubmed_id value
         in: path
@@ -300,6 +304,8 @@ paths:
                 items: {}
                 type: array
       summary: Article Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ArticleRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content

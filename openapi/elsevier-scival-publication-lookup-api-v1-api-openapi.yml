@@ -189,13 +189,6 @@ paths:
       summary: Get a Scopus publication by id
 components:
   schemas:
-    PublicationResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        publication:
-          $ref: '#/components/schemas/PublicationResult'
-      type: object
     AuthorResult:
       properties:
         id:
@@ -208,29 +201,61 @@ components:
         uri:
           type: string
       type: object
-    MetricResults:
+    PublicationResponse:
       properties:
-        metrics:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        publication:
+          $ref: '#/components/schemas/PublicationResult'
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    InstitutionSearchResult:
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
           items:
-            $ref: '#/components/schemas/MetricBaseObject'
+            $ref: '#/components/schemas/MetricResults'
           type: array
       type: object
-    PublicationResult:
-      allOf:
-      - $ref: '#/components/schemas/PublicationSearchResult'
-      - properties:
-          authors:
-            items:
-              $ref: '#/components/schemas/AuthorResult'
-            type: array
-          citationCount:
-            format: int32
-            type: integer
-          institutions:
-            items:
-              $ref: '#/components/schemas/InstitutionSearchResult'
-            type: array
-        type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
       type: object
     MetricBaseObject:
       discriminator:
@@ -292,6 +317,13 @@ components:
       required:
       - the discriminator field
       type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
+      type: object
     PublicationSearchResult:
       properties:
         authors:
@@ -340,54 +372,22 @@ components:
         uri:
           type: string
       type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    MetricBase:
-      properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
-    InstitutionSearchResult:
-      properties:
-        country:
-          type: string
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
+    PublicationResult:
+      allOf:
+      - $ref: '#/components/schemas/PublicationSearchResult'
+      - properties:
+          authors:
+            items:
+              $ref: '#/components/schemas/AuthorResult'
+            type: array
+          citationCount:
+            format: int32
+            type: integer
+          institutions:
+            items:
+              $ref: '#/components/schemas/InstitutionSearchResult'
+            type: array
+        type: object
       type: object
 x-components: {}
 x-apievangelist-provenance:

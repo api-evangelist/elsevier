@@ -144,12 +144,6 @@ paths:
           description: Affiliation search results
 components:
   parameters:
-    InstTokenHeader:
-      name: X-ELS-Insttoken
-      in: header
-      required: false
-      schema:
-        type: string
     AcceptHeader:
       name: Accept
       in: header
@@ -162,6 +156,12 @@ components:
         - application/xml
         - application/atom+xml
         - application/rdf+xml
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
+      schema:
+        type: string
   securitySchemes:
     apiKey:
       type: apiKey

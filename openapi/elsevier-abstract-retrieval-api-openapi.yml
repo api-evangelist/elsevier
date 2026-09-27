@@ -140,7 +140,7 @@ paths:
       description: 'Abstract retrieval via PII exposes interfaces associated with Scopus Abstract API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: AbstractRetrieval
+      operationId: getAbstractPiiByPii
       parameters:
       - description: pii value
         in: path
@@ -195,6 +195,8 @@ paths:
                 items: {}
                 type: array
       summary: Abstract Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: AbstractRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -205,7 +207,7 @@ paths:
       description: 'Abstract retrieval via Medline/Pubmed ID exposes interfaces associated with Scopus Abstract API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: AbstractRetrieval
+      operationId: getAbstractPubmedIdByPubmedId
       parameters:
       - description: pubmed_id value
         in: path
@@ -260,6 +262,8 @@ paths:
                 items: {}
                 type: array
       summary: Abstract Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: AbstractRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -270,7 +274,7 @@ paths:
       description: 'Abstract retrieval vi PUI exposes interfaces associated with Scopus Abstract API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: AbstractRetrieval
+      operationId: getAbstractPuiByPui
       parameters:
       - description: pui value
         in: path
@@ -325,6 +329,8 @@ paths:
                 items: {}
                 type: array
       summary: Abstract Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: AbstractRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -335,7 +341,7 @@ paths:
       description: 'Abstract retrieval via Scopus ID exposes interfaces associated with Scopus Abstract API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: AbstractRetrieval
+      operationId: getAbstractScopusIdByScopusId
       parameters:
       - description: scopus_id value
         in: path
@@ -390,6 +396,8 @@ paths:
                 items: {}
                 type: array
       summary: Abstract Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: AbstractRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content

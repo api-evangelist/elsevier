@@ -71,7 +71,7 @@ paths:
       description: 'ScienceDirect search exposes interfaces associated with ScienceDirect search API.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ScienceDirectSearchV2
+      operationId: putSearchSciencedirect
       parameters:
       - description: Your API key
         in: header
@@ -125,6 +125,8 @@ paths:
             schema: {}
         description: request body
         required: true
+      x-operation-id-source: normalized
+      x-operation-id-original: ScienceDirectSearchV2
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content

@@ -79,7 +79,7 @@ paths:
       description: 'Object retrieval API to retrieve individual object or object metadata associated with a full text article by DOI.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectDoiByDoiRefByRef
       parameters:
       - description: doi value
         in: path
@@ -144,6 +144,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -154,7 +156,7 @@ paths:
       description: 'Object retrieval API to retrieve high-resolution image associated with a full text article by DOI.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectDoiByDoiRefByRefHigh
       parameters:
       - description: doi value
         in: path
@@ -213,6 +215,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -223,7 +227,7 @@ paths:
       description: 'Object retrieval API to retrieve regular-sized image associated with a full text article by DOI.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectDoiByDoiRefByRefStandard
       parameters:
       - description: doi value
         in: path
@@ -282,6 +286,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -292,7 +298,7 @@ paths:
       description: 'Object retrieval API to retrieve thumbnail image associated with a full text article by DOI.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectDoiByDoiRefByRefThumbnail
       parameters:
       - description: doi value
         in: path
@@ -351,6 +357,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -361,7 +369,7 @@ paths:
       description: 'Object retrieval API to retrieve object references associated with a full text article by EID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectEidByEid
       parameters:
       - description: eid value
         in: path
@@ -413,6 +421,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -423,7 +433,7 @@ paths:
       description: 'Object retrieval API to retrieve object references associated with a full text article by PII.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPiiByPii
       parameters:
       - description: pii value
         in: path
@@ -475,6 +485,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -485,7 +497,7 @@ paths:
       description: 'Object retrieval API to retrieve individual object or object metadata associated with a full text article by PII.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPiiByPiiRefByRef
       parameters:
       - description: pii value
         in: path
@@ -550,6 +562,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -560,7 +574,7 @@ paths:
       description: 'Object retrieval API to retrieve high-resolution image associated with a full text article by PII.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPiiByPiiRefByRefHigh
       parameters:
       - description: pii value
         in: path
@@ -619,6 +633,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -629,7 +645,7 @@ paths:
       description: 'Object retrieval API to retrieve regular-sized image associated with a full text article by PII.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPiiByPiiRefByRefStandard
       parameters:
       - description: pii value
         in: path
@@ -688,6 +704,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -698,7 +716,7 @@ paths:
       description: 'Object retrieval API to retrieve thumbnail image associated with a full text article by PII.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPiiByPiiRefByRefThumbnail
       parameters:
       - description: pii value
         in: path
@@ -757,6 +775,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -767,7 +787,7 @@ paths:
       description: 'Object retrieval API to retrieve object references associated with a full text article by Medline/Pubmed ID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPubmedIdByPubmedId
       parameters:
       - description: pubmed_id value
         in: path
@@ -819,6 +839,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -829,7 +851,7 @@ paths:
       description: 'Object retrieval API to retrieve individual object or object metadata associated with a full text article by Medline/Pubmed ID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPubmedIdByPubmedIdRefByRef
       parameters:
       - description: pubmed_id value
         in: path
@@ -894,6 +916,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -904,7 +928,7 @@ paths:
       description: 'Object retrieval API to retrieve high-resolution image associated with a full text article by Medline/Pubmed ID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPubmedIdByPubmedIdRefByRefHigh
       parameters:
       - description: pubmed_id value
         in: path
@@ -962,6 +986,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -972,7 +998,7 @@ paths:
       description: 'Object retrieval API to retrieve regular-sized image associated with a full text article by Medline/Pubmed ID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPubmedIdByPubmedIdRefByRefStandard
       parameters:
       - description: pubmed_id value
         in: path
@@ -1031,6 +1057,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1041,7 +1069,7 @@ paths:
       description: 'Object retrieval API to retrieve thumbnail image associated with a full text article by Medline/Pubmed ID.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectPubmedIdByPubmedIdRefByRefThumbnail
       parameters:
       - description: pubmed_id value
         in: path
@@ -1100,6 +1128,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1110,7 +1140,7 @@ paths:
       description: 'Object retrieval API to retrieve object references associated with a full text article by scopus_id.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectScopusIdByScopusId
       parameters:
       - description: scopus_id value
         in: path
@@ -1162,6 +1192,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1172,7 +1204,7 @@ paths:
       description: 'Object retrieval API to retrieve individual object or object metadata associated with a full text article by scopus_id.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectScopusIdByScopusIdRefByRef
       parameters:
       - description: scopus_id value
         in: path
@@ -1237,6 +1269,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1247,7 +1281,7 @@ paths:
       description: 'Object retrieval API to retrieve high-resolution image associated with a full text article by scopus_id.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectScopusIdByScopusIdRefByRefHigh
       parameters:
       - description: scopus_id value
         in: path
@@ -1306,6 +1340,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1316,7 +1352,7 @@ paths:
       description: 'Object retrieval API to retrieve regular-sized image associated with a full text article by scopus_id.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectScopusIdByScopusIdRefByRefStandard
       parameters:
       - description: scopus_id value
         in: path
@@ -1375,6 +1411,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
@@ -1385,7 +1423,7 @@ paths:
       description: 'Object retrieval API to retrieve thumbnail image associated with a full text article by scopus_id.
 
         API key in this example was setup with authorized CORS domains.'
-      operationId: ObjectRetrieval
+      operationId: getObjectScopusIdByScopusIdRefByRefThumbnail
       parameters:
       - description: scopus_id value
         in: path
@@ -1444,6 +1482,8 @@ paths:
                 items: {}
                 type: array
       summary: Object Retrieval API
+      x-operation-id-source: normalized
+      x-operation-id-original: ObjectRetrieval
     servers:
     - url: https://api.elsevier.com/content
     - url: http://api.elsevier.com/content
