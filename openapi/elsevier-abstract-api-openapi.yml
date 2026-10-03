@@ -105,6 +105,12 @@ paths:
           description: Abstract record
 components:
   parameters:
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
+      schema:
+        type: string
     ViewParam:
       name: view
       in: query
@@ -128,12 +134,6 @@ components:
         - application/xml
         - application/atom+xml
         - application/rdf+xml
-    InstTokenHeader:
-      name: X-ELS-Insttoken
-      in: header
-      required: false
-      schema:
-        type: string
   securitySchemes:
     apiKey:
       type: apiKey

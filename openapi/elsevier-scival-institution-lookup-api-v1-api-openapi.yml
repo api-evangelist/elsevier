@@ -545,94 +545,12 @@ paths:
       summary: Get an institution by id
 components:
   schemas:
-    InstitutionResult:
-      allOf:
-      - $ref: '#/components/schemas/InstitutionSearchResult'
-      - properties:
-          affiliations:
-            items:
-              $ref: '#/components/schemas/AffiliationResult'
-            type: array
-          latitude:
-            format: double
-            type: number
-          longitude:
-            format: double
-            type: number
-          nameVariants:
-            items:
-              type: string
-            type: array
-          region:
-            type: string
-          sector:
-            type: string
-        type: object
-      type: object
-    AffiliationResult:
+    MetricResults:
       properties:
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-      type: object
-    MetricBase:
-      properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    InstitutionCountResponse:
-      properties:
-        count:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-      type: object
-    InstitutionSearchResult:
-      properties:
-        country:
-          type: string
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
-      type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        metrics:
           items:
-            $ref: '#/components/schemas/MetricResults'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
       type: object
     MetricBaseObject:
       discriminator:
@@ -694,12 +612,110 @@ components:
       required:
       - the discriminator field
       type: object
+    InstitutionResult:
+      allOf:
+      - $ref: '#/components/schemas/InstitutionSearchResult'
+      - properties:
+          affiliations:
+            items:
+              $ref: '#/components/schemas/AffiliationResult'
+            type: array
+          latitude:
+            format: double
+            type: number
+          longitude:
+            format: double
+            type: number
+          nameVariants:
+            items:
+              type: string
+            type: array
+          region:
+            type: string
+          sector:
+            type: string
+        type: object
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    InstitutionSearchResult:
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    InstitutionSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/InstitutionSearchResult'
+          type: array
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    InstitutionCountResponse:
+      properties:
+        count:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+      type: object
     InstitutionResponse:
       properties:
         institution:
           $ref: '#/components/schemas/InstitutionResult'
         link:
           $ref: '#/components/schemas/ResponseLink'
+      type: object
+    AffiliationResult:
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
       type: object
     InstitutionsResponse:
       properties:
@@ -712,22 +728,6 @@ components:
         totalCount:
           format: int32
           type: integer
-      type: object
-    InstitutionSearchResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/InstitutionSearchResult'
-          type: array
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

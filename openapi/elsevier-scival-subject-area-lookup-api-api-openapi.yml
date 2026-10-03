@@ -227,33 +227,6 @@ paths:
       summary: Get subject area by id
 components:
   schemas:
-    SubjectAreaResponse:
-      properties:
-        discipline:
-          $ref: '#/components/schemas/Discipline'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        subjectArea:
-          $ref: '#/components/schemas/SubjectAreaResult'
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    SubjectAreasResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        subjectAreas:
-          items:
-            $ref: '#/components/schemas/SubjectAreaSearchResult'
-          type: array
-      type: object
     SubjectAreaResult:
       properties:
         children:
@@ -285,6 +258,15 @@ components:
         uri:
           type: string
       type: object
+    SubjectAreaResponse:
+      properties:
+        discipline:
+          $ref: '#/components/schemas/Discipline'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectArea:
+          $ref: '#/components/schemas/SubjectAreaResult'
+      type: object
     SubjectAreaSearchResult:
       properties:
         children:
@@ -313,6 +295,24 @@ components:
           type: string
         uri:
           type: string
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    SubjectAreasResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectAreas:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
       type: object
     SubjectAreaSearchResponse:
       properties:

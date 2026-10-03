@@ -204,13 +204,12 @@ paths:
     - url: http://api.elsevier.com/content
 components:
   schemas:
-    Afs:
+    Database:
       properties:
-        AF:
-          type: array
-          description: Authors affiliation list
-          items:
-            $ref: '#/components/schemas/Affiliation'
+        DBNAME:
+          type: string
+        ID:
+          type: string
     ContributorAffiliation:
       properties:
         AFID:
@@ -218,6 +217,23 @@ components:
           description: Affiliation ID list
           items:
             type: string
+    DocID:
+      properties:
+        DB:
+          $ref: '#/components/schemas/Database'
+        DOC-ID:
+          type: string
+        HITINDEX:
+          type: integer
+          format: int32
+        TAGDATE:
+          type: string
+    Status:
+      properties:
+        statusCode:
+          type: string
+        statusText:
+          type: string
     Aus:
       properties:
         AU:
@@ -225,17 +241,10 @@ components:
           description: Author list
           items:
             $ref: '#/components/schemas/ContributorInfo'
-    Eds:
+    FT:
       properties:
-        ED:
-          type: array
-          description: Editor list
-          items:
-            $ref: '#/components/schemas/ContributorInfo'
-    PageEntry:
-      properties:
-        EI-DOCUMENT:
-          $ref: '#/components/schemas/CitationEiDoc'
+        FTLINK:
+          type: string
     ContributorInfo:
       properties:
         AFS:
@@ -250,18 +259,6 @@ components:
           type: string
         NAME:
           type: string
-    Status:
-      properties:
-        statusCode:
-          type: string
-        statusText:
-          type: string
-    Affiliation:
-      properties:
-        ID:
-          type: string
-        NAME:
-          type: string
     Efs:
       properties:
         EF:
@@ -269,15 +266,26 @@ components:
           description: Editors affiliation list
           items:
             $ref: '#/components/schemas/Affiliation'
-    DocProperties:
+    PageEntry:
       properties:
-        any:
-          type: object
-          additionalProperties:
-            type: string
-    FT:
+        EI-DOCUMENT:
+          $ref: '#/components/schemas/CitationEiDoc'
+    ServiceErrorWrap:
       properties:
-        FTLINK:
+        service-error:
+          $ref: '#/components/schemas/ServiceError'
+    Afs:
+      properties:
+        AF:
+          type: array
+          description: Authors affiliation list
+          items:
+            $ref: '#/components/schemas/Affiliation'
+    Affiliation:
+      properties:
+        ID:
+          type: string
+        NAME:
           type: string
     PageContainerItems:
       properties:
@@ -293,31 +301,6 @@ components:
       properties:
         PAGE:
           $ref: '#/components/schemas/PageContainerItems'
-    Database:
-      properties:
-        DBNAME:
-          type: string
-        ID:
-          type: string
-    DocID:
-      properties:
-        DB:
-          $ref: '#/components/schemas/Database'
-        DOC-ID:
-          type: string
-        HITINDEX:
-          type: integer
-          format: int32
-        TAGDATE:
-          type: string
-    ServiceError:
-      properties:
-        status:
-          $ref: '#/components/schemas/Status'
-    ServiceErrorWrap:
-      properties:
-        service-error:
-          $ref: '#/components/schemas/ServiceError'
     CitationEiDoc:
       properties:
         AFS:
@@ -344,12 +327,29 @@ components:
           type: string
         docProperties:
           $ref: '#/components/schemas/DocProperties'
+    ServiceError:
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+    Eds:
+      properties:
+        ED:
+          type: array
+          description: Editor list
+          items:
+            $ref: '#/components/schemas/ContributorInfo'
     PageResults:
       properties:
         PAGE-ENTRY:
           type: array
           items:
             $ref: '#/components/schemas/PageEntry'
+    DocProperties:
+      properties:
+        any:
+          type: object
+          additionalProperties:
+            type: string
 x-refined-from:
 - elsevier-engineering-village-swagger.json
 - elsevier-search-swagger.json
