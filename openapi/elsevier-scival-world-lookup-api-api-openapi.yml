@@ -143,12 +143,18 @@ paths:
       summary: Get world metrics
 components:
   schemas:
-    MetricResults:
+    MetricBase:
       properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
       type: object
     MetricBaseObject:
       discriminator:
@@ -210,18 +216,16 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricBase:
+    MetricResponse:
       properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
       type: object
     ResponseLink:
       properties:
@@ -232,15 +236,11 @@ components:
         '@type':
           type: string
       type: object
-    MetricResponse:
+    MetricResults:
       properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        metrics:
           items:
-            $ref: '#/components/schemas/MetricResults'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
       type: object
 x-components: {}

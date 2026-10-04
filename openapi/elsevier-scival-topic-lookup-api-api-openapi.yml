@@ -655,31 +655,22 @@ paths:
       summary: Get a topic by id
 components:
   schemas:
-    TopicsResponse:
+    TopicMetricResponse:
+      allOf:
+      - $ref: '#/components/schemas/MetricResponse'
+      type: object
+    MetricBase:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        topics:
-          items:
-            $ref: '#/components/schemas/TopicSearchResult'
-          type: array
-        totalCount:
+        lastUpdated:
+          type: string
+        metricEndYear:
           format: int32
           type: integer
-      type: object
-    TopicResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        topic:
-          $ref: '#/components/schemas/TopicSearchResult'
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
       type: object
     MetricBaseObject:
       discriminator:
@@ -741,43 +732,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricBase:
-      properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
-    TopicMetricResponse:
-      allOf:
-      - $ref: '#/components/schemas/MetricResponse'
-      type: object
     TopicSearchResult:
       properties:
         id:
@@ -795,6 +749,52 @@ components:
           type: integer
         uri:
           type: string
+      type: object
+    TopicsResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        topics:
+          items:
+            $ref: '#/components/schemas/TopicSearchResult'
+          type: array
+        totalCount:
+          format: int32
+          type: integer
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    TopicResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        topic:
+          $ref: '#/components/schemas/TopicSearchResult'
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

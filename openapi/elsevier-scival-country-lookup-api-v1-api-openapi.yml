@@ -318,19 +318,48 @@ paths:
       summary: Get a country by id
 components:
   schemas:
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    CountrySearchResult:
+      properties:
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    CountrySearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/CountrySearchResult'
+          type: array
+      type: object
     CountryResponse:
       properties:
         country:
           $ref: '#/components/schemas/CountryResult'
         link:
           $ref: '#/components/schemas/ResponseLink'
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -392,28 +421,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricBase:
-      properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
     MetricResponse:
       properties:
         dataSource:
@@ -424,20 +431,6 @@ components:
           items:
             $ref: '#/components/schemas/MetricResults'
           type: array
-      type: object
-    CountrySearchResult:
-      properties:
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
       type: object
     CountryResult:
       properties:
@@ -457,13 +450,20 @@ components:
         uri:
           type: string
       type: object
-    CountrySearchResponse:
+    ResponseLink:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
           items:
-            $ref: '#/components/schemas/CountrySearchResult'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
       type: object
 x-components: {}

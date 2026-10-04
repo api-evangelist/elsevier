@@ -189,89 +189,18 @@ paths:
       summary: Get a Scopus publication by id
 components:
   schemas:
-    MetricResults:
+    MetricBase:
       properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
-      type: object
-    MetricBaseObject:
-      discriminator:
-        propertyName: metricType
-      properties:
-        the discriminator field:
-          enum:
-          - AcademicCorporateCollaboration
-          - AcademicCorporateCollaborationImpact
-          - AuthorCount
-          - AuthorshipBreakdown
-          - CitationCount
-          - CitationsPerPublication
-          - CitedPublications
-          - CitingPatentCount
-          - Collaboration
-          - CollaborationImpact
-          - CorePapers
-          - FieldWeightedCitationImpact
-          - FieldWeightedViewsImpact
-          - HIndices
-          - InstitutionCount
-          - JournalImpact
-          - MostRecentlyPublishedPapers
-          - PublicationsInTopJournalPercentiles
-          - OutputsInTopCitationPercentiles
-          - PaperPercentile
-          - PatentCitationCount
-          - PatentCitationsPerPublication
-          - PatentCitedPublicationCount
-          - ProminencePercentile
-          - PublicationShare
-          - PublicationShareGrowth
-          - RelatedTopics
-          - ScholarlyOutput
-          - TopAuthors
-          - TopCitedPublications
-          - TopInstitutions
-          - TopJournals
-          - TopKeywords
-          - TopTopics
-          - ViewsCount
-          - ViewsPerPublication
+        lastUpdated:
           type: string
-        value:
-          type: object
-        valueByMonth:
-          additionalProperties:
-            type: object
-          type: object
-        valueByYear:
-          additionalProperties:
-            type: object
-          type: object
-        values:
-          items:
-            type: object
-          type: array
-      required:
-      - the discriminator field
-      type: object
-    PublicationResult:
-      allOf:
-      - $ref: '#/components/schemas/PublicationSearchResult'
-      - properties:
-          authors:
-            items:
-              $ref: '#/components/schemas/AuthorResult'
-            type: array
-          citationCount:
-            format: int32
-            type: integer
-          institutions:
-            items:
-              $ref: '#/components/schemas/InstitutionSearchResult'
-            type: array
-        type: object
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
       type: object
     InstitutionSearchResult:
       properties:
@@ -289,44 +218,11 @@ components:
         uri:
           type: string
       type: object
-    PublicationResponse:
+    MetricResults:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        publication:
-          $ref: '#/components/schemas/PublicationResult'
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    MetricBase:
-      properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        metrics:
           items:
-            $ref: '#/components/schemas/MetricResults'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
       type: object
     AuthorResult:
@@ -388,6 +284,110 @@ components:
           type: string
         uri:
           type: string
+      type: object
+    MetricBaseObject:
+      discriminator:
+        propertyName: metricType
+      properties:
+        the discriminator field:
+          enum:
+          - AcademicCorporateCollaboration
+          - AcademicCorporateCollaborationImpact
+          - AuthorCount
+          - AuthorshipBreakdown
+          - CitationCount
+          - CitationsPerPublication
+          - CitedPublications
+          - CitingPatentCount
+          - Collaboration
+          - CollaborationImpact
+          - CorePapers
+          - FieldWeightedCitationImpact
+          - FieldWeightedViewsImpact
+          - HIndices
+          - InstitutionCount
+          - JournalImpact
+          - MostRecentlyPublishedPapers
+          - PublicationsInTopJournalPercentiles
+          - OutputsInTopCitationPercentiles
+          - PaperPercentile
+          - PatentCitationCount
+          - PatentCitationsPerPublication
+          - PatentCitedPublicationCount
+          - ProminencePercentile
+          - PublicationShare
+          - PublicationShareGrowth
+          - RelatedTopics
+          - ScholarlyOutput
+          - TopAuthors
+          - TopCitedPublications
+          - TopInstitutions
+          - TopJournals
+          - TopKeywords
+          - TopTopics
+          - ViewsCount
+          - ViewsPerPublication
+          type: string
+        value:
+          type: object
+        valueByMonth:
+          additionalProperties:
+            type: object
+          type: object
+        valueByYear:
+          additionalProperties:
+            type: object
+          type: object
+        values:
+          items:
+            type: object
+          type: array
+      required:
+      - the discriminator field
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    PublicationResult:
+      allOf:
+      - $ref: '#/components/schemas/PublicationSearchResult'
+      - properties:
+          authors:
+            items:
+              $ref: '#/components/schemas/AuthorResult'
+            type: array
+          citationCount:
+            format: int32
+            type: integer
+          institutions:
+            items:
+              $ref: '#/components/schemas/InstitutionSearchResult'
+            type: array
+        type: object
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
+    PublicationResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        publication:
+          $ref: '#/components/schemas/PublicationResult'
       type: object
 x-components: {}
 x-apievangelist-provenance:

@@ -285,6 +285,35 @@ paths:
       summary: Get a Scopus source by id
 components:
   schemas:
+    SourceSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/SourceSearchResult'
+          type: array
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
+          format: int32
+          type: integer
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
+          type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
+      type: object
     SourceSearchResult:
       properties:
         id:
@@ -298,13 +327,6 @@ components:
           $ref: '#/components/schemas/JournalCategorySearchDoc'
         uri:
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -366,36 +388,16 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricBase:
+    MetricResponse:
       properties:
-        lastUpdated:
-          type: string
-        metricEndYear:
-          format: int32
-          type: integer
-        metricStartYear:
-          format: int32
-          type: integer
-        sourceName:
-          type: string
-      type: object
-    SourceSearchResponse:
-      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
         link:
           $ref: '#/components/schemas/ResponseLink'
         results:
           items:
-            $ref: '#/components/schemas/SourceSearchResult'
+            $ref: '#/components/schemas/MetricResults'
           type: array
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
       type: object
     JournalCategorySearchDoc:
       properties:
@@ -433,16 +435,14 @@ components:
         type:
           type: string
       type: object
-    MetricResponse:
+    ResponseLink:
       properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
       type: object
     SourceResponse:
       properties:

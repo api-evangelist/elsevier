@@ -227,6 +227,45 @@ paths:
       summary: Get subject area by id
 components:
   schemas:
+    Discipline:
+      properties:
+        circleOrder:
+          format: int32
+          type: integer
+        classificationType:
+          type: string
+        color:
+          type: string
+        hasASJCMapping:
+          type: boolean
+        id:
+          format: int32
+          type: integer
+        localCode:
+          type: string
+        localName:
+          type: string
+        mappingChecked:
+          type: boolean
+        name:
+          type: string
+        subjectId:
+          format: int32
+          type: integer
+        subjectURI:
+          type: string
+        uri:
+          type: string
+      type: object
+    SubjectAreasResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectAreas:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+      type: object
     SubjectAreaResult:
       properties:
         children:
@@ -267,6 +306,24 @@ components:
         subjectArea:
           $ref: '#/components/schemas/SubjectAreaResult'
       type: object
+    SubjectAreaSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+      type: object
+    ResponseLink:
+      properties:
+        '@href':
+          type: string
+        '@ref':
+          type: string
+        '@type':
+          type: string
+      type: object
     SubjectAreaSearchResult:
       properties:
         children:
@@ -292,63 +349,6 @@ components:
         link:
           $ref: '#/components/schemas/ResponseLink'
         name:
-          type: string
-        uri:
-          type: string
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    SubjectAreasResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        subjectAreas:
-          items:
-            $ref: '#/components/schemas/SubjectAreaSearchResult'
-          type: array
-      type: object
-    SubjectAreaSearchResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/SubjectAreaSearchResult'
-          type: array
-      type: object
-    Discipline:
-      properties:
-        circleOrder:
-          format: int32
-          type: integer
-        classificationType:
-          type: string
-        color:
-          type: string
-        hasASJCMapping:
-          type: boolean
-        id:
-          format: int32
-          type: integer
-        localCode:
-          type: string
-        localName:
-          type: string
-        mappingChecked:
-          type: boolean
-        name:
-          type: string
-        subjectId:
-          format: int32
-          type: integer
-        subjectURI:
           type: string
         uri:
           type: string
