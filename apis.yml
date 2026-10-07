@@ -981,6 +981,8 @@ apis:
   - type: Console
     url: https://dev.elsevier.com/metadata.html
 common:
+  - type: Pricing
+    url: https://dev.elsevier.com/support.html
   - type: Overlay
     url: overlays/elsevier-scopus-overlay.yaml
   - type: Overlay
