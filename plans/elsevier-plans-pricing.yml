@@ -90,3 +90,30 @@ summary:
   note: >-
     plan_count is 3 access classes, not 3 purchasable tiers. Zero of them carry a published
     price.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Non-commercial (academic and public-sector)
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Commercial
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
+  - name: SciVal API
+    access: other
+    model: subscription
+    model_how: stated
+    units: []
+    periods: []
