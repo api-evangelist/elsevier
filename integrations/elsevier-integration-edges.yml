@@ -1,0 +1,41 @@
+edges:
+- partner_name: 1EdTech
+  partner: null
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://site.imsglobal.org/certifications
+  category: 1EdTech certified products
+  contract_reference:
+    register: 1EdTech certified product directory (TrustEd Apps)
+    spec_file: null
+    standard: 1EdTech
+    role: Contributing Member
+    registered_name: Elsevier Inc.
+    matched_domain: elsevier.com
+    matched_by: domain
+    standards:
+    - LTI Advantage
+    - Learning Tools Interoperability (LTI) v1.3
+    certified_products:
+    - product: Evolve Link
+      version: v1.3
+      standards:
+      - LTI Advantage
+      - Learning Tools Interoperability (LTI) v1.3
+      implementation:
+      - 'Extension: LTI Assignment & Grade Services 2.0'
+      - 'Extension: LTI Names and Role Provisioning Services 2.0'
+      - 'Type: Tool'
+      attributes:
+      - Certified Product
+      - Vetted
+      lapsed: false
+      url: https://site.imsglobal.org/certifications/elsevier-inc/evolve-link/v13
+    detected_by: sweep-edtech.py
+    detected: '2026-10-14'
+generated: '2026-10-14'
+method: searched
+checked:
+- https://site.imsglobal.org/certifications
