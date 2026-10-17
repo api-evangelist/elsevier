@@ -655,9 +655,28 @@ paths:
       summary: Get a topic by id
 components:
   schemas:
-    TopicMetricResponse:
-      allOf:
-      - $ref: '#/components/schemas/MetricResponse'
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    TopicsResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        topics:
+          items:
+            $ref: '#/components/schemas/TopicSearchResult'
+          type: array
+        totalCount:
+          format: int32
+          type: integer
       type: object
     MetricBase:
       properties:
@@ -671,6 +690,17 @@ components:
           type: integer
         sourceName:
           type: string
+      type: object
+    TopicMetricResponse:
+      allOf:
+      - $ref: '#/components/schemas/MetricResponse'
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -750,29 +780,6 @@ components:
         uri:
           type: string
       type: object
-    TopicsResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        topics:
-          items:
-            $ref: '#/components/schemas/TopicSearchResult'
-          type: array
-        totalCount:
-          format: int32
-          type: integer
-      type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
     TopicResponse:
       properties:
         link:
@@ -788,13 +795,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

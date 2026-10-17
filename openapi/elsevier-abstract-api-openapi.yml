@@ -105,17 +105,12 @@ paths:
           description: Abstract record
 components:
   parameters:
-    ViewParam:
-      name: view
-      in: query
+    InstTokenHeader:
+      name: X-ELS-Insttoken
+      in: header
+      required: false
       schema:
         type: string
-        enum:
-        - META
-        - META_ABS
-        - FULL
-        - REF
-        - ENTITLED
     AcceptHeader:
       name: Accept
       in: header
@@ -128,12 +123,17 @@ components:
         - application/xml
         - application/atom+xml
         - application/rdf+xml
-    InstTokenHeader:
-      name: X-ELS-Insttoken
-      in: header
-      required: false
+    ViewParam:
+      name: view
+      in: query
       schema:
         type: string
+        enum:
+        - META
+        - META_ABS
+        - FULL
+        - REF
+        - ENTITLED
   securitySchemes:
     apiKey:
       type: apiKey

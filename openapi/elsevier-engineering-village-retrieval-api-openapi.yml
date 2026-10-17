@@ -107,19 +107,56 @@ paths:
     - url: http://api.elsevier.com/content
 components:
   schemas:
-    ContributorInfo:
+    Efs:
       properties:
-        AFS:
-          description: Affiliations
-          $ref: '#/components/schemas/ContributorAffiliation'
-        CO:
+        EF:
+          type: array
+          description: Editors affiliation list
+          items:
+            $ref: '#/components/schemas/Affiliation'
+    PageEntry:
+      properties:
+        EI-DOCUMENT:
+          $ref: '#/components/schemas/CitationEiDoc'
+    PageResults:
+      properties:
+        PAGE-ENTRY:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageEntry'
+    ContributorAffiliation:
+      properties:
+        AFID:
+          type: array
+          description: Affiliation ID list
+          items:
+            type: string
+    FT:
+      properties:
+        FTLINK:
           type: string
-          description: Country
-        EMAIL:
+    Afs:
+      properties:
+        AF:
+          type: array
+          description: Authors affiliation list
+          items:
+            $ref: '#/components/schemas/Affiliation'
+    Status:
+      properties:
+        statusCode:
+          type: string
+        statusText:
+          type: string
+    ServiceError:
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+    Database:
+      properties:
+        DBNAME:
           type: string
         ID:
-          type: string
-        NAME:
           type: string
     PageContainerItems:
       properties:
@@ -131,47 +168,17 @@ components:
         RESULTS-PER-PAGE:
           type: integer
           format: int32
-    FT:
+    Aus:
       properties:
-        FTLINK:
-          type: string
+        AU:
+          type: array
+          description: Author list
+          items:
+            $ref: '#/components/schemas/ContributorInfo'
     ServiceErrorWrap:
       properties:
         service-error:
           $ref: '#/components/schemas/ServiceError'
-    Efs:
-      properties:
-        EF:
-          type: array
-          description: Editors affiliation list
-          items:
-            $ref: '#/components/schemas/Affiliation'
-    Database:
-      properties:
-        DBNAME:
-          type: string
-        ID:
-          type: string
-    ContributorAffiliation:
-      properties:
-        AFID:
-          type: array
-          description: Affiliation ID list
-          items:
-            type: string
-    Status:
-      properties:
-        statusCode:
-          type: string
-        statusText:
-          type: string
-    Afs:
-      properties:
-        AF:
-          type: array
-          description: Authors affiliation list
-          items:
-            $ref: '#/components/schemas/Affiliation'
     Eds:
       properties:
         ED:
@@ -179,6 +186,23 @@ components:
           description: Editor list
           items:
             $ref: '#/components/schemas/ContributorInfo'
+    DocProperties:
+      properties:
+        any:
+          type: object
+          additionalProperties:
+            type: string
+    DocID:
+      properties:
+        DB:
+          $ref: '#/components/schemas/Database'
+        DOC-ID:
+          type: string
+        HITINDEX:
+          type: integer
+          format: int32
+        TAGDATE:
+          type: string
     CitationEiDoc:
       properties:
         AFS:
@@ -205,54 +229,30 @@ components:
           type: string
         docProperties:
           $ref: '#/components/schemas/DocProperties'
+    PageContainer:
+      properties:
+        PAGE:
+          $ref: '#/components/schemas/PageContainerItems'
     Affiliation:
       properties:
         ID:
           type: string
         NAME:
           type: string
-    ServiceError:
+    ContributorInfo:
       properties:
-        status:
-          $ref: '#/components/schemas/Status'
-    PageContainer:
-      properties:
-        PAGE:
-          $ref: '#/components/schemas/PageContainerItems'
-    PageResults:
-      properties:
-        PAGE-ENTRY:
-          type: array
-          items:
-            $ref: '#/components/schemas/PageEntry'
-    DocID:
-      properties:
-        DB:
-          $ref: '#/components/schemas/Database'
-        DOC-ID:
+        AFS:
+          description: Affiliations
+          $ref: '#/components/schemas/ContributorAffiliation'
+        CO:
           type: string
-        HITINDEX:
-          type: integer
-          format: int32
-        TAGDATE:
+          description: Country
+        EMAIL:
           type: string
-    Aus:
-      properties:
-        AU:
-          type: array
-          description: Author list
-          items:
-            $ref: '#/components/schemas/ContributorInfo'
-    DocProperties:
-      properties:
-        any:
-          type: object
-          additionalProperties:
-            type: string
-    PageEntry:
-      properties:
-        EI-DOCUMENT:
-          $ref: '#/components/schemas/CitationEiDoc'
+        ID:
+          type: string
+        NAME:
+          type: string
 x-refined-from:
 - elsevier-engineering-village-swagger.json
 - elsevier-retrieval-swagger.json

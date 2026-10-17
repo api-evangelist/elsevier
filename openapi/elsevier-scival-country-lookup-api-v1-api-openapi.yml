@@ -318,6 +318,33 @@ paths:
       summary: Get a country by id
 components:
   schemas:
+    CountrySearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/CountrySearchResult'
+          type: array
+      type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    CountryResponse:
+      properties:
+        country:
+          $ref: '#/components/schemas/CountryResult'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+      type: object
     MetricBase:
       properties:
         lastUpdated:
@@ -329,6 +356,24 @@ components:
           format: int32
           type: integer
         sourceName:
+          type: string
+      type: object
+    CountryResult:
+      properties:
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        regionCode:
+          type: string
+        regionName:
+          type: string
+        uri:
           type: string
       type: object
     CountrySearchResult:
@@ -345,21 +390,12 @@ components:
         uri:
           type: string
       type: object
-    CountrySearchResponse:
+    MetricResults:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        metrics:
           items:
-            $ref: '#/components/schemas/CountrySearchResult'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
-      type: object
-    CountryResponse:
-      properties:
-        country:
-          $ref: '#/components/schemas/CountryResult'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
       type: object
     MetricBaseObject:
       discriminator:
@@ -421,35 +457,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
-    CountryResult:
-      properties:
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        regionCode:
-          type: string
-        regionName:
-          type: string
-        uri:
-          type: string
-      type: object
     ResponseLink:
       properties:
         '@href':
@@ -458,13 +465,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

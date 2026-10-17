@@ -189,6 +189,36 @@ paths:
       summary: Get a Scopus publication by id
 components:
   schemas:
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    AuthorResult:
+      properties:
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    PublicationResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        publication:
+          $ref: '#/components/schemas/PublicationResult'
+      type: object
     MetricBase:
       properties:
         lastUpdated:
@@ -224,66 +254,6 @@ components:
           items:
             $ref: '#/components/schemas/MetricBaseObject'
           type: array
-      type: object
-    AuthorResult:
-      properties:
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
-      type: object
-    PublicationSearchResult:
-      properties:
-        authors:
-          items:
-            $ref: '#/components/schemas/AuthorResult'
-          type: array
-        citationCount:
-          format: int32
-          type: integer
-        doi:
-          type: string
-        id:
-          format: int64
-          type: integer
-        institutions:
-          items:
-            $ref: '#/components/schemas/InstitutionSearchResult'
-          type: array
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        publicationYear:
-          format: int32
-          type: integer
-        sdg:
-          items:
-            type: string
-          type: array
-        sourceTitle:
-          type: string
-        title:
-          type: string
-        topicClusterId:
-          format: int32
-          type: integer
-        topicClusterName:
-          type: string
-        topicId:
-          format: int32
-          type: integer
-        topicName:
-          type: string
-        type:
-          type: string
-        uri:
-          type: string
       type: object
     MetricBaseObject:
       discriminator:
@@ -345,17 +315,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
     PublicationResult:
       allOf:
       - $ref: '#/components/schemas/PublicationSearchResult'
@@ -373,6 +332,54 @@ components:
             type: array
         type: object
       type: object
+    PublicationSearchResult:
+      properties:
+        authors:
+          items:
+            $ref: '#/components/schemas/AuthorResult'
+          type: array
+        citationCount:
+          format: int32
+          type: integer
+        doi:
+          type: string
+        id:
+          format: int64
+          type: integer
+        institutions:
+          items:
+            $ref: '#/components/schemas/InstitutionSearchResult'
+          type: array
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        publicationYear:
+          format: int32
+          type: integer
+        sdg:
+          items:
+            type: string
+          type: array
+        sourceTitle:
+          type: string
+        title:
+          type: string
+        topicClusterId:
+          format: int32
+          type: integer
+        topicClusterName:
+          type: string
+        topicId:
+          format: int32
+          type: integer
+        topicName:
+          type: string
+        type:
+          type: string
+        uri:
+          type: string
+      type: object
     ResponseLink:
       properties:
         '@href':
@@ -381,13 +388,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    PublicationResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        publication:
-          $ref: '#/components/schemas/PublicationResult'
       type: object
 x-components: {}
 x-apievangelist-provenance:

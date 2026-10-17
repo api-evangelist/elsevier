@@ -143,6 +143,17 @@ paths:
       summary: Get world metrics
 components:
   schemas:
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
     MetricBase:
       properties:
         lastUpdated:
@@ -155,6 +166,13 @@ components:
           type: integer
         sourceName:
           type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -216,17 +234,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
     ResponseLink:
       properties:
         '@href':
@@ -235,13 +242,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

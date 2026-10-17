@@ -227,32 +227,31 @@ paths:
       summary: Get subject area by id
 components:
   schemas:
-    Discipline:
+    SubjectAreaSearchResult:
       properties:
-        circleOrder:
-          format: int32
-          type: integer
+        children:
+          items:
+            $ref: '#/components/schemas/Discipline'
+          type: array
         classificationType:
+          enum:
+          - ASJC
+          - FOR
+          - FOS
+          - QS
+          - KAKEN
+          - THE
+          - POL
+          - SDG
+          - SCADC
+          - NIRF
           type: string
-        color:
-          type: string
-        hasASJCMapping:
-          type: boolean
         id:
-          format: int32
+          format: int64
           type: integer
-        localCode:
-          type: string
-        localName:
-          type: string
-        mappingChecked:
-          type: boolean
+        link:
+          $ref: '#/components/schemas/ResponseLink'
         name:
-          type: string
-        subjectId:
-          format: int32
-          type: integer
-        subjectURI:
           type: string
         uri:
           type: string
@@ -265,6 +264,24 @@ components:
           items:
             $ref: '#/components/schemas/SubjectAreaSearchResult'
           type: array
+      type: object
+    SubjectAreaSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/SubjectAreaSearchResult'
+          type: array
+      type: object
+    SubjectAreaResponse:
+      properties:
+        discipline:
+          $ref: '#/components/schemas/Discipline'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        subjectArea:
+          $ref: '#/components/schemas/SubjectAreaResult'
       type: object
     SubjectAreaResult:
       properties:
@@ -297,23 +314,35 @@ components:
         uri:
           type: string
       type: object
-    SubjectAreaResponse:
+    Discipline:
       properties:
-        discipline:
-          $ref: '#/components/schemas/Discipline'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        subjectArea:
-          $ref: '#/components/schemas/SubjectAreaResult'
-      type: object
-    SubjectAreaSearchResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/SubjectAreaSearchResult'
-          type: array
+        circleOrder:
+          format: int32
+          type: integer
+        classificationType:
+          type: string
+        color:
+          type: string
+        hasASJCMapping:
+          type: boolean
+        id:
+          format: int32
+          type: integer
+        localCode:
+          type: string
+        localName:
+          type: string
+        mappingChecked:
+          type: boolean
+        name:
+          type: string
+        subjectId:
+          format: int32
+          type: integer
+        subjectURI:
+          type: string
+        uri:
+          type: string
       type: object
     ResponseLink:
       properties:
@@ -322,35 +351,6 @@ components:
         '@ref':
           type: string
         '@type':
-          type: string
-      type: object
-    SubjectAreaSearchResult:
-      properties:
-        children:
-          items:
-            $ref: '#/components/schemas/Discipline'
-          type: array
-        classificationType:
-          enum:
-          - ASJC
-          - FOR
-          - FOS
-          - QS
-          - KAKEN
-          - THE
-          - POL
-          - SDG
-          - SCADC
-          - NIRF
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
           type: string
       type: object
 x-components: {}

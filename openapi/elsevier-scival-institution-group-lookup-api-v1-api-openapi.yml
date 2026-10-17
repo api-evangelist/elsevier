@@ -274,6 +274,26 @@ components:
         name:
           type: string
       type: object
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    InstitutionGroupSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/InstitutionGroupSearchResult'
+          type: array
+      type: object
     InstitutionGroupResult:
       allOf:
       - $ref: '#/components/schemas/InstitutionGroupSearchResult'
@@ -284,29 +304,37 @@ components:
             type: array
         type: object
       type: object
-    InstitutionResult:
-      allOf:
-      - $ref: '#/components/schemas/InstitutionSearchResult'
-      - properties:
-          affiliations:
-            items:
-              $ref: '#/components/schemas/AffiliationResult'
-            type: array
-          latitude:
-            format: double
-            type: number
-          longitude:
-            format: double
-            type: number
-          nameVariants:
-            items:
-              type: string
-            type: array
-          region:
+    EntityTag:
+      properties:
+        disabled:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        limitTo:
+          type: boolean
+        name:
+          type: string
+        occurrences:
+          format: int32
+          type: integer
+        privateTag:
+          type: boolean
+        selected:
+          type: boolean
+        shared:
+          type: boolean
+        type:
+          type: string
+        uri:
+          type: string
+        uris:
+          items:
             type: string
-          sector:
-            type: string
-        type: object
+          type: array
+        webUserId:
+          format: int64
+          type: integer
       type: object
     MetricBase:
       properties:
@@ -319,6 +347,22 @@ components:
           format: int32
           type: integer
         sourceName:
+          type: string
+      type: object
+    InstitutionSearchResult:
+      properties:
+        country:
+          type: string
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
           type: string
       type: object
     Country:
@@ -363,51 +407,12 @@ components:
         uri:
           type: string
       type: object
-    InstitutionGroupSearchResponse:
+    MetricResults:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        metrics:
           items:
-            $ref: '#/components/schemas/InstitutionGroupSearchResult'
+            $ref: '#/components/schemas/MetricBaseObject'
           type: array
-      type: object
-    InstitutionSearchResult:
-      properties:
-        country:
-          type: string
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
-      type: object
-    InstitutionGroupSearchResult:
-      properties:
-        categoryName:
-          type: string
-        id:
-          format: int64
-          type: integer
-        institutionCount:
-          format: int32
-          type: integer
-        institutions:
-          items:
-            $ref: '#/components/schemas/Institution'
-          type: array
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        uri:
-          type: string
       type: object
     InstitutionGroupResponse:
       properties:
@@ -416,60 +421,13 @@ components:
         link:
           $ref: '#/components/schemas/ResponseLink'
       type: object
-    Institution:
+    ResponseLink:
       properties:
-        tags:
-          items:
-            $ref: '#/components/schemas/EntityTag'
-          type: array
-        acronym:
+        '@href':
           type: string
-        active:
-          type: boolean
-        additionalData:
+        '@ref':
           type: string
-        affilCnt:
-          format: int32
-          type: integer
-        base:
-          type: string
-        color:
-          type: string
-        country:
-          $ref: '#/components/schemas/Country'
-        countryId:
-          type: string
-        countryName:
-          type: string
-        favorite:
-          type: boolean
-        id:
-          format: int64
-          type: integer
-        latitude:
-          format: double
-          type: number
-        longitude:
-          format: double
-          type: number
-        name:
-          type: string
-        nameVariant1:
-          type: string
-        nameVariant2:
-          type: string
-        pubCount:
-          format: int32
-          type: integer
-        regionName:
-          type: string
-        secondary:
-          type: string
-        sector:
-          type: string
-        sortName:
-          type: string
-        uri:
+        '@type':
           type: string
       type: object
     MetricBaseObject:
@@ -532,64 +490,106 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricResponse:
+    Institution:
       properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        tags:
           items:
-            $ref: '#/components/schemas/MetricResults'
+            $ref: '#/components/schemas/EntityTag'
           type: array
-      type: object
-    EntityTag:
-      properties:
-        disabled:
+        acronym:
+          type: string
+        active:
+          type: boolean
+        additionalData:
+          type: string
+        affilCnt:
+          format: int32
+          type: integer
+        base:
+          type: string
+        color:
+          type: string
+        country:
+          $ref: '#/components/schemas/Country'
+        countryId:
+          type: string
+        countryName:
+          type: string
+        favorite:
           type: boolean
         id:
           format: int64
           type: integer
-        limitTo:
-          type: boolean
+        latitude:
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
         name:
           type: string
-        occurrences:
+        nameVariant1:
+          type: string
+        nameVariant2:
+          type: string
+        pubCount:
           format: int32
           type: integer
-        privateTag:
-          type: boolean
-        selected:
-          type: boolean
-        shared:
-          type: boolean
-        type:
+        regionName:
+          type: string
+        secondary:
+          type: string
+        sector:
+          type: string
+        sortName:
           type: string
         uri:
           type: string
-        uris:
-          items:
-            type: string
-          type: array
-        webUserId:
+      type: object
+    InstitutionGroupSearchResult:
+      properties:
+        categoryName:
+          type: string
+        id:
           format: int64
           type: integer
-      type: object
-    ResponseLink:
-      properties:
-        '@href':
-          type: string
-        '@ref':
-          type: string
-        '@type':
-          type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
+        institutionCount:
+          format: int32
+          type: integer
+        institutions:
           items:
-            $ref: '#/components/schemas/MetricBaseObject'
+            $ref: '#/components/schemas/Institution'
           type: array
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        uri:
+          type: string
+      type: object
+    InstitutionResult:
+      allOf:
+      - $ref: '#/components/schemas/InstitutionSearchResult'
+      - properties:
+          affiliations:
+            items:
+              $ref: '#/components/schemas/AffiliationResult'
+            type: array
+          latitude:
+            format: double
+            type: number
+          longitude:
+            format: double
+            type: number
+          nameVariants:
+            items:
+              type: string
+            type: array
+          region:
+            type: string
+          sector:
+            type: string
+        type: object
       type: object
 x-components: {}
 x-apievangelist-provenance:

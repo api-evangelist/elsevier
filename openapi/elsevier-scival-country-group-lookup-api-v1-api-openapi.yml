@@ -266,12 +266,25 @@ paths:
       summary: Get an country group by id
 components:
   schemas:
-    CountryGroupResponse:
+    MetricResponse:
       properties:
-        countryGroup:
-          $ref: '#/components/schemas/CountryGroupResult'
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
         link:
           $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
+    CountryGroupSearchResponse:
+      properties:
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/CountryGroupSearchResult'
+          type: array
       type: object
     CountryGroupSearchResult:
       properties:
@@ -294,14 +307,37 @@ components:
         uri:
           type: string
       type: object
-    CountryGroupSearchResponse:
+    EntityTag:
       properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
+        disabled:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        limitTo:
+          type: boolean
+        name:
+          type: string
+        occurrences:
+          format: int32
+          type: integer
+        privateTag:
+          type: boolean
+        selected:
+          type: boolean
+        shared:
+          type: boolean
+        type:
+          type: string
+        uri:
+          type: string
+        uris:
           items:
-            $ref: '#/components/schemas/CountryGroupSearchResult'
+            type: string
           type: array
+        webUserId:
+          format: int64
+          type: integer
       type: object
     MetricBase:
       properties:
@@ -314,6 +350,41 @@ components:
           format: int32
           type: integer
         sourceName:
+          type: string
+      type: object
+    CountryGroupResponse:
+      properties:
+        countryGroup:
+          $ref: '#/components/schemas/CountryGroupResult'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+      type: object
+    CountryGroupResult:
+      allOf:
+      - $ref: '#/components/schemas/CountryGroupSearchResult'
+      - properties:
+          countries:
+            items:
+              $ref: '#/components/schemas/CountryResult'
+            type: array
+        type: object
+      type: object
+    CountryResult:
+      properties:
+        countryCode:
+          type: string
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
+          type: string
+        regionCode:
+          type: string
+        regionName:
+          type: string
+        uri:
           type: string
       type: object
     Country:
@@ -358,15 +429,12 @@ components:
         uri:
           type: string
       type: object
-    CountryGroupResult:
-      allOf:
-      - $ref: '#/components/schemas/CountryGroupSearchResult'
-      - properties:
-          countries:
-            items:
-              $ref: '#/components/schemas/CountryResult'
-            type: array
-        type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -428,67 +496,6 @@ components:
       required:
       - the discriminator field
       type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
-    CountryResult:
-      properties:
-        countryCode:
-          type: string
-        id:
-          format: int64
-          type: integer
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        regionCode:
-          type: string
-        regionName:
-          type: string
-        uri:
-          type: string
-      type: object
-    EntityTag:
-      properties:
-        disabled:
-          type: boolean
-        id:
-          format: int64
-          type: integer
-        limitTo:
-          type: boolean
-        name:
-          type: string
-        occurrences:
-          format: int32
-          type: integer
-        privateTag:
-          type: boolean
-        selected:
-          type: boolean
-        shared:
-          type: boolean
-        type:
-          type: string
-        uri:
-          type: string
-        uris:
-          items:
-            type: string
-          type: array
-        webUserId:
-          format: int64
-          type: integer
-      type: object
     ResponseLink:
       properties:
         '@href':
@@ -497,13 +504,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:

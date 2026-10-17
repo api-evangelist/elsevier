@@ -641,6 +641,17 @@ paths:
       summary: Get a topic cluster by id
 components:
   schemas:
+    MetricResponse:
+      properties:
+        dataSource:
+          $ref: '#/components/schemas/MetricBase'
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        results:
+          items:
+            $ref: '#/components/schemas/MetricResults'
+          type: array
+      type: object
     TopicClusterResponse:
       properties:
         link:
@@ -648,17 +659,25 @@ components:
         topicCluster:
           $ref: '#/components/schemas/TopicClusterResult'
       type: object
-    MetricBase:
+    TopicClusterSearchResult:
       properties:
-        lastUpdated:
+        id:
+          format: int64
+          type: integer
+        link:
+          $ref: '#/components/schemas/ResponseLink'
+        name:
           type: string
-        metricEndYear:
+        prominencePercentile:
+          format: float
+          type: number
+        scholarlyOutput:
           format: int32
           type: integer
-        metricStartYear:
+        topicCount:
           format: int32
           type: integer
-        sourceName:
+        uri:
           type: string
       type: object
     TopicClusterResult:
@@ -686,26 +705,37 @@ components:
         uri:
           type: string
       type: object
-    TopicClusterSearchResult:
+    TopicClustersResponse:
       properties:
-        id:
-          format: int64
-          type: integer
         link:
           $ref: '#/components/schemas/ResponseLink'
-        name:
-          type: string
-        prominencePercentile:
-          format: float
-          type: number
-        scholarlyOutput:
+        topicClusters:
+          items:
+            $ref: '#/components/schemas/TopicClusterSearchResult'
+          type: array
+        totalCount:
           format: int32
           type: integer
-        topicCount:
+      type: object
+    MetricBase:
+      properties:
+        lastUpdated:
+          type: string
+        metricEndYear:
           format: int32
           type: integer
-        uri:
+        metricStartYear:
+          format: int32
+          type: integer
+        sourceName:
           type: string
+      type: object
+    MetricResults:
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/MetricBaseObject'
+          type: array
       type: object
     MetricBaseObject:
       discriminator:
@@ -785,29 +815,6 @@ components:
         uri:
           type: string
       type: object
-    MetricResponse:
-      properties:
-        dataSource:
-          $ref: '#/components/schemas/MetricBase'
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        results:
-          items:
-            $ref: '#/components/schemas/MetricResults'
-          type: array
-      type: object
-    TopicClustersResponse:
-      properties:
-        link:
-          $ref: '#/components/schemas/ResponseLink'
-        topicClusters:
-          items:
-            $ref: '#/components/schemas/TopicClusterSearchResult'
-          type: array
-        totalCount:
-          format: int32
-          type: integer
-      type: object
     ResponseLink:
       properties:
         '@href':
@@ -816,13 +823,6 @@ components:
           type: string
         '@type':
           type: string
-      type: object
-    MetricResults:
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/MetricBaseObject'
-          type: array
       type: object
 x-components: {}
 x-apievangelist-provenance:
