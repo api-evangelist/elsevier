@@ -1,4 +1,34 @@
 edges:
+- partner_name: PyPI
+  partner: pypi
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Python)
+  evidence: https://pypi.org/project/elsapy/
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: elsapy
+      version: 0.5.1
+      released: '2022-11-09'
+      released_field: upload_time
+      lapsed: true
+      page: https://pypi.org/project/elsapy/
+      repo_leg: github-org:elsevierdev
+      publisher_leg: email:elsevier.com
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 - partner_name: 1EdTech
   partner: null
   type: contract
@@ -34,37 +64,32 @@ edges:
       lapsed: false
       url: https://site.imsglobal.org/certifications/elsevier-inc/evolve-link/v13
     detected_by: sweep-edtech.py
-    detected: '2026-10-14'
-- partner_name: PyPI
-  partner: pypi
+    detected: '2026-10-19'
+- partner_name: UK G-Cloud 14 (Digital Marketplace)
+  partner: null
   partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (Python)
-  evidence: https://pypi.org/project/elsapy/
-  channel: package-registry
+  type: marketplace
+  marketplace: g-cloud
+  channel: distribution
   relationship: distribution-channel
+  direction: third-party
+  evidence: https://www.applytosupply.digitalmarketplace.service.gov.uk/g-cloud-14/supplier/711237
+  category: UK public-sector procurement framework
   contract_reference:
-    register: PyPI (public registry JSON)
+    register: UK G-Cloud 14 supplier list (Digital Marketplace)
     spec_file: null
-    language: Python
-    packages:
-    - name: elsapy
-      version: 0.5.1
-      released: '2022-11-09'
-      released_field: upload_time
-      lapsed: true
-      page: https://pypi.org/project/elsapy/
-      repo_leg: github-org:elsevierdev
-      publisher_leg: email:elsevier.com
-      matched_by: domain
-    current: false
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-official-sdks.py
-    detected: '2026-10-18'
-  detected_by: sweep-official-sdks.py
-  first_seen: '2026-10-18'
+    role: g-cloud-supplier
+    registered_name: Elsevier B.V.
+    register_id: '711237'
+    matched_domain: elsevier.com
+    matched_by: domain
+    domain_source: contact-email
+    signal_note: a framework award is distribution (selling to the public sector), not an integration; kept out
+      of position shares
+    detected_by: sweep-uk-g-cloud-suppliers.py
+    detected: '2026-10-21'
+  detected_by: sweep-uk-g-cloud-suppliers.py
+  first_seen: '2026-10-21'
 generated: '2026-10-14'
 method: searched
 checked:
@@ -76,11 +101,15 @@ checked:
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
 - https://site.imsglobal.org/certifications
+- https://iasme.co.uk/cyber-essentials/ncsc-certificate-search/
+- https://www.applytosupply.digitalmarketplace.service.gov.uk/g-cloud-14/suppliers
+- https://www.crowncommercial.gov.uk/agreements
+- https://www.ncsc.gov.uk/cyberessentials/search
 source:
-- https://api.nuget.org/v3
-- https://crates.io/api/v1
-- https://proxy.golang.org
-- https://pypi.org/pypi
 - https://registry.npmjs.org
-- https://repo1.maven.org/maven2
+- https://pypi.org/pypi
 - https://rubygems.org/api/v1
+- https://crates.io/api/v1
+- https://repo1.maven.org/maven2
+- https://api.nuget.org/v3
+- https://proxy.golang.org
