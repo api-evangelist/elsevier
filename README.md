@@ -1,4 +1,4 @@
-# Elsevier (elsevier)
+# Elsevier
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,139 +64,186 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Elsevier is a Dutch academic publishing company specializing in scientific, technical, and medical content. Its products include journals such as The Lancet and Cell, the ScienceDirect collection of electronic journals, the online citation database Scopus, the SciVal research performance platform, and the ClinicalKey search engine for clinicians.
+Elsevier is a Dutch academic publishing company specializing in scientific, technical, and medical content. Its products include journals such as The Lancet and Cell, the ScienceDirect collection of electronic journals, the online citation database Scopus, the SciVal research performance platform, and the ClinicalKey search engine for clinicians. Its Research Products APIs expose Scopus, ScienceDirect, SciVal, Embase, Engineering Village and COUNTER usage reporting over a single host, api.elsevier.com, under an API key plus institutional entitlement model.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/elsevier/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/elsevier/refs/heads/main/apis.yml)
+**Areas:** Content · Journals · Medical · Research · Scientific · Technical · Elsevier · Publishing · Scholarly Publishing
 
-## Scope
+## Elsevier on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Elsevier is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/elsevier/](https://apis.io/providers/elsevier/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (32)
 
-- Content
-- Journals
-- Medical
-- Research
-- Scientific
-- Technical
+- [Elsevier Embase API](https://apis.io/apis/elsevier/elsevier-embase-api/) — Embase APIs provide access to biomedical and pharmacological abstracts and indexing for life sciences research, drug development, and evidence-based medicine.
+- [Elsevier COUNTER SUSHI API](https://apis.io/apis/elsevier/elsevier-sushi-api/) — Elsevier's COUNTER Code of Practice Release 5 and 5.1 API, delivering standards-compliant usage statistics and reports over SUSHI. Base…
+- [Elsevier Abstract API](https://apis.io/apis/elsevier/elsevier-abstract-api/) — The Abstract API from Elsevier — 5 operation(s) for abstract.
+- [Elsevier Search API](https://apis.io/apis/elsevier/elsevier-search-api/) — The Search API from Elsevier — 3 operation(s) for search.
+- [Elsevier Abstract Citation Count API](https://apis.io/apis/elsevier/elsevier-abstract-citation-count-api/) — Abstract Citation count API
+- [Elsevier Abstract Retrieval API](https://apis.io/apis/elsevier/elsevier-abstract-retrieval-api/) — Abstract Retrieval API
+- [Elsevier Affiliation Retrieval API](https://apis.io/apis/elsevier/elsevier-affiliation-retrieval-api/) — Affiliation Retrieval API
+- [Elsevier Affiliation Search API](https://apis.io/apis/elsevier/elsevier-affiliation-search-api/) — Affiliation Search API
+- [Elsevier Article Entitlement Retrieval API](https://apis.io/apis/elsevier/elsevier-article-entitlement-retrieval-api/) — Article Entitlement Retrieval API
+- [Elsevier Article Metadata API](https://apis.io/apis/elsevier/elsevier-article-metadata-api/) — Article Metadata API
+- [Elsevier Article Retrieval API](https://apis.io/apis/elsevier/elsevier-article-retrieval-api/) — Article Retrieval API
+- [Elsevier Author Retrieval API](https://apis.io/apis/elsevier/elsevier-author-retrieval-api/) — Author Retrieval API
+- [Elsevier Author Search API](https://apis.io/apis/elsevier/elsevier-author-search-api/) — Author Search API
+- [Elsevier Citations Overview API](https://apis.io/apis/elsevier/elsevier-citations-overview-api/) — Citations Overview API
+- [Elsevier Engineering Village Retrieval API](https://apis.io/apis/elsevier/elsevier-engineering-village-retrieval-api/) — Engineering Village Retrieval API
+- [Elsevier Engineering Village Search API](https://apis.io/apis/elsevier/elsevier-engineering-village-search-api/) — Engineering Village Search API
+- [Elsevier Nonserial Title API](https://apis.io/apis/elsevier/elsevier-nonserial-title-api/) — Nonserial Title API
+- [Elsevier Object Retrieval API](https://apis.io/apis/elsevier/elsevier-object-retrieval-api/) — Object Retrieval API
+- [Elsevier Science Direct Search V2 API](https://apis.io/apis/elsevier/elsevier-sciencedirect-search-v2-api/) — ScienceDirect Search V2 API
+- [Elsevier SciVal Author Lookup API](https://apis.io/apis/elsevier/elsevier-scival-author-lookup-api-api/) — The SciVal Author Lookup API API from Elsevier — 4 operation(s) for scival author lookup api.
+- [Elsevier SciVal Country Group Lookup API V1 API](https://apis.io/apis/elsevier/elsevier-scival-country-group-lookup-api-v1-api/) — The SciVal Country Group Lookup API V1 API from Elsevier — 3 operation(s) for scival country group lookup api v1.
+- [Elsevier SciVal Country Lookup API V1 API](https://apis.io/apis/elsevier/elsevier-scival-country-lookup-api-v1-api/) — The SciVal Country Lookup API V1 API from Elsevier — 4 operation(s) for scival country lookup api v1.
+- [Elsevier SciVal Institution Group Lookup API V1 API](https://apis.io/apis/elsevier/elsevier-scival-institution-group-lookup-api-v1-api/) — The SciVal Institution Group Lookup API V1 API from Elsevier — 3 operation(s) for scival institution group lookup api v1.
+- [Elsevier SciVal Institution Lookup API V1 API](https://apis.io/apis/elsevier/elsevier-scival-institution-lookup-api-v1-api/) — The SciVal Institution Lookup API V1 API from Elsevier — 7 operation(s) for scival institution lookup api v1.
+- [Elsevier SciVal Publication Lookup API V1 API](https://apis.io/apis/elsevier/elsevier-scival-publication-lookup-api-v1-api/) — The SciVal Publication Lookup API V1 API from Elsevier — 2 operation(s) for scival publication lookup api v1.
+- [Elsevier SciVal Scopus Source Lookup API](https://apis.io/apis/elsevier/elsevier-scival-scopus-source-lookup-api-api/) — The SciVal Scopus Source Lookup API API from Elsevier — 3 operation(s) for scival scopus source lookup api.
+- [Elsevier SciVal Subject Area Lookup API](https://apis.io/apis/elsevier/elsevier-scival-subject-area-lookup-api-api/) — The SciVal Subject Area Lookup API API from Elsevier — 3 operation(s) for scival subject area lookup api.
+- [Elsevier SciVal Topic Cluster Lookup API](https://apis.io/apis/elsevier/elsevier-scival-topic-cluster-lookup-api-api/) — The SciVal Topic Cluster Lookup API API from Elsevier — 7 operation(s) for scival topic cluster lookup api.
+- [Elsevier SciVal Topic Lookup API](https://apis.io/apis/elsevier/elsevier-scival-topic-lookup-api-api/) — The SciVal Topic Lookup API API from Elsevier — 7 operation(s) for scival topic lookup api.
+- [Elsevier SciVal World Lookup API](https://apis.io/apis/elsevier/elsevier-scival-world-lookup-api-api/) — The SciVal World Lookup API API from Elsevier — 1 operation(s) for scival world lookup api.
+- [Elsevier Scopus Search API](https://apis.io/apis/elsevier/elsevier-scopus-search-api/) — Scopus Search API
+- [Elsevier Serial Title API](https://apis.io/apis/elsevier/elsevier-serial-title-api/) — Serial Title API
 
-## Timestamps
+### Published properties
 
-- **Created:** 2023-11-22
-- **Modified:** 2026-04-28
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Elsevier Scopus APIs
+Model Context Protocol servers that expose the API to agents.
 
-Scopus delivers a comprehensive view of the world of research, allowing tracking, analysis, and visualization of research data across publishers, journals, books, conference proceedings, and trade publications.
+- [elsevier-mcp.yml](https://apis.io/servers/elsevier/elsevier-mcp-yml/)
 
-- **Human URL:** [https://dev.elsevier.com/sc_apis.html](https://dev.elsevier.com/sc_apis.html)
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Citations
-- Research
-- Scientific
+- [Elsevier Agentic Access](https://apis.io/agentic-access/elsevier/elsevier-agentic-access/)
 
-#### Properties
+#### Collections (3)
 
-- [Documentation](https://dev.elsevier.com/scopus.html)
-- [Specification](https://dev.elsevier.com/api_docs.html)
-- [Postman Collection](collections/elsevier.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/elsevier.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-### Elsevier ScienceDirect APIs
+- [Elsevier Scopus APIs](https://apis.io/collections/elsevier/open-elsevier/)
+- [Elsevier Scopus APIs Abstract API](https://apis.io/collections/elsevier/open-elsevier-abstract-api/)
+- [Elsevier Scopus APIs Abstract Search API](https://apis.io/collections/elsevier/open-elsevier-search-api/)
 
-ScienceDirect APIs expose peer-reviewed full-text scientific, technical and medical content from all scholarly publications indexed by ScienceDirect, Elsevier's premier scientific platform.
+#### Overlays (9)
 
-- **Human URL:** [https://dev.elsevier.com/sd_apis.html](https://dev.elsevier.com/sd_apis.html)
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Tags
+- [Elsevier Abstract Api Overlay](https://apis.io/overlays/elsevier/elsevier-abstract-api-overlay/)
+- [Elsevier Engineering Village Overlay](https://apis.io/overlays/elsevier/elsevier-engineering-village-overlay/)
+- [Elsevier Metadata Overlay](https://apis.io/overlays/elsevier/elsevier-metadata-overlay/)
+- [Elsevier Retrieval Overlay](https://apis.io/overlays/elsevier/elsevier-retrieval-overlay/)
+- [Elsevier Sciencedirect Overlay](https://apis.io/overlays/elsevier/elsevier-sciencedirect-overlay/)
+- [Elsevier Scival Overlay](https://apis.io/overlays/elsevier/elsevier-scival-overlay/)
+- [Elsevier Scopus Overlay](https://apis.io/overlays/elsevier/elsevier-scopus-overlay/)
+- [Elsevier Search Api Overlay](https://apis.io/overlays/elsevier/elsevier-search-api-overlay/)
+- [Elsevier Search Overlay](https://apis.io/overlays/elsevier/elsevier-search-overlay/)
 
-- Full Text
-- Journals
-- Scientific
+#### Security (3)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [Documentation](https://dev.elsevier.com/sciencedirect.html)
-- [Specification](https://dev.elsevier.com/api_docs.html)
-- [Postman Collection](collections/elsevier.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/elsevier.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Elsevier Authentication](https://apis.io/security/elsevier/elsevier-authentication/)
+- [Elsevier Domain Security](https://apis.io/security/elsevier/elsevier-domain-security/)
+- [Elsevier Trust Center](https://apis.io/security/elsevier/elsevier-trust-center/)
 
-### Elsevier SciVal API
+#### OAuth scopes (1)
 
-The SciVal API gives access to a comprehensive set of metrics for researchers (Scopus Author profiles) and 8,500+ institutions available in SciVal, Elsevier's platform for research performance benchmarking.
+The permissions the API asks for.
 
-- **Human URL:** [https://dev.elsevier.com/scival_apis.html](https://dev.elsevier.com/scival_apis.html)
+- [Elsevier Scopes](https://apis.io/scopes/elsevier/elsevier-scopes/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Benchmarking
-- Metrics
-- Research
+Published plans, tiers and prices.
 
-#### Properties
+- [Elsevier Plans Pricing](https://apis.io/plans/elsevier/elsevier-plans-pricing/)
 
-- [Documentation](https://dev.elsevier.com/scival.html)
-- [Specification](https://dev.elsevier.com/api_docs.html)
-- [Postman Collection](collections/elsevier.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/elsevier.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Elsevier Engineering Village API
+Published request limits.
 
-Engineering Village APIs provide programmatic access to engineering research literature, indexed publications, and engineering-focused content across multiple databases.
+- [Elsevier Rate Limits](https://apis.io/rate-limits/elsevier/elsevier-rate-limits/)
 
-- **Human URL:** [https://dev.elsevier.com/ev.html](https://dev.elsevier.com/ev.html)
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Engineering
-- Research
+- [Elsevier Finops](https://apis.io/finops/elsevier/elsevier-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://dev.elsevier.com/ev.html)
-- [Postman Collection](collections/elsevier.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/elsevier.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Elsevier Embase API
-
-Embase APIs provide access to biomedical and pharmacological abstracts and indexing for life sciences research, drug development, and evidence-based medicine.
-
-- **Human URL:** [https://dev.elsevier.com/embase.html](https://dev.elsevier.com/embase.html)
-
-#### Tags
-
-- Biomedical
-- Medical
-- Pharmacology
-
-#### Properties
-
-- [Documentation](https://dev.elsevier.com/embase.html)
-- [Postman Collection](collections/elsevier.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/elsevier.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/elsevier)
-- [Portal](https://dev.elsevier.com/)
-- [Getting Started](https://dev.elsevier.com/getting_started.html)
+- [Website](https://www.elsevier.com/)
 - [Documentation](https://dev.elsevier.com/api_docs.html)
-- [Use Cases](https://dev.elsevier.com/use_cases.html)
-- [Terms of Service](https://dev.elsevier.com/api_service_agreement.html)
-- [Privacy Policy](http://www.elsevier.com/locate/privacypolicy)
-- [Examples](https://dev.elsevier.com/examples.html)
-- [Guides](https://dev.elsevier.com/technical_documentation.html)
-- [SDK](https://github.com/ElsevierDev/elsapy)
+- [API reference](https://dev.elsevier.com/api_docs.html)
+- [Pricing](https://dev.elsevier.com/support.html)
+- [Sign up](https://dev.elsevier.com/apikey/manage)
 - [Support](https://dev.elsevier.com/support.html)
+- [Blog](https://www.elsevier.com/connect)
+- [Compliance](https://www.elsevier.com/security)
+- [Terms of service](https://dev.elsevier.com/api_service_agreement.html)
+- [Privacy policy](https://www.elsevier.com/legal/privacy-policy)
+- [GitHub](https://github.com/ElsevierDev)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 58.1** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 46.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 62.5 |
+| Access clarity | 84.2 |
+
+**Agent readiness 38.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 36.7** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/elsevier/](https://apis.io/providers/elsevier/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Elsevier: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/elsevier/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
