@@ -1,0 +1,119 @@
+generated: '2026-09-06'
+method: searched
+source: https://dev.elsevier.com/support.html
+supporting_sources:
+- https://dev.elsevier.com/api_key_settings.html
+- https://dev.elsevier.com/use_cases.html
+- https://dev.elsevier.com/policy.html
+- https://dev.elsevier.com/api_service_agreement.html
+provider: Elsevier
+plan_count: 3
+providerId: elsevier
+description: >-
+  Elsevier publishes no price list for the Research Products APIs. Access is not sold in
+  tiers; it is granted by WHO YOU ARE and WHAT YOUR INSTITUTION ALREADY SUBSCRIBES TO. The
+  three access classes below are the provider's own words, and none of them carries a
+  published number. This artifact records that as the finding rather than omitting the file:
+  a developer cannot learn from Elsevier's site what any of this costs.
+pricing_model: entitlement-based
+public_price_list: false
+currency: null
+plans:
+- id: elsevier-non-commercial
+  name: Non-commercial (academic and public-sector)
+  type: free
+  price: '0.00'
+  currency: null
+  billing_period: null
+  audience: >-
+    Researchers in academic and public-sector institutions, charities and charitable
+    foundations.
+  description: >-
+    "Most APIs (except SciVal APIs) are available for no charge, for non-commercial use,
+    subject to Elsevier's policies and limits on usage." Quoted verbatim from the developer
+    portal FAQ.
+  self_serve: true
+  signup: https://dev.elsevier.com/apikey/manage
+  included_quota: see rate-limits/elsevier-rate-limits.yml
+  quota_note: >-
+    Quotas are per API, not per plan — the same free key gets 20,000 weekly Scopus Search
+    requests and 5,000 weekly Author Search requests. There is no single global allowance.
+  entitlement_gate: >-
+    Content returned is bounded by the caller's institutional subscription, resolved by
+    institutional IP address. Calling from outside the institutional network without an
+    Institutional Token returns authorisation errors even with a valid key.
+  excluded:
+  - SciVal APIs
+  - the eight access-controlled APIs listed in rate-limits/elsevier-rate-limits.yml
+- id: elsevier-commercial
+  name: Commercial
+  type: contact-sales
+  price: null
+  currency: null
+  billing_period: null
+  audience: Researchers in private-sector and commercial institutions.
+  description: >-
+    "APIs are available (for commercial use), with an API license and subscription, please
+    contact us here to discuss your request." No price, no rate card, no published minimum.
+  self_serve: false
+  signup: https://service.elsevier.com/app/contact/supporthub/researchproductsapis/
+- id: elsevier-scival
+  name: SciVal API
+  type: subscription
+  price: null
+  currency: null
+  billing_period: null
+  audience: SciVal subscribers.
+  description: >-
+    The SciVal APIs are carved out of the free non-commercial offer by name. Access requires a
+    SciVal product subscription; Elsevier publishes no standalone API price.
+  self_serve: false
+  signup: https://dev.elsevier.com/scival_apis.html
+gates:
+- name: Access-controlled APIs
+  description: >-
+    Eight APIs are not enabled on a new key at all and require a written request reviewed by
+    Elsevier API Support, which states it "cannot guarantee permission to use access-controlled
+    APIs."
+  url: https://dev.elsevier.com/api_key_settings.html
+- name: Use-case policy
+  description: >-
+    Even inside the free tier, permitted uses are enumerated (federated search, IR/CRIS/VIVO,
+    cited-by, journal metrics, academic research, text mining, SciVal metrics). A use case not
+    on the list must be cleared with Elsevier before it is allowed.
+  url: https://dev.elsevier.com/policy.html
+summary:
+  plan_count: 3
+  priced_plan_count: 0
+  free_plan_count: 1
+  contact_sales_count: 2
+  note: >-
+    plan_count is 3 access classes, not 3 purchasable tiers. Zero of them carry a published
+    price.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Non-commercial (academic and public-sector)
+    access: free
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Commercial
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
+  - name: SciVal API
+    access: other
+    model: subscription
+    model_how: stated
+    units: []
+    periods: []
