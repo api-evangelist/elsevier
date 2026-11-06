@@ -91,7 +91,7 @@ summary:
     plan_count is 3 access classes, not 3 purchasable tiers. Zero of them carry a published
     price.
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - free
